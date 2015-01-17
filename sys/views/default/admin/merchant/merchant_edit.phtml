@@ -1,0 +1,185 @@
+{include file='admin/before_body.phtml' title='商家修改'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='merchant'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/merchant/')}">商家中心</a></li>
+          <li class="current">商家修改</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4><i class="icon-reorder"></i></h4>
+            </div>
+            {$mid = $merchant->mid|default:0}
+            <div class="widget-content">
+              <form class="form-horizontal" id="validate" action="{url('admin/merchant/edit/'|cat:$mid)}" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    商家名称：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="seller" value="{$merchant->seller|default:''|escape}" class="form-control input-width-xlarge required" disabled>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                     商家店铺地址：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="shop_url" value="{$merchant->shop_url|default:''|escape}" class="form-control input-width-xxlarge required" disabled>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    商家店铺名称：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="shop_name" value="{$merchant->shop_name|default:''|escape}" class="form-control input-width-xlarge required" disabled>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商家联系电话：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="telphone" value="{$merchant->telphone|default:''|escape}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商家联系旺旺：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="contact_wangwang" value="{$merchant->contact_wangwang|default:''|escape}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商家联系QQ：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="qq" value="{$merchant->qq|default:''|escape}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商家联系邮箱：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="email" value="{$merchant->email|default:''|escape}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    商家资金：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="send_score" value="{$merchant->deposit|default:''|escape}" class="form-control input-width-medium required" style="float:left; margin-right:10px;" disabled>
+                    <input type="text" name="server_score" value="{$merchant->margin|default:''|escape}" class="form-control input-width-medium required" style="float:left; margin-right:10px;" disabled>
+                    <input type="text" name="match_score" value="{$merchant->service_fee|default:''|escape}" class="form-control input-width-medium required" disabled><br>
+                    <p>余额，技术费，保证金</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商家评分：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="send_score" value="{$merchant->send_score|default:''|escape}" class="form-control input-width-mini required" style="float:left; margin-right:10px;">
+                    <input type="text" name="server_score" value="{$merchant->server_score|default:''|escape}" class="form-control input-width-mini required" style="float:left; margin-right:10px;">
+                    <input type="text" name="match_score" value="{$merchant->match_score|default:''|escape}" class="form-control input-width-mini required"><br>
+                    <p>物流评分，服务评分，描述评分</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商家所属分类：
+                  </label>
+                  <div class="col-md-9">
+                    <select name="category" class="input-width-large select2" data-minimum-results-for-search="-1">
+                      {if isset($cateList) && $cateList}
+                        {foreach $cateList as $sa}
+                          <option value="{$sa->cid}"{if $sa->cid == $merchant->category|default:0} selected="selected"{/if}>{$sa->name|escape}</option>
+                        {/foreach}
+                      {/if}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商家店铺类型：
+                  </label>
+                  {$merchant_type = $merchant->merchant_type|default:'C'}
+                  <div class="col-md-9 clearfix">
+                    <label class="radio pull-left" style="width:120px;">
+                      <input type="radio" name="merchant_type" class="uniform" {if $merchant_type == 'C' || $merchant_type == ''}checked{/if} value="C">
+                      淘宝店铺
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="merchant_type" class="uniform" {if $merchant_type == 'B'}checked{/if} value="B">
+                      天猫店铺
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                     商家联系所属人：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="contacts" value="{$merchant->contacts|default:''|escape}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 状态：
+                  </label>
+                  {$status = $merchant->status|default:0}
+                  <div class="col-md-9 clearfix">
+                    <label class="radio pull-left" style="width:120px;">
+                      <input type="radio" name="status" class="uniform" {if $status == 1 || $merchant_type == ''}checked{/if} value="1">
+                      店铺有效
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" {if $status != 1}checked{/if} value="0">
+                      店铺禁用
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary">
+                    <a href="{url('admin/merchant')}" class="btn">返回商家列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+</script>
+</html>

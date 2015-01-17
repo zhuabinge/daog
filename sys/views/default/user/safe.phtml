@@ -1,0 +1,159 @@
+{include file='before_body.phtml' title='天天逛逛_账号安全'}
+<body>
+{include file='header.phtml' head="user"}
+
+
+  {include file='user/user_sidebar.phtml' active='账号安全'}
+
+  <div class="credit-content">
+    <div class="main-full">
+      <form action="{url('user/safe')}" method="POST" id="safe-form1" autocomplete="off" {if $user->username_can_change == 1} hidden {/if}>
+      <ul class="usersInfo">
+        <li><span class="flInfo">用户名：</span>{$user->username|escape}</li>
+        <li><span class="flInfo">绑定邮箱：</span><input type="text" name="email" value="{$user->email}"  class="from-text">
+          <span class="msgGre">绑定邮箱，方便以后找回登陆密码</span>
+        </li>
+        <li><span class="flInfo">绑定支付宝：</span><input type="text" name="alipay" value="{$user->alipay}" class="from-text">
+          <span class="msgGre">亲，绑定支付宝才能换取集分宝哦</span>
+        </li>
+        <li><span class="flInfo">当前密码：</span><input type="password" name="opassword" class="from-text"></li>
+        <li><span class="flInfo">新密码：</span><input type="password" name="npassword"  class="from-text" onkeyup="EvalPwdStrength(document.forms[0],this.value);">
+          <span class="msgGre">留空则不修改密码</span>
+          <div><span class="flInfo">&nbsp;</span>
+            <div class="messa_q">
+              <i id="idSM0" class="red">弱</i>
+              <i id="idSM1">中</i>
+              <i id="idSM2">强</i>
+            </div>
+          </div>
+        </li>
+        <li><span class="flInfo">确认新密码：</span><input type="password" name="rnpassword" class="from-text"></li>
+        <li><span class="flInfo">&nbsp;</span><input type="submit" value="确认修改" class="from-button"></li>
+      </ul>
+      </form>
+
+      <form action="{url('user/safe')}" method="POST" id="safe-form2" autocomplete="off" {if $user->username_can_change != 1} hidden {/if}>
+      <ul class="usersInfo">
+        <li><span class="flInfo">用户名：</span><input type="text" name="username" class="from-text"> (只能修改一次哦！)</li>
+        <li><span class="flInfo">绑定邮箱：</span><input type="text" name="email" value="{$user->email}"  class="from-text">
+          <span class="msgGre">绑定邮箱，方便以后找回登陆密码</span>
+        </li>
+        <li><span class="flInfo">绑定支付宝：</span><input type="text" name="alipay" value="{$user->alipay}" class="from-text">
+          <span class="msgGre">亲，绑定支付宝才能换取集分宝哦</span>
+        </li>
+        <li><span class="flInfo">密码：</span><input type="password" name="npassword"  class="from-text">
+          <span class="msgGre">设定一个密码，方便以后登陆天天逛逛</span>
+        </li>
+        <li><span class="flInfo">确认密码：</span><input type="password" name="rnpassword" class="from-text"></li>
+        <input type="text" name="uid" value="{$user->uid}" hidden>
+        <li><span class="flInfo">&nbsp;</span><input type="submit" value="确认修改" class="from-button"></li>
+      </ul>
+      </form>
+    </div>
+  </div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+<script type="text/javascript">
+$('#safe-form1').submit(function() {
+  var from = $(this), error = false,
+  email = from.find("input[name='email']"),
+  opassword = from.find("input[name='opassword']"),
+  npassword = from.find("input[name='npassword']"),
+  rnpassword = from.find("input[name='rnpassword']");
+
+  if (!isEmpy(email.val()) && !isEmail(email.val())){
+    appendMsg(email, '邮箱地址格式不正确哦');
+    error = true;
+  } else {
+    appendMsg(email, '');
+  }
+  if (isEmpy(opassword.val())){
+    appendMsg(opassword, '请输入您的密码，确定此次操作');
+    error = true;
+  } else {
+    appendMsg(opassword, '');
+  }
+  if (!isEmpy(npassword.val())) {
+    if (npassword.val().length < 6) {
+      appendMsg(npassword, '新密码有点短哦，最少6位');
+      error = true;
+    } else if (npassword.val() !== rnpassword.val()) {
+      appendMsg(rnpassword, '两次密码不相同哦');
+      error = true;
+    } else {
+      appendMsg(npassword, '');
+      appendMsg(rnpassword, '');
+    }
+  } else {
+    appendMsg(npassword, '');
+    appendMsg(rnpassword, '');
+  }
+  if (error) {
+    return false;
+  }
+});
+$('#safe-form2').submit(function() {
+  var from = $(this), error = false,
+  email = from.find("input[name='email']"),
+  username = from.find("input[name='username']"),
+  npassword = from.find("input[name='npassword']"),
+  rnpassword = from.find("input[name='rnpassword']");
+  $('.from-validate').remove();
+  if (!isEmpy(email.val()) && !isEmail(email.val())){
+    appendMsg(email, '邮箱地址格式不正确哦');
+    error = true;
+  }
+  if (isEmpy(username.val())){
+    appendMsg(username, '用户名不能为空喔');
+    error = true;
+  }
+  if (!isEmpy(npassword.val())) {
+    if (npassword.val().length < 6) {
+      appendMsg(npassword, '新密码有点短哦，最少6位');
+      error = true;
+    } else if (npassword.val() !== rnpassword.val()) {
+      appendMsg(rnpassword, '两次密码不相同哦');
+      error = true;
+    }
+  } else {
+    appendMsg(npassword, '密码不能为空喔');
+    error = true;
+  }
+  if (error) {
+    return false;
+  }
+});
+var msg = '{html_messages|strip_tags|strip}';
+if(!isEmpy(msg)) {
+  dialog('<p>' + msg + '</p>').open();
+}
+
+
+{literal}
+function isEmpy(str) {
+  if ( str == '' || str == null) return true;
+  var regu = '^[ ]+$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+function isEmail(str){
+  var regu = '^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+function appendMsg(object, msg){
+  var id = object.attr('name') + 'msg';
+  if (isEmpy(msg)) {
+    $('#' + id).remove();
+  } else {
+    if ($('#' + id).html()) {
+      $('#' + id).html('<span style="width:155px;display: inline-block;"></span>' + msg);
+    } else {
+      object.after('<div id="' + id + '" class="from-validate" ><span style="width:155px;display: inline-block;"></span>' + msg + '</div>');
+    }
+  }
+}
+{/literal}
+</script>
+</html>

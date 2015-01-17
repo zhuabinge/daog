@@ -1,0 +1,80 @@
+{include file='before_body.phtml' title='天天逛逛独家优惠，天天送集分宝9.9包邮20元封顶秒杀在天天逛逛' keywords='天天逛逛官网,积分签到,天天逛逛独家优惠,天逛网,天天逛逛天天特价,9.9包邮,20元封顶,ttgg' description='汇集独家特约【淘宝网2-5折商品】，以天天有九块九包邮超值宝贝著名。价格足够低，先到先得。找独家淘宝天猫商城折扣秒杀，请到天天逛逛。【9.9包邮 天天有】'}
+<body>
+{include file='header.phtml' head="home"}
+<div class="banner-area">
+  <div class="big-banner">
+{if isset($cates) && $cates}
+    <!--顶部左侧主导航 start-->
+    <div class="navigation">
+      <ul>
+{foreach $cates as $cate}
+        <li><a href="{$cate->link}" title="{$cate->name|escape}"><i class="{$cate->seo_path}"></i>{$cate->name|escape}</a></li>
+{/foreach}
+      </ul>
+    </div>
+    <!--顶部左侧主导航 end-->
+{/if}
+    <!--首页顶部广告栏目 start-->
+    <div class="fr">
+      <div class="banner_column">
+        <div class="fl flw1">
+          {html_ad id="home-1" width="495" height="260" class="zs" target="1"}
+          {html_ad id="home-2" width="250" height="240" class="zsb" target="1"}
+          {html_ad id="home-3" width="250" height="240" class="zsb" target="1"}
+        </div>
+        <div class="fl">
+          {html_ad id="home-4" width="245" height="500" class="zrsx" target="1"}
+        </div>
+        <div class="fl flw3">
+          {html_ad id="home-5" width="250" height="260" class="rs" target="1"}
+          {html_ad id="home-6" width="250" height="240" class="rsb" target="1"}
+        </div>
+      </div>
+    </div>
+    <!--首页顶部广告栏目 end-->
+  </div>
+</div>
+<div class="area">
+  <div class="title_un">
+    <i class="icon_start"></i><strong>每日特惠推荐</strong>
+  </div>
+  <!--产品列表 start-->
+  {include file='main_products.phtml'}
+  <!--产品列表 end-->
+  <!--分页 start-->
+  <div class="newPage clearbox tc">
+	  {html_pagination page="$page" rows="$rows" count="$count" prev="<i class='icon-chevron-left'></i>" next="<i class='icon-chevron-right'></i>" url="{url('?page=%page%')}" showinfo="0"}
+	</div>
+  <!--分页 end-->
+  <!--推荐的产品 start-->
+  {include file='footer_recommend.phtml'}
+  <!--推荐的产品 end-->
+</div>
+{include file='footer.phtml'}
+<!--页面左侧导航 start-->
+<div class="side-panel left-panel">
+  <div class="tab-content">
+    <ul>
+      <li class="tab-index cur">
+        <a href="{url('')}"><i></i></a>
+        <div class="tab-tip">
+          <a href="{url('')}">首页</a>
+        </div>
+      </li>
+{if isset($cates) && $cates}
+{foreach $cates as $cate}
+      <li>
+        <a href="{$cate->link}"><i class="{$cate->seo_path}"></i></a>
+        <div class="tab-tip">
+          <a href="{$cate->link}">{$cate->name|escape}</a>
+        </div>
+      </li>
+{/foreach}
+{/if}
+    </ul>
+  </div>
+</div>
+<!--页面左侧导航 end-->
+{include file='after_body.phtml'}
+</body>
+</html>

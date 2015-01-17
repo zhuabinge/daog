@@ -1,0 +1,111 @@
+{include file='admin/before_body.phtml' title='类目列表'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/product')}">商品管理</a></li>
+          <li class="current">类目列表</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <div id="strMessages"></div>
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group" id="nestable-menu">
+            <a href="{url('admin/category/edit')}" class="btn btn-primary">添加类目</a>
+            <button type="button" class="btn" data-action="expand-all">展开所有类目</button>
+            <button type="button" class="btn" data-action="collapse-all">合并所有类目</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group widget-content">
+            <div class="dd" id="nestable">
+              <ol class="dd-list">
+              {if isset($categoryList) && $categoryList}
+                {foreach $categoryList as $sa}
+                <li class="dd-item" data-id="{$sa->cid}">
+                  <div class="dd-handle">
+                    {$sa->name|escape}
+                    <div class="pull-right action-buttons">
+                      <a href="{$sa->link}" target="_blank"><i class="icon-search"></i></a>
+                      <a href="{url('admin/category/edit/'|cat:$sa->cid)}"><i class="icon-pencil"></i></a>
+                      <a class="confirm-dialog" href="{url('admin/category/remove/'|cat:$sa->cid)}"><i class="icon-trash"></i></a>
+                    </div>
+                  </div>
+                  {if isset($sa->children) && $sa->children}
+                  <ol class="dd-list">
+                    {foreach $sa->children as $va}
+                    <li class="dd-item" data-id="{$va->cid}">
+                      <div class="dd-handle">
+                        {$va->name|escape}
+                        <div class="pull-right action-buttons">
+                          <a href="{$va->link}" target="_blank"><i class="icon-search"></i></a>
+                          <a class="blue" href="{url('admin/category/edit/'|cat:$va->cid)}"><i class="icon-pencil"></i></a>
+                          <a class="confirm-dialog red" href="{url('admin/category/remove/'|cat:$va->cid)}"><i class="icon-trash"></i></a>
+                        </div>
+                      </div>
+                    </li>
+                    {/foreach}
+                  </ol>
+                  {/if}
+                </li>
+                {/foreach}
+              {/if}
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#nestable').nestable({
+    group: 1,
+    maxDepth: 2
+  }).on("change", function() {
+    $.post('{url('admin/category/ajaxordersave')}', {
+      list: JSON.stringify($('#nestable').nestable('serialize'))
+    }, function(data) {
+      if (data.result) { document.getElementById('strMessages').innerHTML = '<div class="alert alert-success fade in"><i class="icon-remove close"data-dismiss="alert"></i>类目修改成功</div>' } else {
+        $('#strMessages').html('<div class="alert alert-danger fade in"><i class="icon-remove close"data-dismiss="alert"></i>类目修改失败</div>');
+      };
+    }, 'json');
+  });
+
+  $('#nestable-menu').on('click', function(e) {
+    var target = $(e.target), action = target.data('action');
+    if (action === 'expand-all') {
+      $('.dd').nestable('expandAll');
+    }
+    if (action === 'collapse-all') {
+      $('.dd').nestable('collapseAll');
+    }
+  });
+
+  $('.dd-handle .action-buttons').mousedown(function(e){
+    e.stopPropagation();
+  });
+});
+</script>
+</html>

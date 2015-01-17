@@ -1,0 +1,121 @@
+{include file='admin/before_body.phtml' title='编辑用户'}
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='user_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/user/')}">用户管理</a></li>
+          <li class="current">编辑用户</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>
+                <i class="icon-reorder"></i>
+                编辑用户
+              </h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="" method="POST">
+                <div class="form-group">
+                  <div class="col-md-9 col-md-offset-3">
+                    <img src="{urlAvatar($user, 160)}" alt="用户头像">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-3 control-label">用户名：</label>
+                  <div class="col-md-9"><label class="control-label">{$user->username|escape}</label></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-3 control-label">昵称：</label>
+                  <div class="col-md-9"><label class="control-label">{$user->nickname|escape}</label></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">电子邮箱：</label>
+                  <div class="col-md-9"><label class="control-label">{$user->email|escape}</label></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    状态：
+                  </label>
+                  <div class="col-md-9">
+                    {if $user->status==1}
+                    <label class="radio pull-left" style="width:80px;">
+                      <input type="radio" name="status" class="uniform" checked="checked" value="1" />
+                     有效
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" value="0" />
+                       禁用
+                    </label>
+                    {elseif $user->status==0}
+                    <label class="radio pull-left" style="width:80px;">
+                      <input type="radio" name="status" class="uniform" value="1" />
+                     有效
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" checked="checked" value="0" />
+                       禁用
+                    </label>
+                    {/if}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    角色列表：
+                  </label>
+                  <div class="col-md-9" style="width:530px;">
+                    {foreach $roles as $role}
+                    <div class="col-md-4">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="roles[]" class="uniform" value="{$role->rid}"{if isset($userRoles[$role->rid])} checked="checked"{/if}>
+                      {$role->name|escape}
+                    </label>
+                    </div>
+                    {/foreach}
+                  </div>
+                </div>
+
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存提交" class="btn btn-primary">
+                    <a href="{url('admin/user/')}" class="btn">返回用户列表</a>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#validate").validate({
+    });
+    FormComponents.init();
+});
+</script>
+</html>

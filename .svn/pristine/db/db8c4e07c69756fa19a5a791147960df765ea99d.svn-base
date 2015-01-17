@@ -1,0 +1,100 @@
+{include file='before_body.phtml' title='天天逛逛_我的喜欢'}
+<body>
+{include file='header.phtml' head="user"}
+
+  {include file='user/user_sidebar.phtml' active='我的喜欢'}
+
+  <div class="credit-content">
+    <div class="main-full">
+      <div class="tabs">
+        <ul>
+          {if isset($tags) && $tags}
+          {foreach $tags as $tag}
+          <li><a href="{$tag->link}" target="_blank">{$tag->title}</a></li>
+          {/foreach}
+          {/if}
+        </ul>
+        <a href="javascript:void(0);" class="more">显示全部</a>
+      </div>
+{if $products}
+      {$userModel = BpfCore::getModel('user')}
+      <div class="goods">
+        {foreach $products as $product}
+        <div class="goods-box">
+          <div class="goods-img">
+            <a target="_blank" href="{$product->link}" title="{$product->title}">
+              <img class="lazy" alt="{$product->title}" src="{urlStatic($product->image_path, 280, 280)}" width="280" height="280">
+            </a>
+            <div class="goods-price">￥<em>{floatval($product->sell_price)}</em></div>
+          </div>
+          <div class="goods-bottom">
+            <div class="fl">
+              {if $userModel->checkLikes($account->uid, array($product->pid))}
+              <a href="javascript:void(0);">已喜欢 <em>（{$product->users_like_count}）</em></a>
+              {else}
+              <a href="javascript:void(0);" lkid="{$product->pid}" lc="{$product->users_like_count}" class="delcol"><i class="love-redback"></i> 喜欢 <em>({$product->users_like_count})</em></a>
+              {/if}
+            </div>
+            <div class="fr"><em>{$product->views}</em>人想买</div>
+          </div>
+        </div>
+        {/foreach}
+      </div>
+{else}
+      {if isset($other) && $other}
+        <div class="users_Icon likes_other">
+          <span></span>
+          <a href="{url('')}">去随便逛逛</a>
+        </div>
+      {else}
+        <div class="users_Icon likes_info">
+          <span></span>
+          <a href="{url('')}">去随便逛逛</a>
+        </div>
+      {/if}
+{/if}
+    </div>
+  </div>
+
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+{literal}
+<script type="text/javascript">
+$("a.delcol").on('click', function() {
+  var id = $(this).attr('lkid');
+  adduser(id);
+  var lc = $(this).attr('lc');
+  lc = parseInt(lc) + 1;
+  $(this).html('已喜欢 <em>（' + lc + '）</em>');
+});
+function adduser(id) {
+  $.post('/user/addlikes', {pid:id}, function(data) {
+    if (data == 'flase') {
+      $('#prompt').load('/user/loginLoad');
+      return false;
+    }
+  }, 'text');
+}
+$(document).ready(function() {
+  var naturalHeight = $('.tabs ul').height();
+  if(naturalHeight > 126) {
+    $('.tabs ul').height(126);
+    $('.tabs .more').show();
+  } else {
+    $('.tabs .more').hide();
+  }
+  $('.tabs .more').click(function() {
+    var minHeight = $('.tabs ul').height();
+    if(minHeight > 126) {
+      $(this).text('显示全部');
+      $('.tabs ul').animate({ height:'126px' }, '500');
+    } else {
+      $(this).text('收起');
+      $('.tabs ul').animate({ height:naturalHeight }, '500');
+    }
+  });
+});
+</script>
+{/literal}
+</html>

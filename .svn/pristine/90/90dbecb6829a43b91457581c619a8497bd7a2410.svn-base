@@ -1,0 +1,75 @@
+{include file='admin/before_body.phtml' title='采集商品'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/product')}">商品管理</a></li>
+          <li class="current">采集商品</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>
+                <i class="icon-reorder"></i>
+                修改采集商品
+              </h4>
+            </div>
+            {$pid = $product->pid|default:''}
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/product/collect/')}" method="POST"  enctype="multipart/form-data">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商品链接：
+                  </label>
+                  <div class="col-md-9">
+                    <textarea rows="5" cols="5" name="productUrl" class="form-control input-width-xxlarge required">{$smarty.get.productUrl|default:''}</textarea>
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" id="submit-all" value="采集" class="btn btn-primary">
+                    <a href="{url('admin/product')}" class="btn">返回商品列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /end -->
+
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#validate").validate({
+    messages:{
+      productUrl:"商品链接填写错误，请输入内容",
+    }
+  });
+});
+</script>
+</html>

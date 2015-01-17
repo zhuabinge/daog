@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN">  
+<head>
+<meta charset="utf-8">
+<title>{$smarty.cookies.title|default:'商品名字'}</title>
+<link href="{$tpldir}/css/ttgg.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="overflow-x:hidden">
+<div class="header">
+  <div class="area">
+    <div class="logo fl"><a href="{url('')}"><img src="{$tpldir}/images/logo.png"></a></div>
+  </div>
+</div>
+<div class="head_nav">
+  <div class="area">
+    <div class="fl">
+      <a href="{url('')}" class="cur">首页</a>
+      <a href="{url('')}" >9块9包邮</a>
+      <a href="{url('')}" >20元封顶</a>
+    </div>
+    <div class="fr">
+      <span class="line_fg"><i class="gry"></i><i class="gre"></i></span>
+      <a href="{url('/user/checkin')}"><i class="icon icon_qd"></i>签到</a>
+      <span class="line_fg"><i class="gry"></i><i class="gre"></i></span>
+      <a href="{url('/user/score')}"><i class="icon icon_jf"></i>积分兑换</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="main">
+  <div class="place-show">
+    <div class="fl"><a href="{url('')}">天天逛逛</a>
+     &gt; {$smarty.cookies.title|default:'商品名字'}</div>
+      </div>
+
+  <div class="product">
+  	<div class="fl">
+  	{if isset($smarty.cookies.images) && $smarty.cookies.images}
+  	  {assign var=images value=","|explode:$smarty.cookies.images}
+  	  <div class="big_photo"><img src="{$images[0]|replace:'!m125x125':''}" width="460" height="460" class="jqzoom"></div>
+  	    	  <ul class="seall_photo" id="thumblist">
+  	    	  {foreach $images as $sa}
+        		{if $sa@index lt 5}
+  	  	          	  	<li><a href="javascript:;"><img src="{$sa}" width="75" height="75"></a></li>
+  	  	        {/if}
+          	  {/foreach}
+          	  	  	  </ul>
+    {/if}
+  	    	</div>
+  	<div class="fr">
+  	  <h1>{$smarty.cookies.title|default:'商品名字'}</h1>
+  	  <h2>{$smarty.cookies.feature|default:'促销标题'}</h2>
+      <div class="sell_price"><strong><small>¥</small>{$smarty.cookies.sell_price|default:'0'}</strong>/包邮</div>
+  	  <div class="price">
+  	  	市场价&nbsp;<del>￥{$smarty.cookies.list_price|default:'0'}</del>
+  	  </div>
+      <div class="want">想买人数：<span>0</span><em>人</em></div>
+  	  <div class="item-btn mt10">
+        <a href="{$smarty.cookies.url|default:''}" target="_blank" class="icon_qg">去天猫抢购<i></i></a>
+  	  </div>
+      <div class="bdshar pt15">
+        <p>分享至：</p>
+        {literal}
+        <div class="bdsharebuttonbox"><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+        {/literal}
+      </div>
+        	</div>
+  </div>
+
+  <div class="details mt15">
+  	<div class="fl">
+  	  <ul class="dateils-tab">
+  	    <li class="selected">商品详情</li>
+  	    <li>用户讨论区</li>
+  	  </ul>
+  	  <div class="dateils-content">
+	  	<div class="hide dete-body">
+	  		{$smarty.cookies.body|default:'商品详情'}
+	  	</div>
+  	  </div>
+  	</div>
+
+  </div>
+
+
+</div>
+
+</html>

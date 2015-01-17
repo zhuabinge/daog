@@ -1,0 +1,40 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="卖家帮助"}
+
+  <div class="container">
+    <div class="sidebar">
+      <h1>卖家帮助</h1>
+      <ul class="side-menu">
+        <li {if isset($id) && $id == '2716'}class="current"{/if}>
+          <a href="{url('merchant/help/detail/2716')}">入驻须知</a>
+        </li>
+        <li {if isset($id) && $id == '3716'}class="current"{/if}>
+          <a href="{url('merchant/help/detail/3716')}">报名商品</a>
+        </li>
+        <li {if isset($id) && $id == '4716'}class="current"{/if}>
+          <a href="{url('merchant/help/detail/4716')}">商品管理</a>
+        </li>
+        <li {if isset($id) && $id == '5716'}class="current"{/if}>
+          <a href="{url('merchant/help/detail/5716')}">交易管理</a>
+        </li>
+        <li {if isset($id) && $id == '6716'}class="current"{/if}>
+          <a href="{url('merchant/help/detail/6716')}">售后管理</a>
+        </li>
+        <li {if isset($id) && $id == '7716'}class="current"{/if}>
+          <a href="{url('merchant/help/detail/7716')}">货款管理</a>
+        </li>
+      </ul>
+    </div>
+    <div class="main">
+      <h2>{$title|default:''}</h2>
+      <div class="help">
+        <div class="help-content">
+          {$content|default:''}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

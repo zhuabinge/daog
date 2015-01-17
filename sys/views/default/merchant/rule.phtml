@@ -1,0 +1,46 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="规则中心"}
+
+  <div class="container nb">
+    <div class="rule-section">
+      <div class="rule-title">
+        <h3>卖家专栏</h3>
+        <span></span>
+      </div>
+      <div class="rule-box1">
+        <div class="rule-pic1">
+          <a class="r1" href="{url('merchant/rule/detail/1140')}" title="报名规则">报名规则</a>
+          <a class="r2" href="{url('merchant/rule/detail/1240')}" title="保证金规则">保证金规则</a>
+          <a class="r3" href="{url('merchant/rule/detail/1340')}" title="收费规则">收费规则</a>
+          <a class="r4" href="{url('merchant/rule/detail/1440')}" title="处罚规则">处罚规则</a>
+          <a class="r5" href="{url('merchant/rule/detail/1540')}" title="活动规则">活动规则</a>
+        </div>
+      </div>
+    </div>
+    <div class="rule-section">
+      <div class="rule-title">
+        <h3>买家专栏</h3>
+        <span></span>
+      </div>
+      <div class="rule-content">
+        <div class="rule-box2">
+          <div class="rule-pic2">
+            <a class="r1" href="{url('merchant/rule/detail/1640')}" title="服务体系">服务体系</a>
+            <a class="r2" href="{url('merchant/rule/detail/1740')}" title="交易规则">交易规则</a>
+          </div>
+        </div>
+        <div class="rule-list">
+          <h3>违规曝光台</h3>
+          <ul class="fl">
+          </ul>
+          <div class="fr">
+            <a href="{url('merchant/rule/detail/390')}" class="hei-rule"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

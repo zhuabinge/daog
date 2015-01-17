@@ -1,0 +1,102 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="我的账户"}
+
+<div class="container">
+    {include file='merchant/user_sidebar.phtml' match="绑定手机"}
+
+{if isset($verify) && $verify == 1}
+    <div class="main">
+      <h2>绑定手机</h2>
+      <div class="change-pwd">
+        <p>请先完成店铺验证，在设置账号安全，<a href="{url('merchant/user/shop_verify')}">店铺验证</a></p>
+      </div>
+    </div>
+{else}
+    <div class="main">
+      <h2>绑定手机</h2>
+      <p class="warning">请您绑定手机，以获得我们更多的增值服务。同时，请确保绑定的手机是您的手机。</p>
+      <div class="step">
+        <ul>
+          <li class="s-box1 {if $step == '1'}blue{/if}">填写手机</li>
+          <li class="s-box2 {if $step == '2'}blue{/if}">验证手机</li>
+          <li class="s-box3 {if $step == '3'}blue{/if}">完成</li>
+        </ul>
+        {if $step == '1'}
+        <div class="step3-1"></div>
+        {/if}
+        {if $step == '2'}
+        <div class="step3-2"></div>
+        {/if}
+        {if $step == '3'}
+        <div class="step3-3"></div>
+        {/if}
+      </div>
+      <div class="input-area">
+        {if $step != '3'}
+        <form action="" method="POST">
+        {/if}
+        {if $step == '1'}
+          <div>
+            <label>绑定手机：</label>
+            <input type="text" name="telphone" value="">
+            {if isset($msg) && $msg}
+            <div class="error"><i></i>{$msg}</div>
+            {/if}
+          </div>
+        {/if}
+        {if $step == '2'}
+          <div>
+            <label>手机验证码：</label>
+            <input type="text" name="code" value="">
+            {if isset($msg) && $msg}
+            <div class="error"><i></i>{$msg}</div>
+            {/if}
+          </div>
+        {/if}
+        {if $step != '3'}
+          <input type="submit" value="提交" class="btn3" onclick="return checksend();">
+        </form>
+        {/if}
+      </div>
+      {if $step == '3'}
+      <div class="change-pwd">
+        <p>手机验证已完成；</p><br>
+        <p>前往商品报名中心<a href="{url('merchant')}">【商家报名】</a></p><br>
+        <p>前往安全中心设置支付密码<a href="{url('merchant/user/password')}">【账号安全】</a></p><br>
+        <p>前往资金中心，缴纳保证金<a href="{url('merchant/user/funds')}">【资金管理】</a></p><br>
+      </div>
+      {/if}
+    </div>
+{/if}
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+<script type="text/javascript">
+function isEmpy(str) {
+  if ( str == '' || str == null) return true;
+  var regu = '^[ ]+$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+function checksend() {
+{if $step == '1'}
+  var telphone = $("input[name='telphone']").val();
+  if(isEmpy(telphone)) {
+    dialog('<h1>请输入手机号码！</h1><input type="button" class="button close" value="我知道了">').open();
+    return false;
+  } else if (telphone.length != 11) {
+    dialog('<h1>请输入正确的手机号码！</h1><input type="button" class="button close" value="我知道了">').open();
+    return false;
+  };
+{/if}
+{if $step == '2'}
+  if(isEmpy($("input[name='code']").val())) {
+    dialog('<h1>请输入手机验证码！</h1><input type="button" class="button close" value="我知道了">').open();
+    return false;
+  }
+{/if}
+  return true;
+}
+</script>
+</html>

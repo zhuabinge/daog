@@ -1,0 +1,131 @@
+{include file='admin/before_body.phtml' title='专题列表'}
+
+<body>
+{include file='admin/header.phtml'}
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/user/')}">专题设置</a></li>
+          <li class="current">专题列表</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group" id="nestable_list_menu">
+            <a href="{url('admin/channel/edit')}" class="btn btn-primary">新增专题</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col-md-12">
+       <div class="widget box">
+        <div class="widget-content no-padding">
+         <div class="row">
+          <div class="dataTables_header clearfix">
+            <form method="GET" action="{url('admin/channel')}" id="form1" style="margin:0">
+              <div class="col-md-4">
+                <div class="input-group page_align"><input type="text" name="title" value="{$smarty.get.title|default:''}" placeholder="输入需要搜索的关键词.." class="form-control"><span class="input-group-addon"><i onclick="document.getElementById('form1').submit();" style="cursor:pointer;" class="icon-search"></i></span></div>
+              </div>
+              <div class="col-md-8">
+                <div class="dataTables_paginate paging_bootstrap">
+                {html_pagination page="$page" rows="$rows" count="$total" url="{url('admin/channel/index?page=%page%&title='|cat:($smarty.get.title|default:''))}"}
+                </div>
+              </div>
+            </form>
+          </div>
+         </div>
+         <form action="{url('admin/channel/batch')}" method="POST" id="form2" style="margin:0">
+         <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+          <thead>
+           <tr>
+            <th class="checkbox-column"> <input type="checkbox" class="uniform" /> </th>
+            <th> 标题 </th>
+            <th> 路径</th>
+            <th> 模板路径</th>
+            <th width="70">导航显示</th>
+            <th width="70">排序权重</th>
+            <th width="160">开始时间</th>
+            <th width="160">结束时间</th>
+            <th width="160">添加时间</th>
+            <th width="70">状态</th>
+            <th width="70">操作</th>
+           </tr>
+          </thead>
+          <tbody>
+          {if $channels}
+          {foreach $channels as $channel}
+           <tr>
+            <td class="checkbox-column"> <input name="cid[]" type="checkbox" class="uniform" value="{$channel->cid}"/> </td>
+            <td>{$channel->title|escape}</td>
+            <td>{$channel->seo_path|escape}</td>
+            <td>{$channel->template|escape}</td>
+            <td class="align-center">
+              {if $channel->show_on_home == 1}
+              <span class="label label-success">是</span>
+              {/if}
+            </td>
+            <td class="align-center">{$channel->weight|escape}</td>
+            <td>{$channel->scheduling|date_format:'Y-m-d G:i:s'}</td>
+            <td>{$channel->expired|date_format:'Y-m-d G:i:s'}</td>
+            <td>{$channel->created|date_format:'Y-m-d G:i:s'}</td>
+            <td>
+              {if $channel->status == 1}
+              <span class="label label-success">有效</span>
+              {else}
+              <span class="label label-danger">已禁用</span>
+              {/if}
+            </td>
+            <td>
+              <a href="{$channel->link}" target="_blank" class="bs-tooltip" data-original-title="查看频道"><i class="icon-search"></i></a>&nbsp;
+              <a href="{url('admin/channel/edit?id='|cat:$channel->cid)}" class="bs-tooltip" data-original-title="编辑频道"><i class="icon-pencil"></i></a>&nbsp;
+              <a href="{url('admin/channel/delete?id='|cat:$channel->cid)}" class="bs-tooltip confirm-dialog" data-original-title="删除频道"><i class="icon-trash"></i></a>
+            </td>
+           </tr>
+           {/foreach}
+           {else}
+           <tr><td colspan="7">找不到符合条件的频道</td></tr>
+           {/if}
+          </tbody>
+         </table>
+         <div class="table-footer">
+          <div class="col-md-6">
+            <div class="table-actions">
+              <select name="status" class="select2 input-width-xlarge" id="mySelect" data-minimum-results-for-search="-1">
+                <option value="-1">选择需要操作</option>
+                <option value="1">启用选中</option>
+                <option value="0">禁用选中</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="dataTables_paginate paging_bootstrap">
+            {html_pagination page="$page" rows="$rows" count="$total" url="{url('admin/channel/index?page=%page%&title='|cat:($smarty.get.title|default:''))}"}
+            </div>
+          </div>
+         </div>
+       </form>
+        </div>
+       </div>
+      </div>
+     </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#mySelect').change(function(){
+    $('#form2').submit();
+  });
+});
+</script>
+</html>

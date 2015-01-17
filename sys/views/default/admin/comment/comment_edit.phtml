@@ -1,0 +1,212 @@
+{include file='admin/before_body.phtml' title='评论详情'}
+<style type="text/css">
+.tablecss {
+width: 400px;
+}
+</style>
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/comment/')}">评论管理</a></li>
+          <li class="current">评论详情</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>
+                <i class="icon-reorder"></i>
+                评论详情
+              </h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/comment/audit')}" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                   商品名称
+                  </label>
+                  <div class="col-md-9">
+                    <label class="control-label">
+                    {$product->title|escape}
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    评论内容
+                  </label>
+                  <div class="col-md-9 tablecss">
+                    {$comment->body|escape|nl2br}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    评论人
+                  </label>
+                  <div class="col-md-9">
+                    <label class="control-label">
+                    {$critic->username|escape}
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    评论时间:
+                  </label>
+                  <div class="col-md-9">
+                    <label class="control-label">
+                      {$comment->created|date_format:'Y-m-d G:i:s'}
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group" hidden="hidden">
+                  <div class="col-md-9" >
+                    <input type="password" id="comcid"  name="comcid" value="{$comment->cid}" class="form-control input-width-xxlarge ">
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    状态：
+                  </label>
+                  <div class="col-md-9">
+                    {if $comment->status==1}
+                    <label class="radio pull-left" style="width:80px;">
+                      <input type="radio" name="status" class="uniform" checked="checked" value="1" />
+                     启用
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" value="0" />
+                       禁用
+                    </label>
+                    {elseif $comment->status==0}
+                    <label class="radio pull-left" style="width:80px;">
+                      <input type="radio" name="status" class="uniform" value="1" />
+                     启用
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" checked="checked" value="0" />
+                       禁用
+                    </label>
+                    {/if}
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-reply" title="" data-original-title="Reply" id="btn-reply" rel="{$comment->cid}">评论回复</a>
+                    <input type="submit" value="保存提交" class="btn btn-primary">
+                    <a href="{url('admin/comment/')}" class="btn">返回评论列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+         <div class="widget box">
+          <div class="widget-content no-padding">
+           <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+            <thead>
+             <tr>
+              <th>回复内容</th>
+              <th width="100"> 回复人 </th>
+              <th width="160"> 回复时间 </th>
+              <th width="70"> 状态 </th>
+              <th width="45">操作</th>
+             </tr>
+            </thead>
+            <tbody>
+            {if isset($replyser) && $replyser && $comment->replys && isset($comment)}
+            {foreach $comment->replys as $reply}
+             <tr>
+              <td>{$reply->body|escape}</td>
+              <td>{if $replyser[$reply->uid]}{$replyser[$reply->uid]->username|escape}{/if}</td>
+              <td class="align-center">{$reply->created|date_format:'Y-m-d G:i:s'}</td>
+              <td>
+                {if $reply->status == 1}
+                <span class="label label-success">有效</span>
+                {else}<span class="label label-danger">已禁用</span>
+                {/if}
+              </td>
+              <td align="center">
+                <a href="{url('admin/comment/delete?rid='|cat:{$comment->cid}|cat:'&action=audit&id='|cat:$reply->cid)}" class="bs-tooltip confirm-dialog" data-original-title="删除"><i class="icon-trash"></i></a>
+             </tr>
+             {/foreach}
+             {else}
+             <tr><td colspan="4" class="align-center">没有回复内容</td></tr>
+             {/if}
+            </tbody>
+           </table>
+
+          </div>
+         </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+$("a.btn-reply").click(function(b) {
+  // var url = this.href;
+  var cid=this.rel;
+  // alert(this.rel);
+  // alert($("a.btn-reply").attr("rel"));
+  b.preventDefault();
+  bootbox.dialog({
+      message: '回复内容<BR /><BR /><textarea rows="4" cols="5" name="textarea" class="form-control" id="dialogshow"></textarea>',
+      buttons: {
+        danger: {
+          label: "确认",
+          className: "btn-danger",
+          callback: function() {
+            // alert(url);
+            post($("#dialogshow").val(),cid);
+            window.location.href = "/admin/comment/edit?id={$comment->cid}";
+          }
+        },
+        main: {
+          label: "返回",
+          className: "btn",
+          callback: function() {}
+        }
+      }
+  })
+});
+function post(content,cid) {
+   $.ajax({
+    type: "POST",
+    async: false,
+    data:{ "replycontent":content,"cid":cid },
+    url : "/admin/comment/reply",
+    dataType : 'jsonp',
+    success : function(data){
+    },
+    error:function(XMLHttpRequest, textStatus, errorThrown){
+    }
+  });
+}
+</script>
+</html>

@@ -1,0 +1,182 @@
+{include file='admin/before_body.phtml' title='修改添加广告'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='ad_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/ad')}">广告管理</a></li>
+          <li class="current">修改添加广告</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4><i class="icon-reorder"></i></h4>
+            </div>
+            {$aid = $ads->aid|default:''}
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/ad/edit/'|cat:$aid)}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    类型选择：
+                  </label>
+                  {$type = $ads->type|default:''}
+                  <div class="col-md-9 clearfix">
+                    <label class="radio pull-left" style="width:120px;" id="tab1" onclick="switchTab('tab1','con1');">
+                      <input type="radio" name="type" class="uniform" {if $type == 1 || $type == ''}checked{/if} value="1">
+                      普通类型
+                    </label>
+                    <label class="radio" id="tab2" onclick="switchTab('tab2','con2');">
+                      <input type="radio" name="type" class="uniform" {if $type == 2}checked{/if} value="2">
+                      联盟类型
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 广告名称： 
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="name" value="{$ads->name|default:''|escape}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group" style="padding:5px 0;"></div>
+                <div class="tab-content">
+                  <div id="con1" {if $type == 2}style="display:none;"{/if}>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        <span class="required">  * </span> 广告图片：
+                      </label>
+                      {$image_path = $ads->image_path|default:''}
+                      <div class="col-md-4">
+                        {if $image_path != ''}
+                        <img src="{urlStatic($ads->image_path,100,100)}" width="100" height="100"><br><br>
+                        {/if}
+                        <input type="file" name="image_path" {if $image_path == ''}class="required"{/if} accept="image/*" data-style="fileinput" data-inputsize="medium" />
+                        <p class="help-block">
+                          仅限上传图片
+                        </p>
+                        <label for="image_path" class="has-error help-block" generated="true" style="display:none;"></label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                       <span class="required">  * </span> 广告路径：
+                      </label>
+                      <div class="col-md-9">
+                        <input type="text" name="url" value="{$ads->url|default:''|escape}" class="form-control input-width-xxlarge required url">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="con2" {if $type == 1 || $type == ''}style="display:none;"{/if}>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                       <span class="required">  * </span>  联盟代码：
+                      </label>
+                      <div class="col-md-9">
+                        <textarea rows="5" cols="5" name="code" class="form-control input-width-xxlarge required">{$ads->code|default:''|escape}</textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 广告位： 
+                  </label>
+                  <div class="col-md-9">
+                    <input name="sid" value="{$socketTags|default:''}" class="select2-select-02 full-width-fix input-width-xxlarge" multiple data-placeholder="输入您所需要的标签" type="hidden">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                   <span class="required">  * </span>  状态：
+                  </label>
+                  {$status = $ads->status|default:'-1'}
+                  <div class="col-md-9">
+                    <label class="radio pull-left" style="width:80px;">
+                      <input type="radio" name="status" class="uniform" {if $status == 1}checked{else if $status == -1}checked{/if} value="1">
+                      有效
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" {if $status == 0}checked{/if} value="0">
+                      无效
+                    </label>
+                  </div>
+                </div>
+                {if isset($adsOwner) && $adsOwner}
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                   <span class="required">  * </span>  所属广告组：
+                  </label>
+                  <div class="col-md-9">
+                    <select name="oid" class="select2 input-width-large" data-minimum-results-for-search="-1">
+                      {foreach $adsOwner as $sa}
+                      <option value="{$sa->oid}" {if isset($ads) && $sa->oid == $ads->oid}selected{/if}>{$sa->name|escape}</option>
+                      {/foreach}
+                    </select>
+                  </div>
+                </div>
+                {/if}
+
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary">
+                    <a href="{url('admin/ad')}" class="btn">返回广告列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#validate").validate({
+    messages:{
+      name:"内容有误，请重新输入",
+      url:"路径格式有误，请重新输入",
+      image_path: "图片内容有误，请重新上传",
+      code: "内容有误，请重新输入",
+    }
+  });
+  $(".select2-select-02").select2({
+    tags: ["{$adsSockets}"]
+  });
+});
+function switchTab(ProTag, ProBox) {
+  for (i = 1; i < 3; i++) {
+    if ("con" + i == ProBox) {
+      document.getElementById(ProBox).style.display = "";
+    } else {
+      document.getElementById("con" + i).style.display = "none";
+    }
+  }
+}
+</script>
+</html>

@@ -1,0 +1,30 @@
+{include file='merchant/before_body.phtml' title='保证金缴纳'}
+<body>
+{include file='merchant/header.phtml' match="我的账户"}
+  <div class="container">
+    {include file='merchant/user_sidebar.phtml' match="资金管理"}
+
+    <div class="main">
+      <h2>保证金缴纳</h2>
+      <p class="warning">为了保证您的账户资金安全，请您先进行身份认证后再进行操作。</p>
+      <div class="input-area">
+        <form action="" method="POST">
+          <div>
+            <label>缴纳金额：</label>
+            <input type="text" name="WIDtotal_fee" value="">
+          </div>
+          <div>
+            <label>支付密码：</label>
+            <input type="password" name="pay_password" value="">
+            {if isset($msg) && $msg}
+            <div class="error"><i></i>{$msg}</div>
+            {/if}
+          </div>
+          <input type="submit" value="提交" class="btn3">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

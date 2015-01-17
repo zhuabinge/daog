@@ -1,0 +1,32 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="我的账户"}
+
+  <div class="container">
+    {include file='merchant/user_sidebar.phtml' match="修改密码"}
+
+    <div class="main">
+      <h2>账号安全</h2>
+{if isset($verify) && $verify == 1}
+      <div class="change-pwd">
+        <p>请先完成店铺验证，在设置账号安全，<a href="{url('merchant/user/shop_verify')}">店铺验证</a></p>
+      </div>
+{else}
+ <!--      <div class="change-pwd">
+        <i></i>
+        <b>登录密码</b>
+        <p>建议您设置密码包含大小写字母、数字，并定期更换密码保证账户安全。</p>
+        <a href="{url('merchant/user/verify_login_password')}">修改</a>
+      </div> -->
+      <div class="change-pwd">
+        <i></i>
+        <b>支付密码</b>
+        <p>在使用账户资产时，需通过支付密码进行身份验证。</p>
+        <a href="{url('merchant/user/verify_pay_password')}">设置</a>
+      </div>
+{/if}
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

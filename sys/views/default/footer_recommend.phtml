@@ -1,0 +1,23 @@
+
+<div class="title_un"><i class="icon_xz"></i><strong>买了的人还想买</strong></div>
+
+<ul class="hot_tuangou pt10">
+	{if isset($hotPros) && $hotPros}
+	{foreach $hotPros as $hotPro}
+	<li>
+		<div class="photo">
+			<a href="{$hotPro->link_click}" target="_blank"><img src="{urlStatic($hotPro->image_path, 286, 286)}" width="286" height="286">
+			</a>
+		</div>
+		<div class="name"><a href="{$hotPro->link}" target="_blank">{$hotPro->title|escape}</a></div>
+		<div class="price">
+			<div class="fl">
+			  <em><b>¥</b>{floatval($hotPro->sell_price)}</em>
+			  <del><i>¥</i>{floatval($hotPro->list_price)}</del>
+			</div>
+			<div class="fr">{$hotPro->sellcount}人想买</div>
+		</div>
+	</li>
+	{/foreach}
+	{/if}
+</ul>

@@ -1,0 +1,34 @@
+{include file='before_body.phtml' title='天天逛逛首页'}
+<body>
+{include file='header.phtml' keyword=$keyword|default:''}
+
+<div class="area">
+	<div class="clearbox">
+  		{if $count%$rows}
+		{assign var="temp" value=intval($count/$rows)+1}
+		{else}
+		{assign var="temp" value=intval($count/$rows)}
+		{/if}
+	  	{if isset($keyword) && $keyword && $count!=0}
+  		<div class="title_un"><strong>为您找到与 "<span>{$keyword}</span>" 相关的商品{$count}条！</strong></div>
+	  	{/if}
+	  	{if $count==0}
+  		<div class="title_un"><strong>没有找到与 "<span>{$keyword}</span>" 相关的商品！</strong></div>
+	  	{/if}
+
+	  	{if $products && $count!=0}
+		{include file='main_products.phtml'}
+		<!--分页-->
+	  	<div class="newPage clearbox tc">
+	  		{html_pagination page="$page" rows="$rows" count="$count" url="{url('search?page=%page%'|cat:'&keyword='|cat:$keyword)}" showinfo="0"}
+	  	</div>
+	     {/if}
+
+	 </div>
+
+  {include file='footer_recommend.phtml'}
+</div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+</html>

@@ -1,0 +1,311 @@
+{include file='merchant/before_body.phtml' title='【天天逛逛报名入口】 - 天天逛逛商家报名系统'}
+<body>
+{include file='merchant/header.phtml' match="商家报名"}
+{if $step == '1'}
+   <div class="wrapper">
+    <div class="tbox">
+      <div class="title">
+        <h2>天天逛逛9.9包邮</h2>
+      </div>
+      <div class="content">
+        <p class="thin-color">报名商品上架或驳回后均会恢复报名次数，如连续10次未通过审核，账号锁定30天后才能再次报名。</p>
+        <div class="c-box">
+          <form action="" method='POST' id="submit">
+            <label>报名商品链接：</label>
+            <input type="text" class="long-input" name="url">
+            <input type="submit" value="获取商品信息" class="btn" />
+          </form>
+          <div class="intro">
+            <strong>什么是淘宝商品链接：</strong>
+            <p>如果你是B店，提供的商品格式为：http://detail.tmall.com/item.htm?id=xxxxxx</p>
+            <p>如果你是C店，提供的商品格式为：http://item.taobao.com/item.htm?id=xxxxxx</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/if}
+{if $step == '2'}
+{if !isSet($product) }
+ <div class="container">
+    <div class="sell-infos">
+      <form action="" method="POST" id="apply" enctype="multipart/form-data">
+        <div class="info-section">
+          <h2>店铺信息</h2>
+          <div class="item">
+            <label>店铺名称：</label>
+            <div class="item-content">
+{$json->shopname|default:''}
+            </div>
+          </div>
+          <div class="item">
+            <label>店铺信誉：</label>
+            <div class="item-content">
+              <img style="margin:5px 0 0;" src="{$json->level|default:''}">
+            </div>
+          </div>
+          <div class="item">
+            <label>动态评分：</label>
+            <div class="item-content">
+              <p>描述相符：{$json->matchScore|default:'0'}</p>
+              <p>服务态度：{$json->serverScore|default:'0'}</p>
+              <p>发货速度：{$json->sendScore|default:'0'}</p>
+            </div>
+          </div>
+          <div class="item">
+            <label>掌  &nbsp&nbsp 柜：</label>
+            <div class="item-content">
+{$json->seller|default:''}
+            </div>
+          </div>
+        </div>
+        <div class="horizon-line"></div>
+        <div class="info-section">
+          <h2>活动商品信息</h2>
+          <div class="item">
+            <label>商品名称：</label>
+            <div class="item-content">
+{$json->title|default:''}
+            </div>
+          </div>
+          <div class="item">
+            <label>商品原价：</label>
+            <div class="item-content">
+{$json->sellPrice|default:'0'}元
+            </div>
+          </div>
+          <div class="item">
+            <label>30天销量：</label>
+            <div class="item-content">
+{$json->sellCount|default:'0'}件
+            </div>
+          </div>
+          <div class="item">
+            <label><i>*</i>商品主图一：</label>
+            <input id="img-box1" name="file_images_id" type="hidden" value="{$json->files[0]|default:''}">
+            <input id="img-box2" name="file_images2_id" type="hidden" value="{$json->files[1]|default:''}">
+            <input type="file" name="file_images" accept="image/gif,image/jpg,image/jpeg" class="upload-input" data-url="{url('merchant/activities/uploadImages')}" multiple>
+            <div  class="clearbox">
+            <div class="img-box1">
+{if isset($json->image_path) && $json->image_path}
+             <img src="{urlStatic($json->image_path, 286, 286)}">
+{else}
+             <img src="http://errorpage.b0.upaiyun.com/ttgg-files-404" id="is_img-box1">
+{/if}
+            </div>
+              <div class="tip">
+                <ul>
+                  <li>图片尺寸<span class="red">800*800px</span></li>
+                  <li>图片支持jpg、jpeg、gif格式</li>
+                  <li>图片最大在<span class="red">300kb</span>以内</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+            <div class="item">
+            <label><i>*</i>商品主图二：</label>
+            <input type="file" name="file_images2" accept="image/gif,image/jpg,image/jpeg" class="upload-input" data-url="{url('merchant/activities/uploadImages')}" multiple>
+            <div class="clearbox">
+              <div class="img-box2">
+{if isset($json->images) && $json->images}
+{foreach $json->images as $key => $sa}
+{if $sa@index eq 1}<img src="{urlStatic($sa, 286, 286)}">{/if}
+{/foreach}
+{else}
+             <img src="http://errorpage.b0.upaiyun.com/ttgg-files-404" id="is_img-box2">
+{/if}
+          </div>
+              <div class="tip">
+                <ul>
+                  <li>图片尺寸<span class="red">800*800px</span></li>
+                  <li>图片支持jpg、jpeg、gif格式</li>
+                  <li>图片最大在<span class="red">300kb</span>以内</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="item textarea1">
+            <label><i>*</i>商品摘要：</label>
+            <div class="item-input">
+              <textarea name="feature" style="height:100px;">{$json->feature|default:''}</textarea>
+              <p class="tip-right">商品摘要尽量不要超过<span class="red">100</span>个字</p>
+            </div>
+          </div>
+          <div class="item">
+            <label><i>*</i>所属分类：</label>
+{if isset($cateList) && $cateList}
+            <div class="item-input" style="width:500px;">
+{foreach $cateList as $sa}
+              <input {if $sa->cid == $json->cid|default:'0'}checked{elseif !isset($json->cid) && $sa@index == 0}checked{/if} type="radio" name="cid" value="{$sa->cid}">{$sa->name}
+{/foreach}
+            </div>
+{/if}
+          </div>
+{if isset($channelsList) && $channelsList}
+          <div class="item">
+            <label><i>*</i>活动类型：</label>
+            <div class="item-input">
+              <select name="aid">
+{foreach $channelsList as $sa}
+                <option value="{$sa->cid}" {if $sa->cid == $aid}selected{/if}>{$sa->title}</option>
+{/foreach}
+              </select>
+            </div>
+          </div>
+{/if}
+          <div class="item">
+            <label><i>*</i>活 动 价：</label>
+            <div class="item-input">
+              <input type="text" name="sell_price" class="short-input" value="{$json->promoPrice|default:''}">元
+            </div>
+          </div>
+          <div class="item">
+            <label><i>*</i>商品数量：</label>
+            <div class="item-input">
+              <input type="text" name="stock" class="short-input" value="{$json->stock|default:1000}">件
+            </div>
+          </div>
+          <div class="item">
+            <label><i>*</i>邮件类型：</label>
+            <div class="item-input">
+              <input {if isset($json->free) && $json->free == 1}checked{elseif !isset($json->free)}checked{/if} type="radio" name="free" value="1">包邮
+              <input {if isset($json->free) && $json->free == 2}checked{/if} type="radio" name="free" value="2">不包邮
+              <input {if isset($json->free) && $json->free == 3}checked{/if} type="radio" name="free" value="3">部分地区不包邮
+            </div>
+          </div>
+          <div class="item">
+            <label><i>*</i>发货周期：</label>
+            <div class="item-input">
+              <input {if isset($json->delivery) && $json->delivery == 1}checked{elseif !isset($json->delivery)}checked{/if} type="radio" name="delivery" value="1">1天
+              <input {if isset($json->delivery) && $json->delivery == 2}checked{/if} type="radio" name="delivery" value="2">2天
+              <input {if isset($json->delivery) && $json->delivery == 3}checked{/if} type="radio" name="delivery" value="3">3天
+            </div>
+          </div>
+        </div>
+        <div class="horizon-line"></div>
+        <div class="info-section">
+          <h2>联系信息</h2>
+          <div class="item">
+            <label><i>*</i>联系旺旺：</label>
+            <div class="item-input">
+              <input type="text" name="contact_wangwang" class="middle-input" value="{$merchant->contact_wangwang|default:'未填写'|escape}">
+            </div>
+          </div>
+          <div class="item">
+            <label>联系手机：</label>
+            <div class="item-input" style="line-height:30px;">
+              {$merchant->telphone|default:'未绑定手机'|escape}
+            </div>
+          </div>
+          <div class="item">
+            <label><i>*</i>联系人QQ：</label>
+            <div class="item-input">
+              <input type="text" name="qq" class="middle-input" value="{$merchant->qq|default:''|escape}">
+            </div>
+          </div>
+          <div class="item">
+            <label><i>*</i>验证码：</label>
+            <div class="item-input">
+              <input type="text" name="code" class="short-input" value="">
+            </div>
+          </div>
+          <div class="item">
+            <label><i>&nbsp;</i></label>
+            <div class="item-input">
+              <img class="captcha" src="{url('merchant/activities/captcha')}" onclick="this.src='{url('merchant/activities/captcha')}?_=' + Math.random()">
+              <a href="javascript:void(0);" onclick="$('.captcha')[0].src='{url('merchant/activities/captcha')}?_=' + Math.random()" class="link">看不清？换一张</a>
+            </div>
+          </div>
+          <div class="protocol-check">
+            <input type="checkbox" name="checkbox" id="checkbox" checked>我已阅读并同意<a href="{url('merchant/rule/detail/1140')}" target="_blank">《天天逛逛商家平台活动报名服务协议》</a>
+            <br>
+            <input type="checkbox" name="checkbox" id="checkbox1" checked>我已阅读并同意<a href="{url('merchant/rule/detail/1240')}" target="_blank">《天天逛逛商家保证金协议》</a>
+            <br>
+            <input type="checkbox" name="checkbox" id="checkbox2" checked>我已阅读并同意<a href="{url('merchant/rule')}" target="_blank">《天天逛逛商家违规/违约处罚条例》</a>
+          </div>
+        </div>
+        <input type="submit" value="提交报名" class="btn">
+      </form>
+    </div>
+  </div>
+  {/if}
+{/if}
+{if $step == '3'}
+   <div class="wrapper">
+    <div class="tbox">
+      <div class="title">
+        <h2>报名成功</h2>
+      </div>
+      <div class="content">
+        <p class="thin-color">您的商品已经提交报名，请耐心等待审核。</p>
+      </div>
+    </div>
+  </div>
+{/if}
+</body>
+{include file='merchant/after_body.phtml'}
+<script type="text/javascript">
+function isEmpy(str) {
+  if ( str == '' || str == null) return true;
+  var regu = '^[ ]+$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+$(document).ready(function(){
+  $('.upload-input').fileupload({
+      dataType: 'json',
+      done: function (e, data) {
+        if (data.result.msg == 1) {
+          $(this).attr('value', data.result.name);
+          $('.'+data.result.content).html('');
+          $('.'+data.result.content).append('<img id="is_'+data.result.content+'" src="{BpfConfig::get('static.url')}'+data.result.file_path+'">');
+          $('#'+data.result.content).attr('value', data.result.file_id);
+        } else {
+          dialog('<h1>图片上传失败，请检查图片</h1><input type="button" class="button close" value="我知道了">').open();
+        }
+      }
+  });
+
+  $('#apply').submit(function(e) {
+    var from = $(this), error = false,
+    feature = from.find("textarea[name='feature']"),
+    sell_price = from.find("input[name='sell_price']"),
+    stock = from.find("input[name='stock']"),
+    cwangwang = from.find("input[name='contact_wangwang']"),
+    qq = from.find("input[name='qq']"),
+    code = from.find("input[name='code']");
+    var f = document.getElementById("is_img-box1").src;
+    var g = document.getElementById("is_img-box2").src;
+    if (isEmpy(feature.val()) || isEmpy(sell_price.val()) || isEmpy(stock.val()) || isEmpy(cwangwang.val()) || isEmpy(qq.val()) || isEmpy(code.val()) ) {
+      dialog('<h1>必填内容不能为空，请认真填写</h1><input type="button" class="button close" value="我知道了">').open();
+      error = true;
+    } else if ($('#checkbox').is(":checked") != true || $('#checkbox1').is(":checked") != true || $('#checkbox2').is(":checked") != true) {
+      dialog('<h1>服务条款未勾选</h1><input type="button" class="button close" value="我知道了">').open();
+      error = true;
+    } else if (f == 'http://errorpage.b0.upaiyun.com/ttgg-files-404' || g == 'http://errorpage.b0.upaiyun.com/ttgg-files-404') {
+      dialog('<h1>请上传图片</h1><input type="button" class="button close" value="我知道了">').open();
+      error = true;
+    }
+
+    if (error){
+      e.preventDefault();
+    }
+  });
+
+  $('#submit').submit(function(e) {
+    if (isEmpy($(this).find("input[name='url']").val())) {
+      e.preventDefault();
+      dialog('<h1>链接地址有错误，请重试！</h1><input type="button" class="button close" value="我知道了">').open();
+    } else {
+      $(this).find('.btn').attr('value', '正在抓取中');
+      $(this).find('.btn').attr('type', 'button');
+      $(this).find('.btn').attr('class', 'btn hover');
+    };
+  });
+});
+
+{if isset($msg) && $msg}
+  dialog('<h1>{$msg}</h1><input type="button" class="button close" value="我知道了">').open();
+{/if}
+</script>
+</html>

@@ -1,0 +1,89 @@
+{include file='admin/before_body.phtml' title='角色列表'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='user_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/role')}">用户管理</a></li>
+          <li class="current"><a href="{url('admin/role')}">角色列表</a></li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+      <div class="row"> 
+       <div class="col-md-12">
+        <div class="form-group" id="nestable_list_menu">
+        <a href="{url('admin/role/add')}" class="btn btn-primary">添加角色</a>
+        </div>
+       </div>
+      </div>
+      <div class="row"> 
+      <div class="col-md-12"> 
+       <div class="widget box"> 
+        <div class="widget-content  no-padding">
+          <!--分页头部-->
+        {if $count/$rows>1}
+        <div class="row">
+          <div class="dataTables_header clearfix">
+            <div class="col-md-offset-5">
+              <div class="dataTables_paginate paging_bootstrap">
+             {html_pagination page="$page" rows="$rows" count="$count" url="{url('admin/role?page=%page%')}"}
+              </div>
+            </div>
+           </div>
+        </div>
+        {/if}
+
+         <table class="table table-striped table-bordered table-checkable table-highlight-head table-no-inner-border table-hover"> 
+          <thead> 
+           <tr> 
+            <th> 角色列表 </th> 
+            <th width="70"> 操作 </th> 
+           </tr> 
+          </thead> 
+          <tbody>
+          {if $roleslist}
+          {foreach $roleslist as $role}
+          {if $role->rid==1}
+          {continue}
+          {/if}
+           <tr> 
+            <td>{$role->name|escape}</td> 
+            <td class="align-center"> 
+              <a href="{url('admin/role/user?id='|cat:$role->rid)}" class="bs-tooltip" data-original-title="角色用户设置"><i class=" icon-user"></i></a>&nbsp;
+              <a href="{url('admin/role/edit?id='|cat:$role->rid)}" class="bs-tooltip" data-original-title="修改"><i class="icon-pencil"></i></a>&nbsp;
+              <a href="{url('admin/role/delete?id='|cat:$role->rid)}" class="bs-tooltip confirm-dialog" data-original-title="删除"><i class="icon-trash"></i></a>
+            </td>
+           </tr> 
+           {/foreach}
+           {/if}
+          </tbody> 
+         </table>
+         <div class="table-footer">
+          <div class="col-md-12">
+            {html_pagination page="$page" rows="$rows" count="$count" url="{url('admin/role?page=%page%')}"}
+          </div>
+         </div>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+
+</html>

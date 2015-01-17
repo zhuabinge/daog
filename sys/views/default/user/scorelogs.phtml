@@ -1,0 +1,38 @@
+
+
+<div class="credit-history">
+  <table border="0" cellpadding="0" cellspacing="0">
+    <thead>
+      <tr>
+        <th class="th1">来源/用途</th>
+        <th class="th2">积分变化</th>
+        <th class="th3">操作时间</th>
+        <th class="th4">备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      {foreach item=scoresLog from=$scoresLogs}
+      <tr>
+        <td class="td1">
+          <span class="fl"><img src="{$tpldir}/images/credit/image06.png"></span>
+          <span class="fr">{$scoresLog->body}</span>
+        </td>
+        <td><b>
+        {if $scoresLog->scores >= 0}
+            +{$scoresLog->scores}
+        {else}
+            {$scoresLog->scores}
+        {/if}
+        </b></td>
+        <td>{$scoresLog->created|date_format:"Y-m-d G:i"}</td>
+        <td>{if $scoresLog->scores>0}积分进账记录{else}积分消耗记录{/if}</td>
+      </tr>
+      {/foreach}
+    </tbody>
+  </table>
+
+  <div class="newPage clearbox tc">
+    {html_pagination page="$page" rows="$rows" count="$total" prev="上一页" next="下一页" showinfo="0"}
+  </div>
+
+</div>

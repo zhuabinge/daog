@@ -1,0 +1,214 @@
+{include file='before_body.phtml' title='许下愿望，赢取超值大礼包 - 天天逛逛就是这么任性！'}
+<body>
+{literal}
+<style type="text/css">
+html,body{margin:0; padding:0; height:100%;}
+body{background-color:#ca1a2b; font:12px/1.5 "微软雅黑","宋体",arial,sans-serif; min-width: 1340px;}
+a{text-decoration:none;}
+img{border:none;}
+.title-bar .fl > i, .title-bar .fr a, .jump-front i, .jump-end i, .prev i, .next i{background:url(/static/default/images/topic/yuanwang_icon1.png) no-repeat;}
+.db12 .banner .part1{width:100%; min-width:1340px; height:220px; background:url(/static/default/images/topic/desire_banner_01.jpg) no-repeat center center;}
+.db12 .banner .part2{width:100%; min-width:1340px; height:220px; background:url(/static/default/images/topic/desire_banner_02.jpg) no-repeat center center;}
+.db12 .banner .part3{width:100%; min-width:1340px; height:220px; background:url(/static/default/images/topic/desire_banner_03.jpg) no-repeat center center;}
+.db12 .grass{width:100%; min-width:1340px; height:80px; background:url(/static/default/images/topic/grass.png) no-repeat center center;}
+.db12 .container{width:100%;}
+.container .step{width:960px; height:224px; margin:0 auto -75px; background:url(/static/default/images/topic/award_bg.png) no-repeat;}
+.aw-head{width:100%; height:332px; margin-bottom:-150px; background:url(/static/default/images/topic/award_hbg.png) no-repeat center center;}
+.aw{width:975px; margin:0 auto;}
+.aw1{height:478px; background:url(/static/default/images/topic/award_part_01.png) no-repeat;}
+.aw2{height:430px; background:url(/static/default/images/topic/award_part_02.png) no-repeat;}
+.aw3{height:508px; background:url(/static/default/images/topic/award_part_03.png) no-repeat;}
+.join-record{width:978px; margin:11px auto 0; padding-bottom:20px; background-color:#fff;}
+.newPage{padding:45px 0 25px 0;}
+.title-bar{clear:both; overflow:hidden;}
+.title-bar .fl{float:left; margin-left:15px; font-size:14px;}
+.title-bar .fl > i{display:inline-block; background-position:-11px -3px; width:87px; height:21px; margin:20px 15px 0 0; vertical-align:baseline;}
+.title-bar .fl > span{line-height:20px;}
+.title-bar .fl b{color:#fe8f44; padding:0 3px;}
+.title-bar .fr{float:right; margin:6px 15px 0 0;}
+.title-bar .fr .btn1{display:inline-block; background-position:0 -32px; width:146px; height:49px;}
+.title-bar .fr .btn2{display:inline-block; background-position:0 -81px; width:168px; height:49px;}
+.title-bar .fr .btn3{display:inline-block; background-position:0 -130px; width:146px; height:49px;}
+.join-record table{border-collapse:collapse; margin-left:15px;}
+.join-record table thead tr th{border-top:2px solid #000; border-bottom:2px solid #000; font-size:15px; line-height:35px;}
+.join-record .th1{width:120px;}
+.join-record .th2{width:560px;}
+.join-record .th3{width:130px;}
+.join-record .th4{width:130px;}
+.join-record table tr td{text-align:center; padding:12px 0; vertical-align:text-top; color:#333;}
+.join-record .text{text-align:left; width:530px; padding:0 15px;}
+.join-record .text p{width:100%; margin:0; padding:0; line-height:20px;}
+.join-info{width:978px; height:359px; margin:0 auto; background:url(/static/default/images/topic/info_bg.jpg) no-repeat; position:relative; font-size:14px; line-height:25px; margin-top:11px;}
+.join-info .info1{position:absolute; top:43px; left:195px;}
+.join-info .info2{position:absolute; top:180px; left:195px;}
+.db12-footer{width:100%; min-width:1340px; height:387px; background:url(/static/default/images/topic/footer_1212.jpg) no-repeat center center; margin-top:15px;}
+.footer{margin-top: -20px;}
+</style>
+{/literal}
+{include file='header.phtml' head=$channel->seo_path}
+  <div class="db12">
+    <div class="banner">
+      <div class="part1"></div>
+      <div class="part2"></div>
+      <div class="part3"></div>
+    </div>
+    <div class="grass"></div>
+    <div class="container">
+      <div class="step"></div>
+      <div class="aw-head"></div>
+      <div class="aw">
+        <div class="aw1"></div>
+        <div class="aw2"></div>
+        <div class="aw3"></div>
+      </div>
+      <!--参与列表-->
+      <div class="join-record" id="a">
+        <div class="title-bar">
+          <div class="fl">
+            <i></i>
+            <span>当前共有<b>{$count|default:0}</b>位参加了写感言活动，一起来写写吧！</span>
+          </div>
+          <div class="fr">
+            <a class="btn1" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fwww.ttgg.com%2Ftopic%2Fyuanwang.html%3Fpage%3D1%230-tsina-1-16415-397232819ff9a47a7b7e80a40613cfe1&title=%E8%AE%B8%E4%B8%8B%E6%84%BF%E6%9C%9B%EF%BC%8C%E8%B5%A2%E5%8F%96%E8%B6%85%E5%80%BC%E5%A4%A7%E7%A4%BC%E5%8C%85%20-%20%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%B0%B1%E6%98%AF%E8%BF%99%E4%B9%88%E4%BB%BB%E6%80%A7%EF%BC%81&appkey=1343713053&searchPic=false&pic=http://www.ttgg.com/static/default/images/topic/banner_1212.jpg&searchPic=false" title="点击分享到微博" rel="nofollow" target="_blank"></a>
+            <a class="btn2" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.ttgg.com%2Ftopic%2Fyuanwang.html%3Fpage%3D1%230-qzone-1-25199-d020d2d2a4e8d1a374a433f596ad1440&title=%E8%AE%B8%E4%B8%8B%E6%84%BF%E6%9C%9B%EF%BC%8C%E8%B5%A2%E5%8F%96%E8%B6%85%E5%80%BC%E5%A4%A7%E7%A4%BC%E5%8C%85%20-%20%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%B0%B1%E6%98%AF%E8%BF%99%E4%B9%88%E4%BB%BB%E6%80%A7%EF%BC%81&desc=&summary=&site=&pics=http://www.ttgg.com/static/default/images/topic/800X400.jpg" title="点击分享到QQ空间" rel="nofollow" target="_blank"></a>
+         <!--    <a class="btn3" href="" title="点击分享到微信" rel="nofollow" target="_blank"></a> -->
+          </div>
+        </div>
+{if isset($desireList) && $desireList}
+        <!--留言内容-->
+        <table>
+          <thead>
+            <tr>
+              <th class="th1">NO</th>
+              <th class="th2">留言内容</th>
+              <th class="th3">许愿用户</th>
+              <th class="th4">填写日期</th>
+            </tr>
+          </thead>
+          <tbody>
+          {foreach $desireList as $sa}
+            <tr>
+              <td>{$sa->did + 1000}</td>
+              <td class="text">
+                <p>{$sa->content|escape}</p>
+              </td>
+              <td>{maskString($sa->user->nickname|escape|default:"")}</td>
+              <td>{$sa->created|date_format:'Y-m-d'}</td>
+            </tr>
+          {/foreach}
+          </tbody>
+        </table>
+        {if $count|default:0 > 15}
+        <!--分页-->
+        <div class="newPage clearbox tc">
+          {html_pagination page="$page" rows="$rows" count="$count" url="{url('topic/yuanwang.html?page=%page%#a')}" showinfo="0"}
+        </div>
+        {/if}
+{/if}
+      </div>
+      <!--参与方式-->
+      <div class="join-info">
+        <ul class="info1">
+          <li>1.&nbsp;&nbsp;选择您要的奖品</li>
+          <li>2.&nbsp;&nbsp;在留言板写上2015年您的愿望</li>
+          <li>3.&nbsp;&nbsp;分享到微博上并@天天逛逛官方微博通过抽奖 ？ 位幸运顾客将获得精美礼品（奖品由天天逛逛商家友情赞助）</li>
+        </ul>
+        <ul class="info2">
+          <li>1.&nbsp;&nbsp;此活动参与次数及留言次数每个ID仅限一次。</li>
+          <li>2.&nbsp;&nbsp;奖品图片仅供参考，根据公司情况奖品可能会有变动，在奖品购买困难时，可能用金额类似的其他奖品代替，敬请谅解。</li>
+          <li>3.&nbsp;&nbsp;与此活动无关的留言内容将由管理员删除，不进行个别通知。</li>
+          <li>4.&nbsp;&nbsp;中奖会员如无分享微博，将会被取消中奖名额。</li>
+          <li>5.&nbsp;&nbsp;所有奖品根据会员所提供地址发送，奖品退回时不予重新发送，请确认会员信息是否正确。</li>
+          <li>6.&nbsp;&nbsp;以上活动最终解释权归天天逛逛所有。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="db12-footer"></div>
+  </div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+
+<script type="text/javascript">
+function isEmpy(str) {
+  if ( str == '' || str == null) return true;
+  var regu = '^[ ]+$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+$(document).ready(function() {
+  $('.sale-ul > li > a').click(function() {
+{if isLogin()}
+  {if isset($auth) && $auth == 1}
+      dialog('<h1>很抱歉，您已经许过愿望了！</h1><a href="{url('')}" class="button close">去逛逛双12</a>').open();
+  {else}
+      var pid = $(this).attr('data-pid'), code = $(this).attr('data-code');
+      var dlog;
+      dlog = dialog([
+        '<div class="text-logo"></div>',
+        '<textarea class="dream-text" name="content" id="pub_content" maxlength="70"></textarea>',
+        '<div class="words-count" style="color:#393939">限<em class="cur" id="Num">0</em>/<span>70</span>字</div>',
+        '<div class="dream-input"><div class="input-item"><label>姓名：</label><input type="text" name="nickname" value=""/></div>',
+        '<div class="input-item"><label>电话：</label><input type="text" name="telphone" value=""/></div>',
+        '<div class="input-item"><label>地址：</label><input type="text" name="address" value=""/></div></div>',
+        '<input type="button" class="button" value="确认提交">'
+      ].join(' '));
+      dlog.open(function() {
+        var numNow = 0;
+        var textLong;
+        function addListener(element,e,fn){
+          if(element.addEventListener){
+            element.addEventListener(e,fn,false);
+          } else {
+            element.attachEvent("on" + e,fn);
+          }
+        }
+        var Textarea = document.getElementById("pub_content");
+        addListener(Textarea,"keyup", function(){
+          var Value = document.getElementById("pub_content").value;
+          if(Value.length >= 70){
+            Value = document.getElementById("pub_content").innerHTML = Value.substr(0,70);
+          }
+          if( numNow >= 0 && numNow <= 70){
+            document.getElementById("Num").innerHTML = Value.length;
+          }
+        });
+        $('.button').click(function(e){
+          var nickname = $('input[name="nickname"]').val(), telphone = $('input[name="telphone"]').val(),
+              address = $('input[name="address"]').val(), content = $('textarea[name="content"]').val();
+          var reg = new RegExp("^[0-9]*$");
+          if(!reg.test(telphone)){  
+            alert('电话号码只能是数字！');
+            e.preventDefault();
+            return;
+          }
+          if (isEmpy(nickname) || isEmpy(address) || isEmpy(telphone) || isEmpy(content) || isEmpy(code) || isEmpy(pid)) {
+            alert('留言内容，姓名，电话，地址不能为空！');
+            e.preventDefault();
+            return;
+          };
+          $.post('{url('topic/yuanwang.html')}', { pid:pid, code:code, nickname:nickname, telphone:telphone, address:address, content:content }, function(data) {
+              var data = data.result;
+              if (data == -1) {
+                dialog('<h1>许愿失败，请重试！</h1><input type="button" class="button close" value="我知道了">').open();
+              } else if (data == -2) {
+                dialog('<h1>很抱歉，您已经许过愿望了！</h1><input type="button" class="button close" value="去首页逛逛">').open();
+              } else if (data == 1) {
+                dlog.close();
+                dialog('<h2>亲，感谢您写下2015年愿望，动动手指分享微博并<a href="http://weibo.com/u/5319602800?topnav=1&wvr=6&topsug=1"  target="_blank"><b>@海萍天天逛逛企业微博</b></a>就可以获得免费领取奖品的机会了~</h2><a href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fwww.ttgg.com%2Ftopic%2Fyuanwang.html%3Fpage%3D1%230-tsina-1-16415-397232819ff9a47a7b7e80a40613cfe1&title=%E8%AE%B8%E4%B8%8B%E6%84%BF%E6%9C%9B%EF%BC%8C%E8%B5%A2%E5%8F%96%E8%B6%85%E5%80%BC%E5%A4%A7%E7%A4%BC%E5%8C%85%20-%20%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%B0%B1%E6%98%AF%E8%BF%99%E4%B9%88%E4%BB%BB%E6%80%A7%EF%BC%81&appkey=1343713053&searchPic=false&pic=http://www.ttgg.com/static/default/images/topic/banner_1212.jpg&searchPic=false" target="_blank" class="button close">分享微博</a>').open();
+              };
+          }, 'json');
+        });
+      });
+  {/if}
+{else}
+    dialog('<h1>请先登录后再许愿！</h1><a href="{url('user/login')}" class="button close">马上登陆</a>').open();
+{/if}
+  });
+  // $('#myTabContent').remove();
+
+  /**去掉右侧导航**/
+  $('.side-panel').remove();
+});
+</script>
+</html>

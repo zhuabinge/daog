@@ -1,0 +1,109 @@
+{include file='admin/before_body.phtml'}
+<style type="text/css"> 
+body { 
+overflow-x:hidden; 
+} 
+</style>
+{$mid = $smarty.get.mid|default:0}
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-content no-padding">
+              <div class="row">
+                <div class="dataTables_header clearfix">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/merchant/product?mid='|cat:$mid|cat:'&page=%page%')}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                <thead>
+                  <tr>
+                    <th>商品标题</th>
+                    <th width="100">编辑用户</th>
+                    <th width="70">联盟返佣</th>
+                    <th width="70">推广量</th>
+                    <th width="70">商品销量</th>
+                    <th width="50">评分</th>
+                    <th>销售价</th>
+                    <th width="70">活动销量</th>
+                    <th width="100">报名时间</th>
+                    <th width="100">修改时间</th>
+                    <th width="50">状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {if isset($poductsList) && $poductsList}
+                {foreach $poductsList as $sa}
+                  <tr>
+                    <td>
+                      <a href="{$sa->link_click}" target="_blank" style="margin-right:10px;float:left">
+                        <img width="50px" height="50px" src="{urlStatic($sa->image_path, 50, 50)}">
+                      </a>
+                      <div style="height:18px;overflow:hidden;">
+                        <a style="color:#555;" href="{$sa->link_click}" target="_blank">{$sa->title|escape}</a>
+                      </div>
+                      {if isset($sa->feature) && $sa->feature}
+                      <div style="color:#e4393c;height:36px;overflow:hidden;">{$sa->feature|escape}</div>
+                      {/if}
+                    </td>
+                    <td>{$sa->nickname|escape|default:'无编辑'}</td>
+                    <td>{$sa->ratepercent|default:0}%</td>
+                    <td>{$sa->totalnum|default:0}</td>
+                    <td>{$sa->sellcount|default:0}</td>
+                    <td>{$sa->buyerscore|default:0}</td>
+                    <td align="right">
+                      <div>{$sa->sell_price}</div>
+                      <div><s>({$sa->list_price})</s></div>
+                      <div><strong>({$sa->history_price})</strong></div>
+                    </td>
+                    <td>{$sa->ordersCount|default:0}</td>
+                    <td>
+                      {$sa->created|date_format:'Y-m-d'}<BR> <!-- 报名时间 -->
+                      <span style="color:#428bca">{$sa->scheduling|date_format:'Y-m-d'}</span><BR> <!-- 排期时间 -->
+                      <span style="color:#e25856">{$sa->expired|date_format:'Y-m-d'}</span> <!-- 结束时间 -->
+                    </td>
+                    <td>{$sa->updated|date_format:'Y-m-d'}</td>
+                    <td>
+                      {if $sa->status == 1}
+                      <span class="label label-success">已上线</span>
+                      {else if $sa->status == 2}
+                      <span class="label label-danger">驳回</span>
+                      {else if $sa->status == 3}
+                      <span class="label label-primary">已排期</span>
+                      {else if $sa->status == 4}
+                      <span class="label label-info">已下线</span>
+                      {else if $sa->status == 5}
+                      <span class="label label-warning">已结束</span>
+                      {else if $sa->status == 0}
+                      <span class="label label-default">待审核</span>
+                      {else}
+                      <span class="label label-danger">无效商品</span>
+                      {/if}
+                    </td>
+                  </tr>
+                {/foreach}
+                {/if}
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="table-footer">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/merchant/product?mid='|cat:$mid|cat:'&page=%page%')}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->

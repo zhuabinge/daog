@@ -1,0 +1,241 @@
+{include file='admin/before_body.phtml' title='广告列表'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='ad_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/ad')}">广告管理</a></li>
+          <li class="current">广告列表</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group" id="nestable_list_menu">
+            {$sid = $smarty.get.sid|default:''}
+            {$stime = $smarty.get.stime|default:''}
+            {$sortv = $smarty.get.sortv|default:0}
+            {$sortc = $smarty.get.sortc|default:0}
+            {$uptime = $smarty.get.uptime|default:0}
+            {$ctime = $smarty.get.ctime|default:0}
+            {$uv = $smarty.get.uv|default:0}
+            {$oid = $smarty.get.oid|default:0}
+            {$uid = $smarty.get.uid|default:0}
+
+            {if access('ad-edit')}
+            {$all = $smarty.get.all|default:1}
+            <a href="{url('admin/ad/edit')}" class="btn btn-primary">添加广告</a>
+              {if $all == 1}
+              <a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv='|cat:$sortv|cat:'&sortc='|cat:$sortc|cat:'&uptime='|cat:$uptime|cat:'&ctime='|cat:$ctime|cat:'&all=2&uid=0&oid=0')}" class="btn">查看所有人广告</a>
+              {else}
+              <a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv='|cat:$sortv|cat:'&sortc='|cat:$sortc|cat:'&uptime='|cat:$uptime|cat:'&ctime='|cat:$ctime|cat:'&all=1&uid=0&oid=0')}" class="btn">查看自己广告</a>
+              {/if}
+              <a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv='|cat:$sortv|cat:'&sortc='|cat:$sortc|cat:'&uptime='|cat:$uptime|cat:'&ctime='|cat:$ctime|cat:'&all=1&uid=1072063&oid=0')}" class="btn">阿芬</a>
+              <a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv='|cat:$sortv|cat:'&sortc='|cat:$sortc|cat:'&uptime='|cat:$uptime|cat:'&ctime='|cat:$ctime|cat:'&all=1&uid=27&oid=0')}" class="btn">爱乐</a>
+              <a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv='|cat:$sortv|cat:'&sortc='|cat:$sortc|cat:'&uptime='|cat:$uptime|cat:'&ctime='|cat:$ctime|cat:'&all=1&uid=26&oid=0')}" class="btn">YAO</a>
+            {/if}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-content no-padding">
+              <form action="{url('admin/ad/index/'|cat:$page)}" method="GET" id="form1" style="margin:0">
+              <div class="row">
+              	<div class="dataTables_header clearfix">
+              		<div class="col-md-5">
+                    <select name="sid" class="input-width-large select2 formsub"> 
+                      <option value="0">默认过滤条件</option> 
+                      {if isset($adsSockets) && $adsSockets}
+                      {foreach $adsSockets as $sa}
+                      <option value="{$sa}" {if $sid == $sa}selected{/if}>{$sa|escape}</option>
+                      {/foreach}
+                      {/if}
+                    </select>
+                    <select name="stime" class="input-width-large select2 formsub" data-minimum-results-for-search="-1"> 
+                      <option value="{$smarty.now|date_format:'Ymd'}">默认当天时间</option>
+                      {for $i=1 to 7}
+                        {$dateNow = $smarty.now - (86400 * $i)}
+                        <option value="{$dateNow|date_format:'Ymd'}" {if $stime == ($dateNow|date_format:'Ymd')}selected{/if}>{$dateNow|date_format:'Ymd'}</option>
+                      {/for}
+                    </select>
+                    <select name="oid" class="input-width-large select2 formsub" data-minimum-results-for-search="-1"> 
+                      <option value="0">默认所有</option>
+                      {if isset($adsOwnerList) && $adsOwnerList}
+                      {foreach $adsOwnerList as $sa}
+                      <option value="{$sa->oid}" {if $oid == $sa->oid}selected{/if}>{$sa->name|escape}</option>
+                      {/foreach}
+                      {/if}
+                    </select>
+	                </div>
+                  <input type="hidden" name="sortv" value="{$sortv}">
+                  <input type="hidden" name="sortc" value="{$sortc}">
+                  <input type="hidden" name="uptime" value="{$uptime}">
+                  <input type="hidden" name="ctime" value="{$ctime}">
+                  <input type="hidden" name="uv" value="{$uv}">
+                  <input type="hidden" name="all" value="{$all}">
+                  <div class="col-md-7">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/ad/index/%page%?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv='|cat:$sortv|cat:'&sortc='|cat:$sortc|cat:'&uptime='|cat:$uptime|cat:'&ctime='|cat:$ctime|cat:'&uv='|cat:$uv|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}"}
+                    </div>
+                  </div>
+              	</div>
+              </div>
+              </form>
+              <form id="myForm" action="{url('admin/ad/batch')}" method="POST" style="margin:0">
+              <input type="hidden" name="page" value="{$page}">
+              <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                <thead>
+                  <tr>
+                    <th class="checkbox-column">
+                      <input type="checkbox" class="uniform">
+                    </th>
+                    <th>广告名称</th>
+                    {if $sortv == 1}
+                    <th width="150"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=2&sortc=0&uptime=0&ctime=0&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">当天展示次数</a></th>
+                    {else}
+                    <th width="150"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=1&sortc=0&uptime=0&ctime=0&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">当天展示次数</a></th>
+                    {/if}
+                    {if $sortc == 1}
+                    <th width="150"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=2&uptime=0&ctime=0&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">当天点击率</a></th>
+                    {else}
+                    <th width="150"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=1&uptime=0&ctime=0&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">当天点击率</a></th>
+                    {/if}
+                    {if $uv == 1}
+                    <th width="150"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=0&uptime=0&ctime=0&uv=2'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">当天点击UV次数</a></th>
+                    {else}
+                    <th width="150"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=0&uptime=0&ctime=0&uv=1'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">当天点击UV次数</a></th>
+                    {/if}
+                    <th width="150">素材作者</th>
+                    <th width="70">广告类型</th>
+                    {if $ctime == 1}
+                    <th width="160"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=0&uptime=0&ctime=2&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">添加时间</a></th>
+                    {else}
+                    <th width="160"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=0&uptime=0&ctime=1&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">添加时间</a></th>
+                    {/if}
+                    {if $uptime == 1}
+                    <th width="160"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=0&uptime=2&ctime=0&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">修改时间</a></th>
+                    {else}
+                    <th width="160"><a href="{url('admin/ad/index/'|cat:$page|cat:'?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv=0&sortc=0&uptime=1&ctime=0&uv=0'|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}">修改时间</a></th>
+                    {/if}
+                    <th width="70">状态</th>
+                    <th width="70">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {if isset($adsList) && $adsList}
+                  {foreach $adsList as $sa}
+                  <tr>
+                    <td class="checkbox-column">
+                      <input type="checkbox" name="aid[]" class="uniform" value="{$sa->aid}">
+                    </td>
+                    <td>
+                      <img width="50px" height="50px" src="{urlStatic($sa->image_path, 50, 50)}" style="margin-right:10px;">
+                      {$sa->name|escape}
+                    </td>
+                    <td>{$sa->views|default:0}</td>
+                    <td>{$sa->clicks|default:0} ({round($sa->cvp*100,2)}%)</td>
+                    <td>{$sa->tclicks|default:0}</td>
+                    <td>{$sa->nickname|escape|default:''}</td>
+                    <td>{if $sa->type == 1}普通类型{elseif $sa->type == 2}联盟类型{/if}</td>
+                    <td>{$sa->created|date_format:'Y-m-d G:i:s'}</td>
+                    <td>{$sa->updated|date_format:'Y-m-d G:i:s'}</td>
+                    <td>
+                      {if $sa->status == 1}
+                    	<span class="label label-success">有效</span>
+                      {else}
+                    	<span class="label label-danger">已禁用</span>
+                      {/if}
+                    </td>
+                    <td>
+                      <span class="btn-group">
+                      <a target="_blank" href="{url('admin/ad/view/'|cat:$sa->aid|cat:'?time='|cat:$stime)}" class="bs-tooltip" data-original-title="查看广告"><i class="icon-search"></i></a>&nbsp;
+                      {if access('ad-edit')}
+                      <a href="{url('admin/ad/edit/'|cat:$sa->aid)}" class="bs-tooltip" data-original-title="修改广告"><i class="icon-pencil"></i></a>&nbsp;
+                      {/if}
+                      {if access('ad-delete')}
+                      <a href="{url('admin/ad/remove/'|cat:$sa->aid)}" class="bs-tooltip confirm-dialog" data-original-title="删除广告"><i class="icon-trash"></i></a>
+                      {/if}
+                      </span>
+                    </td>
+                  </tr>
+                  {/foreach}
+                {else}
+                  <tr><td colspan="6">找不到符合条件的广告</td></tr>
+                {/if}
+                </tbody>
+              </table>
+              <div class="row">
+              	<div class="table-footer">
+              		<div class="col-md-6">
+                    <div class="table-actions"> 
+                      <select name="status" class="select2 input-width-xlarge" id="mySelect" data-minimum-results-for-search="-1"> 
+                        <option value="-1">选择需要操作</option> 
+                        <option value="1">启用选中</option>
+                        <option value="0">禁用选中</option>
+                        <option value="2">删除选中</option>
+                      </select> 
+                    </div> 
+              		</div>
+              		<div class="col-md-6">
+              		  <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/ad/index/%page%?sid='|cat:$sid|cat:'&stime='|cat:$stime|cat:'&sortv='|cat:$sortv|cat:'&sortc='|cat:$sortc|cat:'&uptime='|cat:$uptime|cat:'&ctime='|cat:$ctime|cat:'&uv='|cat:$uv|cat:'&all='|cat:$all|cat:'&uid='|cat:$uid|cat:'&oid='|cat:$oid)}"}
+              		  </div>
+              		</div>
+              	</div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#mySelect').change(function(){
+    if($('#mySelect').val() == 2){
+      bootbox.dialog({
+      message: "删除后将不可恢复，请谨慎操作！！",
+      buttons: {
+        danger: {
+          label: "确认",
+          className: "btn-danger",
+          callback: function() {
+            $('#myForm').submit();
+          }
+        },
+        main: {
+          label: "返回",
+          className: "btn",
+          callback: function() { location.reload(); }
+        }
+      }});
+    } else {
+      $('#myForm').submit();
+    }
+  });
+  $('.formsub').change(function(){
+    $('#form1').submit();
+  });
+});
+</script>
+</html>

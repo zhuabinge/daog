@@ -1,0 +1,168 @@
+{include file='before_body.phtml' title='登录注册'}
+<body>
+<div class="login_main login-type2">
+  <div class="logo-top"><a href="{url('')}"></a></div>
+  
+  <div class="login_top"></div>
+  <div class="login_content">
+    <div class="loginlt">
+        {html_ad id="login-1" width="370" height="380"}
+    </div>
+    <form id="login"  method="POST" autocomplete="off" {if !isset($login)} style="display:none" {/if}>
+      <div class="loginrt">
+        <ul>
+          <li>
+            <div class="grey"><span class="user"><i></i></span><input type="text" value="{$username}" name="username"placeholder="用户名" class="text"></div>
+          </li>
+          <li>
+            <div class="grey"><span class="lock"><i></i></span><input type="password"  name="password" placeholder="密码" class="text"></div>
+          </li>
+          <li><label><input class="ck" type="checkbox" checked="checked">下次自动登入</label><a href="{url('user/forgot')}">忘记密码？</a></li>
+          <li><input type="submit" class="btn-green-ttgg height46 btn-from" value="立即登陆"></li>
+          <li class="hezuow">用合作网站账号登录</li>
+          <li><a href="{url('user/qqLogin')}" class="btn-green-ttgg height46"><i></i>QQ登陆</a></li>
+        </ul>
+      </div>
+    </form>
+
+    <form id="regist" method="POST" autocomplete="off" {if isset($login)} style="display:none" {/if}>
+      <div class="loginrt">
+        <ul>
+          <li>
+            <div class="grey"><span class="user"><i></i></span><input type="text" value="" name="username" placeholder="用户名" class="text"></div>
+          </li>
+          <li>
+            <div class="grey"><span class="lock"><i></i></span><input type="password" value="" name="password" placeholder="密码" class="text" onkeyup="EvalPwdStrength(document.forms[0],this.value);"></div>
+          </li>
+          <li>
+            <div class="grey"><span class="lock"><i></i></span><input type="password" value="" name="repassword" placeholder="确认密码" class="text"></div>
+          </li>
+          <li>
+            <div class="grey"><span class="email"><i></i></span><input type="text" value="" name="email" placeholder="邮箱" class="text"></div>
+          </li>
+          <li>
+            <div class="grey capcha"><input type="text" name="captcha" placeholder="验证码" class="text"></div>
+            <a href="#" class="fr"><img src="{url('user/captcha')}" onclick="this.src='{url('user/captcha')}?_=' + Math.random()" width="150" height="38"></a>
+            <div class="clearbox"></div>
+          </li>
+          <li class="pt5"><label><input class="ck" type="checkbox" checked="checked">我已阅读并同意使用天天逛逛的<a target="_blank" href="{url('service.html')}">《服务条款》</a></label></li>
+          <li><input type="submit" class="btn-green-ttgg height46 btn-from" value="快速注册"></li>
+          <li class="hezuow">用合作网站账号登录</li>
+          <li><a href="{url('user/qqLogin')}" class="btn-green-ttgg height46"><i></i>QQ登陆</a></li>
+        </ul>
+      </div>
+    </form>
+  </div>
+  <div class="login_bottom">{if isset($login)} <a href="{url('user/register')}">快速注册></a> {else} <a href="{url('user/login')}">直接登录></a> {/if}</div>
+</div>
+
+
+{include file='footer.phtml'}
+{include file='after_body.phtml'}
+<script type="text/javascript">
+{if isset($loginMsg)}
+    appendMsg($('#login').find("input[name='username']"), '{$loginMsg}', 'error');
+{/if}
+{if isset($captchError)}
+    appendMsg($('#regist').find("input[name='captcha']"), '{$captchError}', 'error');
+{/if}
+{if isset($userError)}
+    appendMsg($('#regist').find("input[name='username']"), '{$userError}', 'error');
+{/if}
+{if isset($msg)}
+  dialog('{$msg}').open();
+{/if}
+{literal}
+function isEmpy(str) {
+  if ( str == '' || str == null) return true;
+  var regu = '^[ ]+$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+function isEmail(str){
+  var regu = '^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+function appendMsg(object, msg, type){
+  if (msg !== '') {
+    object.parent().parent().append('<div class="org from-msg">' + msg + '</div>');
+  }
+  if (type === 'error') {
+    object.after('<em class="cha from-msg"></em>');
+  } else if (type === 'success') {
+    object.after('<em class="dui from-msg"></em>');
+  }
+}
+
+$(function () {
+  $('#login').submit(function() {
+    var from = $(this), error = false,
+    username = from.find("input[name='username']"),
+    password = from.find("input[name='password']");
+    $('.from-msg').remove();
+    if (isEmpy(username.val())) {
+      appendMsg(username, '用户名不能为空', 'error');
+      error = true;
+    }
+    if (isEmpy(password.val())) {
+      appendMsg(password, '密码不能为空', 'error');
+      error = true;
+    }
+    if (error){
+      return false;
+    }
+  });
+
+  $('#regist').submit(function() {
+    var from = $(this), error = false,
+    username = from.find("input[name='username']"),
+    email = from.find("input[name='email']"),
+    captcha = from.find("input[name='captcha']"),
+    repassword = from.find("input[name='repassword']"),
+    password = from.find("input[name='password']");
+    $('.from-msg').remove();
+    if (isEmpy(username.val())) {
+      appendMsg(username, '用户名不能为空', 'error');
+      error = true;
+    } else if(!username.val().match(/\w{0,16}/)) {
+        appendMsg(username, '用户名只能由字母或下划线或数字组合哦,最长只能16位', 'error');
+        error = true;
+    } else {
+        appendMsg(username, '', 'success');
+    }
+
+    if (isEmpy(password.val())) {
+      appendMsg(password, '密码不能为空', 'error');
+      error = true;
+    } else if (!password.val().match(/\w{6,20}/)) {
+      appendMsg(password, '只能由6~20位的字母或下划线或数字组合', 'error');
+      error = true;
+    }  else {
+      appendMsg(password, '', 'success');
+      if (password.val() === repassword.val()) {
+        appendMsg(repassword, '', 'success');
+      } else {
+        appendMsg(repassword, '两次密码不一样', 'error');
+        error = true;
+      }
+    }
+
+    if (!isEmpy(email.val()) && !isEmail(email.val())){
+      appendMsg(email, '邮箱地址格式不正确', 'error');
+      error = true;
+    }
+
+    if (isEmpy(captcha.val())) {
+      appendMsg(captcha, '验证码不能为空', 'error');
+      error = true;
+    }
+    if (error){
+      return false;
+    }
+  });
+});
+{/literal}
+</script>
+</body>
+</html>

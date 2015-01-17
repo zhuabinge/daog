@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>{$title|default:'天天逛逛'}</title>
+	<meta name="keywords" content="{$keywords|default:''}"/>
+	<meta name="description" content="{$description|default:''}"/>
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="">
+	<link href="{url('rssfeed.xml', true)}" rel="alternate" type="application/rss+xml" title="天天逛逛 RSS Feed">
+	<link rel="shortcut icon" type="image/x-icon" href="{$tpldir}/images/favicon.ico" media="screen" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="{$tpldir}/css/style.css">
+	{html_css}
+</head>

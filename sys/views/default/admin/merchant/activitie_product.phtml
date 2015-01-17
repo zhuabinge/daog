@@ -1,0 +1,153 @@
+{$title = $smarty.get.title|default:''}
+<div class="dataTables_header clearfix">
+  <form tyle="margin:0"  action='{url("admin/merchant/activities_getProducts/$aid")}' id="seach" method="GET" >
+    <div class="col-md-4">
+      <div class="input-group page_align"><input type="text" name="title" value="{$title}" placeholder="输入需要搜索的关键词.." class="form-control"><span class="input-group-addon"><i onclick="document.getElementById('form1').submit();" style="cursor:pointer;" class="icon-search"></i></span></div>
+    </div>
+    <div class="col-md-8">
+      <div class="dataTables_paginate paging_bootstrap">
+      {html_pagination showinfo="1" page="$page" rows="$rows" count="$total" }
+      </div>
+    </div>
+  </form>
+</div>
+  <form  method="POST" style="margin:0" id="form2">
+    <input type="hidden" name="a_editor" value="{$account->uid}">
+    <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+      <thead>
+        <tr>
+          <th class="checkbox-column">
+            <input type="checkbox" class="uniform" id="tool">
+          </th>
+          <th>商品标题</th>
+          <th width="70">活动名字</th>
+          <th width="70">所属分类</th>
+          <th >价格</th>
+          <th width="70">邮费类型</th>
+          <th width="70">发货周期</th>
+          <th width="70">审核员</th>
+          <th width="100">商家名称</th>
+          <th width="70">审核状态</th>
+          <th width="100">添加时间</th>
+          <th width="100">修改时间</th>
+        </tr>
+      </thead>
+      <tbody>
+      {if isset($productlist) && $productlist}
+        {foreach $productlist as $sa}
+        <tr>
+         <td class="checkbox-column">
+            <input type="checkbox" name="apid[]" class="uniform" value="{$sa->apid}">
+          </td>
+          <td>
+            <a href="{$sa->url}" target="_blank">
+            <img width="50px" height="50px" src="{urlStatic($sa->image_path, 50, 50)}" style="margin-right:10px;float:left">
+            <div style="height:18px;overflow:hidden;">{$sa->title|escape}</div>
+            {if isset($sa->feature) && $sa->feature}
+            <div style="color:#e4393c;height:36px;overflow:hidden;">{$sa->feature|escape}</div>
+            {/if}
+            </a>
+          </td>
+          <td>
+            {$sa->activitie->title|escape}
+          </td>
+          <td>
+            {$sa->cate->name|escape}
+          </td>
+          <td align="right">
+            <div>{$sa->sell_price|default:0}</div>
+            <div><s>({$sa->list_price})</s></div>
+          </td>
+          {$free =$sa->free|default:'0'}
+          <td>
+            {if free== 1 }
+              包邮
+            {elseif free ==2 }
+              不包邮
+            {elseif free ==3}
+              部分时间不包邮
+            {else}
+              未设定
+            {/if}
+          </td>
+          <td>{$sa->delivery|default:0}天</td>
+          <td>{$sa->user->username|escape|default:''}</td>
+          <td>{$sa->merchant->seller|escape|default:''}</td>
+          <td>
+            {if $sa->a_status == 0 }
+              审核中
+            {elseif $sa->a_status == 1 }
+              样品邮寄
+            {elseif $sa->a_status == 2 }
+              已排期
+            {elseif $sa->a_status == 3 }
+              活动中
+            {elseif $sa->a_status == 4 }
+              已结束
+            {elseif $sa->a_status == 5}
+              未通过
+            {/if}
+          </td>
+          <td>{$sa->created|date_format:'Y-m-d G:i:s'}</td>
+          <td>{$sa->updated|date_format:'Y-m-d G:i:s'}</td>
+        </tr>
+        {/foreach}
+      {/if}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <div class="col-md-6">
+        <div class="table-actions">
+          <select name="status" class="select2 input-width-xlarge" id="mySelect" data-minimum-results-for-search="-1">
+            <option value="-1">选择需要操作</option>
+            <option value="0">审核中</option>
+            <option value="1">样品邮寄</option>
+            <option value="2">已排期</option>
+            <option value="3">活动中</option>
+            <option value="4">已结束</option>
+            <option value="5">未通过</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="dataTables_paginate paging_bootstrap">
+         {html_pagination page="$page" rows="$rows" count="$total"}
+      </div>
+    </div>
+    <input name="aid" hidden value="{$aid}">
+  </form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#mySelect').change(function(){
+    $('#form2').submit();
+  });
+  $('#form2').submit(function() {
+    $.post(
+      "{url('admin/merchant/activities_setProducts')}",
+      $(this).serialize(),
+      function (date) {
+        alert(date.msg);
+        $('#seach').submit();
+      },"json");
+    return false;
+  });
+  $('#tool').change(function() {
+    $("input[name='apid[]'").prop("checked",$(this).prop("checked"));
+  });
+  $('.pagination').find('a').click(function() {
+    var page = $(this).attr('rel'),
+    title = $('#seach').find('input[name="title"]').val();
+    $('#products').load('{url("admin/merchant/activities_getProducts/$aid")}' + '?page='+page + '&title=' + title, function(date) {
+      $(this).html(date);
+    });
+  });
+  $('#seach').submit(function () {
+    var title = $(this).find('input[name="title"]').val();
+    var page = $('.pagination').attr('rel');
+    $('#products').load($(this).attr('action')+'?title='+title + '&page=' + {$page}, function(date) {
+      $(this).html(date);
+    });
+    return false;
+  });
+});
+</script>

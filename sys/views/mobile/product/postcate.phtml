@@ -1,0 +1,56 @@
+
+{if $products}
+    <div class="dealbox">
+{foreach $products as $product}
+
+<div class="deal">
+            <div class="deal-box">
+              <div class="deal-con">
+                <figure>
+                  <sup>
+ {if $product->data == 'B'}
+
+                    <i class="icon-tm"></i> 
+{else}                   
+                    <i class="icon-tb"></i>
+{/if}   
+                  </sup>
+                 <a rel="nofollow" target="_blank" href="{$product->link_click}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($product->image_path, 286, 286)}" width="284" height="284" alt="{$product->title}"/></a>
+                  <sub>
+                    <a href="javascript:void(0);">
+                      <i class="icon-lv"></i>
+                      <!-- <i class="icon-lvred"></i> -->
+                    </a>
+                  </sub>
+                </figure>
+                <h2>
+
+                  <a target="_blank" href="{$product->link_click}" title="{$product->title|escape}">
+                     
+                    <span>{$product->title}</span>
+                  </a>
+                </h2>
+                <p>
+                  <span><small>￥</small>{$product->sell_price}</span>
+                  <del>￥{floatval($product->list_price)}</del>
+                  <!-- <span class="count">已售100件</span> -->
+                </p>
+              </div>
+            </div>
+          </div>
+{/foreach}
+    </div>
+    <input type="hidden" value="{$categoryId|default:0}" name="id">
+    <!--分页-->
+    <div class="newPage clearbox tc">
+      {html_pagination page="$page" rows="$rows" count="$count" prev="<i class='icon-chevron-left'></i>" next="<i class='icon-chevron-right'></i>" showinfo="0"}
+    </div>
+<script type="text/javascript">
+  $("img.lazy").lazyload({
+    threshold : 300,
+    effect : "fadeIn"
+  });
+</script>
+{else}
+  <div class="content-spinner">没有找到该类目下相关的商品</div>
+{/if}

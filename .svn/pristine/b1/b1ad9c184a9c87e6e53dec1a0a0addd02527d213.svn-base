@@ -1,0 +1,90 @@
+{include file='before_body.phtml' title='汇聚双12最实惠产品 - 天天逛逛就是这么任性！'}
+<body>
+{literal}
+<style type="text/css">
+html,body{margin:0; padding:0; height:100%; background: url(/static/default/images/topic/top.jpg) center 130px no-repeat #965b47;}
+.head_top_bg{height: 530px; clear: both; overflow: hidden;}
+.db_hot{font-size:20px; color: #fff; margin-bottom: 20px;}
+</style>
+{/literal}
+{include file='header.phtml' head=$channel->seo_path}
+<div class="head_top_bg"></div>
+
+<div class="area" style="width:1020px;">
+{$rand = rand(1,2)}
+{if $rand == 1}
+  {$t1 = 'http://temai.taobao.com/floor3225.htm?q=yzmzC7nPheW7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh%2BhXPmxf1TVTVnFGWZjX0lL7FcGxrzKGjjweuWGfqChJxx1RBMfEBCzmaKkfwmiWrGie%2FpBy9wBFg%3D%3D'}
+  {$t2 = 'http://temai.taobao.com/floor6819.htm?q=WGpDEw11bOq7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh9NUsbPiCKdCVnFGWZjX0lLYSYdA%2FlKy8vqXV8WKn1cBRx1RBMfEBCzmaKkfwmiWrGie%2FpBy9wBFg%3D%3D'}
+  {$t3 = ''}
+  {$t4 = ''}
+  {$t5 = ''}
+  {$t6 = ''}
+  {$t7 = ''}
+  {$t8 = ''}
+  {$t9 = ''}
+  {$t10 = ''}
+  {$t11 = ''}
+{else}
+  {$t1 = 'http://temai.taobao.com/floor6818.htm?q=lkTYbbmQYZm7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh9NUsbPiCKdCVnFGWZjX0lLYSYdA%2FlKy8sf02bWxyDDwRx1RBMfEBCzmaKkfwmiWrGie%2FpBy9wBFg%3D%3D'}
+  {$t2 = 'http://temai.taobao.com/floor6822.htm?q=Cy13JhTrP9G7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh9NUsbPiCKdCVnFGWZjX0lLYSYdA%2FlKy8swuDt9x5hYdxx1RBMfEBCzmaKkfwmiWrGie%2FpBy9wBFg%3D%3D'}
+  {$t3 = ''}
+  {$t4 = ''}
+  {$t5 = ''}
+  {$t6 = 'http://temai.taobao.com/floor6821.htm?q=LDGYnKkjjDO7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh9NUsbPiCKdCVnFGWZjX0lLYSYdA%2FlKy8sJotHzZIXZexx1RBMfEBCzmaKkfwmiWrGie%2FpBy9wBFg%3D%3D'}
+  {$t7 = ''}
+  {$t8 = ''}
+  {$t9 = ''}
+  {$t10 = ''}
+  {$t11 = 'http://temai.taobao.com/floor6820.htm?q=MHhgV8muh8e7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh9NUsbPiCKdCVnFGWZjX0lLYSYdA%2FlKy8sebYHvyFHZpBx1RBMfEBCzmaKkfwmiWrGie%2FpBy9wBFg%3D%3D'}
+{/if}
+
+  <div class="db_hot">热销宝贝</div>
+  <iframe src="{$t1}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">给力推荐</div>
+  <iframe src="{$t2}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">特别推荐</div>
+  <iframe src="{$t3}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">女装专场</div>
+  <iframe src="{$t4}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">男装专场</div>
+  <iframe src="{$t5}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">鞋包专场</div>
+  <iframe src="{$t6}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">饰品专场</div>
+  <iframe src="{$t7}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">母婴专场</div>
+  <iframe src="{$t8}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">食品专场</div>
+  <iframe src="{$t9}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">百货专场</div>
+  <iframe src="{$t10}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+  <div class="db_hot">美妆专场</div>
+  <iframe src="{$t11}" border="0" scrolling="no" frameborder="0" width="1020" height="645"></iframe>
+
+<!--   <iframe src="http://temai.taobao.com/floor3434.htm?q=%2BWs3%2Fr6I%2Fvu7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh%2FT9vOkSvjGdVnFGWZjX0lL5sFbjwfhHYPeGgpwE5Ck3rM22KlMcp5emaKkfwmiWrGie%2FpBy9wBFg%3D%3D" border="0" scrolling="no" frameborder="0" width="1020" height="4055"></iframe>
+
+  <iframe src="http://temai.taobao.com/floor3435.htm?q=V3FCMkjGAlC7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh%2FT9vOkSvjGdVnFGWZjX0lL5sFbjwfhHYPifmSnPJ%2BgNbM22KlMcp5emaKkfwmiWrGie%2FpBy9wBFg%3D%3D" border="0" scrolling="no" frameborder="0" width="1020" height="4055"></iframe>
+
+  <iframe src="http://temai.taobao.com/floor3436.htm?q=boEmAOi4RVu7QfSPPGeGaTR30VbWxM4DWi69nHv6Gh%2FT9vOkSvjGdVnFGWZjX0lL5sFbjwfhHYMmi9UwjXWQ%2BbM22KlMcp5emaKkfwmiWrGie%2FpBy9wBFg%3D%3D" border="0" scrolling="no" frameborder="0" width="1020" height="4055"></iframe>
+   -->
+</div>
+
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+});
+</script>
+</html>

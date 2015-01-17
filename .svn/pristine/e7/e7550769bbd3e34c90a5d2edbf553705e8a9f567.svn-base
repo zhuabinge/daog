@@ -1,0 +1,257 @@
+{include file='before_body.phtml' title='天天逛逛_我的积分'}
+<body>
+{include file='header.phtml' head="user"}
+
+  {include file='user/user_sidebar.phtml' active='我的积分'}
+
+  {$userModel = BpfCore::getModel('user')}
+  {if isset($other) && $other}
+  {$account = $other}
+  {/if}
+  {$userId = $account->uid}
+  {$year = $smarty.now|date_format:'Ym'}
+  {$today = $smarty.now|date_format:'Ymd'}
+  {$checkins = $userModel->getCheckins($userId, $year)}
+  {$checkinstoday = $checkins[$today]|default:0}
+  <div class="credit-content">
+    <div class="main">
+      <div class="credit-statistic">
+        <div class="grid1">
+          <h3>可用积分</h3>
+          <div class="credit-num"><b>{$account->scores|default:0}</b></div>
+          {if isset($other) && $other}
+          <span>TA已连续签到{$checkinstoday->running|default:0}天</span>
+          {else}
+          <span>您已连续签到{$checkinstoday->running|default:0}天</span>
+          {/if}
+        </div>
+        <div class="grid2">
+          <h3>已换集分宝</h3>
+          <div class="credit-num"><b>{$account->jf|default:0}</b></div>
+          <a href="https://www.alipay.com/" target="_blank">去查看集分宝</a>
+        </div>
+        <div class="grid3">
+          赚积分：
+          <a href="{url('user/checkin')}" target="_blank" class="small-btn">签到<span>签到随机获得0-1000积分</span></a>
+          <a href="javascript:;" id="share" class="small-btn">分享<span>每分享一次获得2积分</span></a>
+          <a href="javascript:;" class="small-btn">讨论<span class="sp1">参与宝贝讨论可以获得1积分</span></a>
+          <a href="javascript:;" class="small-btn">登录<span class="sp1">每天坚持用QQ登录可获得1积分</span></a>
+          <p>更多积分玩法，敬请期待。。。</p>
+          {if !isset($other)}
+          积分兑换集分宝：
+          <a href="javascript:;" class="changeBtn big-btn">兑换集分宝</a>
+          {/if}
+        </div>
+        <div class="clearbox"></div>
+      </div>
+      <div id="logscontent"></div>
+
+      <div class="common-question">
+        <div class="title-bar">
+          <h3>常见问题</h3>
+          <a href="{url('help.html')}">帮助中心查看更多>></a>
+        </div>
+        <div class="question-content">
+          <i class="icon-question"></i>
+          <h4>兑换之后可以修改支付宝账号吗？</h4>
+          <i class="icon-answer"></i>
+          <p>请您在兑换前仔细核实好所有的信息，订单生产后将无法修改和调换。</p>
+        </div>
+        <div class="question-content">
+          <i class="icon-question"></i>
+          <h4>积分兑换的集分宝多长时间才发放？</h4>
+          <i class="icon-answer"></i>
+          <p>积分兑换、由于参与的用户非常多，工作人员会尽量在2个工作日内完成发放，请您耐心等待。发放后您可以在“个人中心-我的积分”中查看相应的集分宝。当您发现您在积分兑换中所得的集分宝超过2个工作日未发放时，请联系在线客服，客服会帮您紧急处理，为您及时发放或者退还相应的积分。</p>
+        </div>
+        <div class="question-content">
+          <i class="icon-question"></i>
+          <h4>哪些积分行为是违规的？会有什么处罚措施？</h4>
+          <i class="icon-answer"></i>
+          <p>请大家通过正规合理的渠道获取积分，当发现用户通过机器、外挂、系统漏洞等非正常途径获取积分的，相应积分会被自动收回，兑换的集分宝不予发放，情节严重者会被直接封号处理。</p>
+        </div>
+      </div>
+    </div>
+
+    {include file='user/user_right.phtml'}
+  </div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+<script type="text/javascript">
+$(function($) {
+  /*商品鼠标移动效果*/
+  $("a.small-btn").mouseover(function(){
+    $(this).find('span').addClass("cur");
+  });
+  $("a.small-btn").mouseout(function(){
+    $(this).find('span').removeClass("cur");
+  });
+  // 边栏轮播效果
+  var page = 1; //当前页码
+  $("#alter_prev").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==1){
+        $all_page.animate({ left:"-="+v_width*(page_count-1) });
+        page=page_count;
+      }else{
+        $all_page.animate({ left:"+="+v_width });
+        page--;
+      }
+    }
+  });
+  $("#alter_next").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==page_count){
+        $all_page.animate({ left:"0" });
+        page=1;
+      }else{
+        $all_page.animate({ left:"-="+v_width });
+        page++;
+      }
+    }
+  });
+  // 分享提示
+  $('#share').click(function(){
+    var dEl = $([
+      '<div class="mui-dialog">',
+      '<div class="message_share">',
+      '<div class="message_share_top"><a href="javascript:;" class="close"></a></div>',
+      '<div class="message_share_bottom"><a href="javascript:;" class="close"></a></div>',
+      '</div>',
+      '<div class="messageBg"></div>',
+      '</div>'
+    ].join(''));
+    $(document.body).append(dEl);
+    this.close = function() {
+      dEl.remove();
+    };
+    var dMessage = dEl.children('div.message_share');
+    dMessage.find('> div > a.close').click(this.close);
+  });
+{if !isset($other)}
+  $('.changeBtn').click(function () {
+    var dlog;
+    dlog = dialog([
+      '<p>使用积分换集分宝：<input type="text" class="text" name="much" value=""> 分</p>',
+      '<p>换取到集分宝数额： <em id="jf">+0</em> 个</p>',
+      '<p>您当前积分为：<em id="sc">0</em> 个</p>',
+      '<a href="#" id="jfbtn" class="button">兑换</a>',
+    ].join(' '));
+    dlog.open(function () {
+      $('#sc').html({$account->scores});
+      $('input[name="much"]').bind('input propertychange', function() {
+        var much = $(this).val(), jf = 0, scores = {$account->scores};
+        much = parseInt(much, 10);
+        scores = parseInt(scores, 10);
+        if (isNaN(much) || much <= 0 ) {
+          much = 0;
+        }
+        if (isNaN(scores) || scores <= 0 ) {
+          scores = 0;
+        }
+        if (much > scores) {
+          much = scores;
+        }
+        jf = much * {$rate} ;
+        $('#jf').html('+' + jf);
+      }).keypress(function(e) {
+        if (e.keyCode === 13) {
+          $('#jfbtn').click();
+        }
+      });
+
+      $('#jfbtn').click(function(e) {
+        e.preventDefault();
+        var much = $('input[name="much"]').val(), jf = 0, scores = {$account->scores};
+        much = parseInt(much, 10);
+        scores = parseInt(scores, 10);
+        if (isNaN(much) || much <= 0 ) {
+          much = 0;
+        }
+        if (isNaN(scores) || scores <= 0 ) {
+          scores = 0;
+        }
+        if (much == 0) {
+          dlog.close();
+          dlog = dialog('<p>您还未确定要积分兑换的数量喔</p>');
+          dlog.open(function() {
+            setTimeout(location.reload(), 4000);
+          }, function() {
+            location.reload();
+          });
+          return;
+        }
+        if ( scores == 0 ) {
+          dlog.close();
+          dlog = dialog('<p>您兑换的集分有点不足喔</p>');
+          dlog.open(function() {
+            setTimeout(location.reload(), 4000);
+          }, function() {
+            location.reload();
+          });
+          return;
+        }
+        if (much > scores ) {
+          much = scores;
+        }
+        jf = much * {$rate} ;
+        dlog.close();
+        dlog = dialog('<p>确定要使用 ' + much + '个积分来兑换' + jf + '个集分宝吗？</p> <a id="sure" class="button" >兑换</a>');
+        dlog.open(function() {
+          $('#sure').click(function() {
+            $.post("{url('user/score2jf')}", { much: much }, function(data){
+              dlog.close();
+              dlog = dialog('<p>' + data.msg + '</p>');
+              dlog.open(function() {
+                setTimeout(location.reload(), 3000);
+              }, function() {
+                location.reload();
+              });
+            }, 'json');
+          })
+        });
+      });
+    });
+  });
+{/if}
+
+  var load = function(page) {
+{if isset($other) && $other}
+    var url = '{url("user/scorelogs")}';
+    if (typeof page !== 'undefined') {
+      url += '/' + page + '/{$other->uid}';
+    } else {
+      url += '/1/{$other->uid}';
+    }
+{else}
+    var url = '{url("user/scorelogs")}';
+    if (typeof page !== 'undefined') {
+      url += '/' + page;
+    }
+{/if}
+    $('#logscontent').load(url, function(date) {
+      $(this).html(date);
+    });
+  }
+  load();
+
+  $('#logscontent').delegate('.tc a', 'click', function() {
+    load(parseInt($(this).attr('rel'), 10));
+  });
+});
+</script>
+</html>

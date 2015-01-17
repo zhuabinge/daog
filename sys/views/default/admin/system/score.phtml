@@ -1,0 +1,143 @@
+{include file='admin/before_body.phtml' title='积分设置'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='system_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/system')}">系统设置</a></li>
+          <li class="current">积分设置</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4><i class="icon-reorder"></i> 积分设置</h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">每天签到积分：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="checkin" value="{$checkin}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">连续签到积分：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="checkin_running" value="{$checkin_running}" maxlength="3" class="form-control input-width-small required digits">
+                    <p class="help-block">
+                      当天签到总积分 = 每天签到积分 + ( 连续签到积分 x 连续签到天数 )
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">当天签到总积分上限：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="checkin_top" value="{$checkin_top}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">签到积分周期天数：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="checkin_cycle" value="{$checkin_cycle}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">达标周期天数奖励：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="checkin_cycle_reward" value="{$checkin_cycle_reward}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">每天登录积分：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="login" value="{$login}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">每次评论积分：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="comment" value="{$comment}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">当天评论总积分上限：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="comment_top" value="{$comment_top}" maxlength="3" class="form-control input-width-small required digits">
+                    <p class="help-block">
+                      当天评论商品可获得积分上限次数
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">积分-集分宝汇率：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="score_2jf" value="{$score_2jf}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <label class="col-md-3 control-label">每次分享积分：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="score_share" value="{$score_share}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div><div class="form-group">
+                  <label class="col-md-3 control-label">积分-当天分享上限：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="score_share_top" value="{$score_share_top}" maxlength="3" class="form-control input-width-small required digits">
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#validate").validate({
+    messages:{
+      checkin: '每天签到积分必须是整数',
+      checkin_running: '连续签到积分必须是整数',
+      checkin_top: '签到积分上限必须是整数',
+      login: '每天登录积分必须是整数',
+      scores_2jf: '汇率必须是整数',
+    }
+  });
+});
+function switchTab(ProTag, ProBox) {
+  for (i = 1; i < 3; i++) {
+    if ("con" + i == ProBox) {
+      document.getElementById(ProBox).style.display = "";
+    } else {
+      document.getElementById("con" + i).style.display = "none";
+    }
+  }
+}
+</script>
+</html>

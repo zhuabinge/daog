@@ -1,0 +1,113 @@
+{include file='admin/before_body.phtml' title='抽奖列表'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+  {$stime = $smarty.get.stime|default:'0'}
+  
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li class="current">抽奖用户列表</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-content no-padding">
+              <form action="{url('admin/channel/prizes')}" method="GET" id="form1" style="margin:0">
+              <div class="row">
+                <div class="dataTables_header clearfix">
+                 
+                  <div class="col-md-5">
+                    <select name="stime" class="input-width-xlarge select2" id="snameSelect"> 
+                      <option value="{$smarty.now|date_format:'Ymd'}">默认当天时间</option>
+                      {for $i=1 to 7}
+                        {$dateNow = $smarty.now - (86400 * $i)}
+                        <option value="{$dateNow|date_format:'Ymd'}" {if $stime == ($dateNow|date_format:'Ymd')}selected{/if}>{$dateNow|date_format:'Ymd'}</option>
+                      {/for}
+                    </select>
+                  </div>
+
+                  <input type="hidden" id="stime" value="{$stime}">
+                  
+                  
+                  <div class="col-md-7">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/channel/prizes?page=%page%&stime='|cat:$stime)}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <input type="submit"  style="display:none">
+              </form>
+              <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                <thead>
+                  <tr>
+                    <th class="checkbox-column">
+                      <input type="checkbox" class="uniform">
+                    </th>
+                    <th width="150">抽奖记录ID</th>
+                    <th width="150">抽奖用户ID</th>
+                    <th width="150">奖项序号</th>
+                    <th>奖项内容</th>
+                    <th width="180">抽奖时间</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {if isset($prizesList) && $prizesList}
+                    {foreach $prizesList as $sa}
+                      <tr>
+                        <td class="checkbox-column">
+                          <input type="checkbox" class="uniform">
+                        </td>
+                        <td>{$sa->plid|escape}</td>
+                        <td>{$sa->uid|escape}</td>
+                        <td>{$sa->pzid|escape}</td>
+                        <td>{$sa->body|escape}</td>
+                        <td>{$sa->created|date_format:'Y-m-d G:i:s'}</td>
+                        
+                      </tr>
+                    {/foreach}
+                  {/if}
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="table-footer">
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/channel/prizes?page=%page%&stime='|cat:$stime)}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#snameSelect').change(function(){
+    $('#form1').submit();
+  });
+});
+</script>
+
+</html>

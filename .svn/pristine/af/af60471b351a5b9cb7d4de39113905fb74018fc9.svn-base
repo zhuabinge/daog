@@ -1,0 +1,108 @@
+{include file='before_body.phtml' title=$channel->title}
+<body>
+{include file='header.phtml' head=$channel->seo_path}
+
+<div class="area">
+{if $channel->seo_path == '20t'}
+  {html_ad id="20t" width="1200" height="100"}
+{else}
+  {html_ad id="99m" width="1200" height="100"}
+{/if}
+  <div class="title_un2">
+    <div class="heading">
+      <strong>{$channel->title}</strong>
+    </div>
+{if isset($cates) && $cates}
+    <ul class="small-cate">
+{foreach $cates as $cate}
+      <li><a href="javascript:void(0);" rel="nofollow" isrel="{$channelId|default:0}" iscid="{$cate->cid|default:0}">{$cate->name|escape}</a></li>
+{/foreach}
+      <li class="selected"><a href="javascript:void(0);" rel="nofollow" isrel="{$channelId|default:0}">全部</a></li>
+    </ul>
+{/if} 
+    <ul class="recent-select">
+      <li><a href="javascript:void(0);" rel="nofollow" isrel="hot">热门</a></li>
+      <li class="selected"><a href="javascript:void(0);" rel="nofollow" isrel="new">最新</a></li>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <!--产品列表 start-->
+  <div id="cateContent">
+    <div class="content-spinner"><i class="icon-spinner icon-spin"></i> 正在加载中...</div>
+  </div>
+  <!--产品列表 end-->
+  {html_ad id="home-7" width="1200" height="90"}
+</div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+<style type="text/css">
+.content-spinner{ clear: both; overflow: hidden; text-align: center; font-size: 26px; padding: 90px 0; color:#666; }
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+  /**产品列表**/
+{if isset($channelId) && $channelId}
+  var url, is_id, sort = 'new', page = 1, is_cid;
+  var load = function(page, id, sort, is_cid) {
+    if (typeof id !== 'undefined') {
+      url = "{url('product/postChannel/')}" + id;
+    } else {
+      url = "{url('product/postChannel/'|cat:$channelId)}";
+    }
+    if (typeof page !== 'undefined') {
+      url += '/' + page;
+    }
+    if (typeof sort !== 'undefined') {
+      url += '/' + sort;
+    }
+    if (typeof is_cid !== 'undefined') {
+      url += '/' + is_cid;
+    }
+    $('#cateContent').load(url, function(date) {
+      $('.content-spinner').remove();
+      $(this).html(date);
+    });
+  }
+  load();
+
+  $('#cateContent').delegate('.tc a', 'click', function() {
+    $('html,body').animate({ scrollTop : '125px'}, 200);
+    var id, is_id = $('[name="id"]').val();
+    page = parseInt($(this).attr('rel'), 10);
+    load(page, is_id, sort, is_cid);
+  });
+  $('.small-cate a').click(function(){
+    is_id = parseInt($(this).attr('isrel'), 10);
+    is_cid = $(this).attr('iscid');
+    page = 1;
+    $(this).parent().addClass("selected").siblings().removeClass();
+    load(1, is_id, sort, is_cid);
+  });
+  $('.recent-select a').click(function(){
+    if (!is_id) {
+      is_id = undefined;
+    };
+    $(this).parent().addClass("selected").siblings().removeClass();
+    sort = $(this).attr('isrel');
+    load(page, is_id, sort, is_cid);
+  });
+{/if}
+  /**分类页导航条滑动悬停效果**/
+  var titleOffsetTop = $('.title_un2').offset().top;
+  function fxd() {
+    var scrollTop = $(window).scrollTop();
+    if(scrollTop >= titleOffsetTop) {
+      $('.title_un2').addClass('fxd');
+    } else {
+      $('.title_un2').removeClass('fxd');
+    }
+  }
+  //触发悬停
+  fxd();
+  $(window).scroll(function() {
+    fxd();
+  });
+});
+</script>
+</html>

@@ -1,0 +1,90 @@
+{include file='before_body.phtml' title=$keyword|default:'天天逛逛搜索页'}
+	
+	<body>
+		<div id="wrapper">
+			<div class="scroller">
+				<header>
+					<h1>    {if $count%$rows}
+    {assign var="temp" value=intval($count/$rows)+1}
+    {else}
+    {assign var="temp" value=intval($count/$rows)}
+    {/if}
+      {if isset($keyword) && $keyword && $count!=0}
+      <strong>为您找到与 "<span>{$keyword}</span>" 相关的商品{$count}条！</strong>
+      {/if}
+      {if $count==0}
+     <strong>没有找到与 "<span>{$keyword}</span>" 相关的商品！</strong>
+      {/if}</h1>
+					<a class="back" href="javascript:window.history.back();"></a>
+				</header>
+    <div class="dealbox">
+
+
+
+
+  
+
+      {if $products && $count!=0}
+{if $products}
+        <section class="deals">
+
+{foreach $products as $product}
+          <div class="deal">
+            <div class="deal-box">
+              <div class="deal-con">
+                <figure>
+                  <sup>
+{if $product->data == 'B'}
+
+                    <i class="icon-tm"></i> 
+{else}                   
+                    <i class="icon-tb"></i>
+{/if}            
+                  </sup>
+                    <a target="_blank" href="{$product->link_click}" title="{$product->title|escape}">
+                    <img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($product->image_path, 286, 286)}" width="284" height="284" alt="{$product->title}"/>                  </a>
+                  <sub>
+                    <a href="javascript:void(0);">
+                      <i></i>
+                    </a>
+                  </sub>
+                </figure>
+                <h2>
+ <a target="_blank" href="{$product->link_click}" title="{$product->title|escape}">                   <!--  <em>【包邮】</em> -->
+       <span>{$product->title|escape}</span>
+                  </a>
+                </h2>
+                <p>
+                  <span><small>¥</small>{$product->sell_price}</span>
+                  <del>¥{floatval($product->list_price)}</del>
+                  <!-- <span class="count">已售100件</span> -->
+                </p>
+              </div>
+            </div>
+          </div>
+{/foreach}
+{/if}
+        </section>
+
+{/if}
+
+
+
+
+
+    </div>
+				<footer>
+					<a id="backTop" href="javascript:void(0);">
+						<i></i>
+					</a>
+				</footer>
+			</div>
+		</div>
+
+{include file='after_body.phtml'}
+</body>
+</html>
+
+
+
+

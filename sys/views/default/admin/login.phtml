@@ -1,0 +1,43 @@
+{include file='admin/before_body.phtml' title='登录页面'}
+
+<body class="login">
+  <div class="logo"><img src="{$tpldir}/images/logo.png"></div>
+  <div class="box">
+    <div class="content">
+      <form class="form-vertical login-form" action="{url('admin/login/')}" method="POST">
+        <h3 class="form-title"></h3>
+        {if isset($themeMessages)}
+        <div class="alert fade in alert-danger">
+          {$themeMessages}
+        </div>
+        {/if}
+        <div class="form-group">
+          <div class="input-icon">
+            您目前已登录账户：<strong> {$user->username} </strong>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-icon">
+            <i class="icon-lock"></i>
+            <input type="password" name="password" class="form-control" placeholder="为保障安全，请确认密码" data-msg-required="请输入密码." />
+          </div>
+        </div>
+        <div class="form-actions">
+          <label class="input-icon pull-left">
+            <i class="icon-lock"></i>
+            <input type="text" name="code" class="form-control" style="width:140px" placeholder="验证码" />
+          </label>
+          <a href="#" class="pull-right"><img src="{url('admin/login/captcha')}" onclick="this.src='{url('admin/login/captcha')}?_=' + Math.random()"></a>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="submit btn btn-primary btn-block">
+            登陆
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+{include file='admin/after_body.phtml'}
+</html>

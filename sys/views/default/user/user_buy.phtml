@@ -1,0 +1,69 @@
+{include file='before_body.phtml' title='天天逛逛_我的购买'}
+<body>
+{include file='header.phtml' head="user"}
+
+  {include file='user/user_sidebar.phtml' active='我的购买'}
+
+  <div class="credit-content">
+    <div class="main">
+      {if isset($other) && $other}
+        <div class="users_Icon buy_other">
+          <span></span>
+          <a href="{url('')}">去随便逛逛</a>
+        </div>
+      {else}
+        <div class="users_Icon buy_info">
+          <span></span>
+          <a href="{url('')}">去随便逛逛</a>
+        </div>
+      {/if}
+    </div>
+    
+    {include file='user/user_right.phtml'}
+  </div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+<script type="text/javascript">
+$(function($) {
+  // 边栏轮播效果
+  var page = 1; //当前页码
+  $("#alter_prev").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==1){
+        $all_page.animate({ left:"-="+v_width*(page_count-1) });
+        page=page_count;
+      }else{
+        $all_page.animate({ left:"+="+v_width });
+        page--;
+      }
+    }
+  });
+  $("#alter_next").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==page_count){
+        $all_page.animate({ left:"0" });
+        page=1;
+      }else{
+        $all_page.animate({ left:"-="+v_width });
+        page++;
+      }
+    }
+  });
+});
+</script>
+</html>

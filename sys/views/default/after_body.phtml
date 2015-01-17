@@ -1,0 +1,40 @@
+<script type="text/javascript" src="{$tpldir}/js/ttgg.js"></script>
+{if isset($index) && $index == 'index'}
+<script type="text/javascript">
+	//悬停
+	var menuStick = function() {
+  	if($(window).scrollTop() > 622) {
+      $('.left-panel').fadeIn();
+      $('.right-panel .tab-top').fadeIn();
+    } else {
+      $('.left-panel').fadeOut();
+      $('.right-panel .tab-top').fadeOut();
+    }
+  }
+  menuStick();
+  $(window).scroll(function() {
+    menuStick();
+  });
+</script>
+
+{else}
+<script type="text/javascript">
+  //左边导航一直显示
+  $('.left-panel').css({ 'position':'absolute', 'top':'203px'}).show();
+	//悬停
+  var menuStick = function() {
+    if($(window).scrollTop() > 130) {
+      $('.right-panel .tab-top').fadeIn();
+      $('.left-panel').css({ 'position':'fixed', 'top':'73px' });
+    } else {
+      $('.right-panel .tab-top').fadeOut();
+      $('.left-panel').css({ 'position':'absolute', 'top':'203px'});
+    }
+  }
+  menuStick();
+  $(window).scroll(function() {
+    menuStick();
+  });
+</script>
+{/if}
+{html_js}

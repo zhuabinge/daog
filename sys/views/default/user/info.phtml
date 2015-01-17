@@ -1,0 +1,105 @@
+{$nickname = $user->nickname|default:'匿名用户'|escape}
+{if $user->email}
+{$email = maskString($user->email, 'email')|escape}
+{/if}
+{if $user->qq}
+{$qq = maskString($user->qq)|escape}
+{/if}
+{$weibo = maskString($user->weibo)|escape}
+{if $user->sex == 1}
+{$sex = '男'}
+{elseif $user->sex == 2}
+{$sex = '女'}
+{else}
+{$sex = '保密'}
+{/if}
+{if $user->birthday}
+{$birthday = substr($user->birthday, 0, 4)|cat:'年'|cat:substr($user->birthday, 4, 2)|cat:'月'}
+{/if}
+{include file='before_body.phtml' title=$nickname|cat:'的个人主页'}
+<body>
+{include file='header.phtml' head="user"}
+
+
+  <div class="credit-header">
+    <div class="personal-info">
+      <div class="fl">
+        <div class="user-img">
+          <img src="{urlAvatar($user, 160)}" width="120" height="120" alt="用户头像">
+        </div>
+        <div class="user-info">
+          <div class="user-name">
+            <b>{$user->nickname|default:''}</b>
+            <small>{$user->emotion|default:''}</small>
+          </div>
+          <div class="user-credit">
+            <div class="credit-left">
+              <em>{$user->scores|default:0}</em>
+              <br/>积分
+            </div>
+            <div class="vertical-line"></div>
+            <div class="credit-right">
+              <em>{$user->jf|default:0}</em>
+              <br/>集分宝
+            </div>
+          </div>
+        </div>
+      </div>
+      {$userModel = BpfCore::getModel('user')}
+      {$userId = $account->uid}
+      {$year = $smarty.now|date_format:'Ym'}
+      {$today = $smarty.now|date_format:'Ymd'}
+      {$checkins = $userModel->getCheckins($userId, $year)}
+      {$checkinstoday = $checkins[$today]|default:0}
+      <div class="fr">
+        <div class="edit-link">
+        {if $userId}
+          <a href="{url('user/center')}" target="_blank">编辑个人资料</a>
+        {else}
+          <a href="{url('user/login')}" target="_blank">点击登陆</a>
+        {/if}
+        </div>
+        <div class="qiandao">
+          <div class="qiandao-fl">
+            <span>{$smarty.now|date_format:'n'}</span>月<span>{$smarty.now|date_format:'j'}</span>日
+            <br/>
+            连签<em>{$checkinstoday->running|default:0}</em>天
+          </div>
+          <div class="qiandao-fr">
+{if isset($checkins[$today])}
+            <a href="javascript:void(0)" class="has-qiandao"></a>
+{else}
+            <a href="{url('user/checkin')}" target="_blank"></a>
+{/if}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="credit-nav">
+      <ul>
+        <li {if isset($active) && $active == '我的喜欢'}class="active"{/if}><a href="{url('user/likes')}">我的喜欢</a></li>
+        <li {if isset($active) && $active == '我的积分'}class="active"{/if}><a href="{url('user/score')}">我的积分</a></li>
+        <li {if isset($active) && $active == '我的购买'}class="active"{/if}><a href="{url('user/buy')}">我的购买</a></li>
+        <li {if isset($active) && $active == '我的分享'}class="active"{/if}><a href="{url('user/share')}">我的分享</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="credit-content">
+    <div class="main-full">
+      <ul class="usersInfo">
+        <li><span class="flInfo">昵称：</span>{$nickname}</li>
+        <li><span class="flInfo">个人简介：</span>{$user->emotion|default:'还木有心情喔'|escape|nl2br}</li>
+        <li><span class="flInfo">生日：</span>{$birthday|default:'还未填写喔'}</li>
+        <li><span class="flInfo">性别：</span>{$sex}</li>
+        <li><span class="flInfo">邮箱：</span>{$email|default:'还未绑定喔'}</li>
+        <li><span class="flInfo">家乡：</span>{$user->city|default:'还未填写喔'|escape}</li>
+        <li><span class="flInfo">QQ：</span>{$qq|default:'还未绑定喔'}</li>
+        <li><span class="flInfo">微博：</span>{$weibo|default:'还未绑定喔'}</li>
+      </ul>
+    </div>
+  </div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+</html>

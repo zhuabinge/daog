@@ -1,0 +1,761 @@
+{include file='before_body.phtml' title=$channel->title}
+<body style="min-width: 1004px;">
+{include file='header.phtml' head=$channel->seo_path}
+
+<div class="guoqing_topic" style="min-width: 1004px;height:5907px;margin:0 auto;margin-bottom:-20px;">
+  <div style="background:url({$tpldir}/images/topic/guoqing_01.png) center; clear:both; overflow:hidden; height:721px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_02.png) center; clear:both; overflow:hidden; height:688px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_03.png) center; clear:both; overflow:hidden; height:629px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_04.png) center; clear:both; overflow:hidden; height:688px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_05.png) center; clear:both; overflow:hidden; height:799px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_06.png) center; clear:both; overflow:hidden; height:714px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_07.png) center; clear:both; overflow:hidden; height:623px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_08.png) center; clear:both; overflow:hidden; height:513px;"></div>
+  <div style="background:url({$tpldir}/images/topic/guoqing_09.png) center; clear:both; overflow:hidden; height:532px;"></div>
+
+  <div class="topci_title">
+    <a href="javascript:;" class="cur1"></a>
+    <a href="javascript:;" class="cur2"></a>
+    <a href="javascript:;" class="cur3"></a>
+    <a href="javascript:;" class="cur4"></a>
+  </div>
+
+  <div class="ppo_bg hidden"></div>
+  <div class="topic_ppp hidden">
+    <a href="javascript:;" class="cur1"></a>
+    <a href="javascript:;" class="cur2"></a>
+    <a href="javascript:;" class="cur3"></a>
+    <a href="javascript:;" class="cur4"></a>
+  </div>
+
+  <div class="products_topic zijia">
+    <ul class="title">
+      <li class="cur">食品</li>
+      <li>车载饰品</li>
+      <li>美容护肤</li>
+      <li>户外装备</li>
+      <li>数码</li>
+    </ul>
+
+    {$productModel = BpfCore::getModel('product')}
+    {$conditions.channel = 94}
+    {$conditions.tags = 320}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 321}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 322}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 323}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 324}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+  </div>
+
+
+  <div class="products_topic tuanyou">
+    <ul class="title">
+      <li class="cur">饰品</li>
+      <li>数码</li>
+      <li>美容护肤</li>
+      <li>鞋包</li>
+      <li>女装</li>
+    </ul>
+
+    {$productModel = BpfCore::getModel('product')}
+    {$conditions.tags = 327}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 324}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 322}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 330}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 331}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+  </div>
+
+
+
+  <div class="products_topic zhainan">
+    <ul class="title">
+      <li class="cur">零食</li>
+      <li>居家用品</li>
+      <li>男装</li>
+      <li>男鞋</li>
+      <li>数码</li>
+    </ul>
+
+    {$productModel = BpfCore::getModel('product')}
+    {$conditions.tags = 332}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 333}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 334}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 335}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 324}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+  </div>
+
+
+
+  <div class="products_topic xiangqin">
+    <ul class="title">
+      <li class="cur">女装</li>
+      <li>珠宝饰品</li>
+      <li>美容护肤</li>
+      <li>鞋包</li>
+      <li>数码</li>
+    </ul>
+
+    {$productModel = BpfCore::getModel('product')}
+    {$conditions.tags = 331}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 337}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 322}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 330}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+    {$conditions.tags = 324}
+    {$productList = $productModel->getProducts($conditions, 1, 6)}
+    <ul class="list hidden">
+      {if isset($productList) && $productList}
+      {foreach $productList as $sa}
+      <li>
+        <div class="photo"><a target="_black" href="{$sa->link}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($sa->image_path, 310, 310)}" width="310" height="310" alt="{$sa->title|escape}"/></a></div>
+        <div class="name">
+          <p><i>包邮</i><a href="{$sa->link}" target="_black">{$sa->title|escape}</a></p>
+          <div class="content">
+            <em>{$sa->sell_price|price}</em>
+            <span>
+              {if $sa->list_price != 0}
+              <u>({round($sa->sell_price / $sa->list_price, 2) * 10} 折)</u>
+              {else}
+              <u>10 折</u>
+              {/if}
+              <i>原价: ¥{floatval($sa->list_price)}</i>
+            </span>
+            <a href="{$sa->link}" target="_black">点击进入</a>
+          </div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+  </div>
+
+
+</div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+{literal}
+<style type="text/css">
+.guoqing_topic{position: relative;}
+.guoqing_topic em img{float: left;}
+.guoqing_topic .topci_title{position: absolute;/* left: 466px;*/left: 50%; margin-left: -494px; top: 599px;}
+.guoqing_topic .topci_title a{display: inline-block; width: 239px; height: 121px; overflow: hidden; float: left; margin: 0 6px 0 0;}
+.guoqing_topic .topci_title a:hover{background: url(/static/default/images/topic/guoqing_bg.png) no-repeat;}
+.guoqing_topic .topci_title a.cur1{background-position: 0px 0px;}
+.guoqing_topic .topci_title a.cur2{background-position: 0px -130px; margin: 0 7px 0 0;}
+.guoqing_topic .topci_title a.cur3{background-position: 0px -262px; margin: 0 7px 0 0;}
+.guoqing_topic .topci_title a.cur4{background-position: 0px -395px;}
+
+.products_topic{position: absolute;/* left: 465px;*/ left: 50%; margin-left: -495px; top: 1015px; width: 980px; overflow: hidden;}
+.products_topic ul.title{clear: both; overflow: hidden; background-color: #151413; line-height: 62px; font-family: "黑体";}
+.products_topic ul.title li{float: left; width: 196px; text-align: center; color: #fff; font-size: 24px; cursor: pointer;}
+.products_topic ul.title li.cur{background-color: #f3780a;}
+.products_topic ul.list{width: 1100px; font-family: "微软雅黑";}
+.products_topic ul.list li{float: left; width: 310px; overflow: hidden; margin: 20px 21px 0 0; border: 1px solid #ddd;}
+.products_topic ul.list li.dealon{border: 1px solid #13b506;}
+.products_topic ul.list li .name{background-color: #fff; padding: 10px; clear: both; overflow: hidden;}
+.products_topic ul.list li .name p{height: 24px; line-height: 24px; overflow: hidden;}
+.products_topic ul.list li .name p i{background-color: #43ac2d; padding: 3px 5px; margin: 0 5px 0 0; color: #fff;}
+.products_topic ul.list li .name p a{color: #090909;}
+.products_topic ul.list li .name .content{padding: 10px 0 0;}
+.products_topic ul.list li .name .content em{color:#e61021; letter-spacing:-2; font:41px/38px Arial; float:left;}
+.products_topic ul.list li .name .content em b{font-family:"Microsoft Yahei",Arial;font-weight: normal;font-size: 22px;}
+.products_topic ul.list li .name .content span{padding: 0 5px; line-height: 20px; color: #b5b5b7; font-size: 13px;  font-family: "微软雅黑"; float: left;}
+.products_topic ul.list li .name .content span u{text-decoration: none; display: block;}
+.products_topic ul.list li .name .content span i{text-decoration: line-through;}
+.products_topic ul.list li .name .content a{float: right; background-color: #e61021; padding: 8px 15px; color: #fff; font-size: 16px;}
+.products_topic ul.list li .name .content a:hover{text-decoration: none;}
+.tuanyou{top: 2220px;}
+.zhainan{top: 3450px;}
+.xiangqin{top: 4710px;}
+.hidden{display: none;}
+.on{display: block;}
+
+.ppo_bg{background-color: #000; width: 100%; height: 141px; /*position: absolute; top: 589px;*/ position: fixed; top: 0; left: 0; filter:alpha(opacity=50); -moz-opacity:0.5; -khtml-opacity: 0.5; opacity: 0.5; z-index: 999; text-align: center;}
+.topic_ppp{/*position: absolute; top: 599px; left: 338px;*/ z-index: 1000; position: fixed; top: 10px; left: 50%;   margin-left: -494px; height: 121px; overflow: hidden;}
+/*.topic_ma{margin-left: -494px;}*/
+.topic_ppp a{display: inline-block; width: 239px; height: 121px; overflow: hidden; float: left; margin: 0 6px 0 0;background: url(/static/default/images/topic/guoqing_bg.png) no-repeat;}
+.topic_ppp a.cur1{background-position: -249px 0px;}
+.topic_ppp a.cur2{background-position: -249px -130px; margin: 0 7px 0 0;}
+.topic_ppp a.cur3{background-position: -249px -262px; margin: 0 7px 0 0;}
+.topic_ppp a.cur4{background-position: -249px -395px;}
+.topic_ppp a:hover.cur1{background-position: 0px 0px;}
+.topic_ppp a:hover.cur2{background-position: 0px -130px; margin: 0 7px 0 0;}
+.topic_ppp a:hover.cur3{background-position: 0px -262px; margin: 0 7px 0 0;}
+.topic_ppp a:hover.cur4{background-position: 0px -395px;}
+/*
+.background-topic{position: absolute; bottom: -20px; left: 0; height: 21px; min-width: 1004px; max-width: 1920px; background-color: #9937a6;}*/
+.side_panel{margin-left: 700px;}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.topci_title > a.cur1').click(function() {
+    $('html,body').animate({scrollTop : '1000px'}, 200);
+  });
+  $('.topci_title > a.cur2').click(function() {
+    $('html,body').animate({scrollTop : '2200px'}, 200);
+  });
+  $('.topci_title > a.cur3').click(function() {
+    $('html,body').animate({scrollTop : '3400px'}, 200);
+  });
+  $('.topci_title > a.cur4').click(function() {
+    $('html,body').animate({scrollTop : '4650px'}, 200);
+  });
+
+  $('.topic_ppp > a.cur1').click(function() {
+    $('html,body').animate({scrollTop : '1010px'}, 200);
+  });
+  $('.topic_ppp > a.cur2').click(function() {
+    $('html,body').animate({scrollTop : '2220px'}, 200);
+  });
+  $('.topic_ppp > a.cur3').click(function() {
+    $('html,body').animate({scrollTop : '3450px'}, 200);
+  });
+  $('.topic_ppp > a.cur4').click(function() {
+    $('html,body').animate({scrollTop : '4700px'}, 200);
+  });
+  var clientwidth = document.documentElement.clientWidth;
+  var clientbodywidth = document.body.clientWidth;
+  // if (clientwidth >= 1920) {
+  //   $('.topic_ppp').addClass('topic_ma');
+  // } else{
+  //   $('.topic_ppp').removeClass('topic_ma');
+  // }
+  if (clientwidth >= 1024) {
+    var scrolltop = document.body.scrollTop || document.documentElement.scrollTop;
+    if (scrolltop > 900) {
+      $('.topic_ppp').removeClass('hidden');
+      $('.ppo_bg').fadeIn('200');
+    }else{
+      $('.topic_ppp').addClass('hidden');
+      $('.ppo_bg').fadeOut('200');
+    };
+
+    window.onscroll = function(){
+      var scrolltop = document.body.scrollTop || document.documentElement.scrollTop;
+      if (scrolltop > 900) {
+        $('.topic_ppp').removeClass('hidden');
+        $('.ppo_bg').fadeIn('200');
+      }else{
+        $('.topic_ppp').addClass('hidden');
+        $('.ppo_bg').fadeOut('200');
+      };
+    };
+  };
+  //切换
+  $('.zijia > ul.title > li').click(function() {
+    $(this).addClass("cur").siblings().removeClass();
+    $(".zijia > ul.list").fadeOut('200').eq($('.zijia > ul.title > li').index(this)).fadeIn('200');
+    $("img.lazy").lazyload({
+      threshold : 200,
+      effect : "fadeIn"
+    });
+  });
+  $('.tuanyou > ul.title > li').click(function() {
+    $(this).addClass("cur").siblings().removeClass();
+    $(".tuanyou > ul.list").fadeOut('200').eq($('.tuanyou > ul.title > li').index(this)).fadeIn('200');
+    $("img.lazy").lazyload({
+      threshold : 200,
+      effect : "fadeIn"
+    });
+  });
+  $('.zhainan > ul.title > li').click(function() {
+    $(this).addClass("cur").siblings().removeClass();
+    $(".zhainan > ul.list").fadeOut('200').eq($('.zhainan > ul.title > li').index(this)).fadeIn('200');
+    $("img.lazy").lazyload({
+      threshold : 200,
+      effect : "fadeIn"
+    });
+  });
+  $('.xiangqin > ul.title > li').click(function() {
+    $(this).addClass("cur").siblings().removeClass();
+    $(".xiangqin > ul.list").fadeOut('200').eq($('.xiangqin > ul.title > li').index(this)).fadeIn('200');
+    $("img.lazy").lazyload({
+      threshold : 200,
+      effect : "fadeIn"
+    });
+  });
+
+  $("ul.list > li").mouseover(function(){
+    $(this).addClass("dealon");
+  });
+  $("ul.list > li").mouseout(function(){
+    $(this).removeClass("dealon");
+  });
+});
+</script>
+{/literal}
+</html>

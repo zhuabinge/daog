@@ -1,0 +1,91 @@
+{include file='merchant/before_body.phtml' title='订单管理'}
+<body>
+{include file='merchant/header.phtml' match="活动管理"}
+  <div class="container">
+    <div class="full-area">
+      <h2>订单管理</h2>
+   <!--    <div class="search-select">
+        <div class="detail-row">
+          <div class="order-time">
+            <div class="from">
+              <label>订单号：</label>
+              <input type="text" value="">
+              <i class="calendar-icon"></i>
+            </div>
+            <div class="to">
+              <label>至</label>
+              <input type="text" value="">
+              <i class="calendar-icon"></i>
+            </div>
+          </div>
+          <div class="btn">
+            <a href="" class="search-btn">搜索</a>
+            <a href="" class="export-btn">导出查询结果</a>
+          </div>
+        </div>
+      </div> -->
+      <ul class="state-nav">
+        <li {if !isset($status) || $status == ''}class="current"{/if}>
+          <a href="{url('merchant/activities/order')}">全部</a>
+        </li>
+       <!--  <li {if isset($status) && $status == 1}class="current"{/if}>
+          <a href="{url('merchant/activities/order?page=1&status=1')}">订单有效</a>
+        </li>
+        <li {if isset($status) && $status == 0 && $status != ''}class="current"{/if}>
+          <a href="{url('merchant/activities/order?page=1&status=0')}">订单无效</a>
+        </li> -->
+      </ul>
+      <ul class="th">
+        <li class="th4-2">宝贝</li>
+        <li class="th4-2">单价</li>
+        <li class="th4-3">数量</li>
+        <li class="th4-4">买家</li>
+        <li class="th4-5">规格描述</li>
+      </ul>
+      <div class="item-list">
+        {if isset($orders) && $orders}
+        {foreach $orders as $order}
+        <div class="item">
+          <div class="item-top">
+            <b>交易时间: {$order->created|date_format:'Y-m-d G:i:s'}</b>
+          </div>
+          <div class="item-middle">
+            <div class="col5-1">
+              <a href="{$order->url}" target="_blank">
+                <img src="{urlStatic($order->image_path, 75, 75)}" width="75" height="75">
+              </a>
+            </div>
+            <div class="col5-2">
+              <a href="{$order->url}" target="_blank">{$order->title|escape}</a>
+            </div>
+            <div class="col5-3">
+              <span>{$order->sell_price|escape}</span>
+            </div>
+            <div class="col5-4">
+              <span>{$order->count|escape}</span>
+            </div>
+            <div class="col5-5">
+              <span class="state-green">{$order->buyer}</span>
+            </div>
+            <div class="col5-6">
+              <span class="state-green">{$order->data}</span>
+            </div>
+          </div>
+        </div>
+        {/foreach}
+        {else}
+         <div style="height:30px; padding:0 10px;">暂无订单数据</div>
+
+        {/if}
+
+        <!--分页-->
+        <div class="newPage clearbox tc">
+          {$status = $smarty.get.status|default:''}
+          {html_pagination page="$page" rows="$rows" count="$count" url="{url('merchant/activities/order?page=%page%&status='|cat:$status)}" showinfo="0"}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

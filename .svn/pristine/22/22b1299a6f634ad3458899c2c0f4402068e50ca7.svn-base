@@ -1,0 +1,104 @@
+{include file='before_body.phtml' title='找回密码'}
+<body>
+
+<div class="zh_top">
+  <div class="main">
+    <a class="fl" href="{url('')}"><img src="/static/default/images/logo.png"></a>
+    <span class="fr"><a href="{url('')}">返回首页 &gt;&gt;</a></span>
+  </div>
+</div>
+
+<div class="main zh_content" {if isset($success)} hidden {/if} >
+  <div class="title">设置新密码</div>
+  <div class="icon_zh_3"></div>
+  <form method="POST" id="change-form">
+    <div class="content">
+      <p class="username cz"><span>用户名：</span><input type="text" name="username" class="btnTEXT" placeholder="用户名"></p>
+      <p class="password cz"><span>新密码：</span><input type="password" name="password" class="btnTEXT" placeholder="新密码" onkeyup="EvalPwdStrength(document.forms[0],this.value);"></p>
+      <div><span>&nbsp;</span>
+        <div class="messa_q">
+          <i id="idSM0" class="red">弱</i>
+          <i id="idSM1">中</i>
+          <i id="idSM2">强</i>
+        </div>
+      </div>
+      <p><span>确认密码：</span><input type="password" name="repassword" class="btnTEXT" placeholder="确认密码"></p>
+      <p><span>&nbsp;</span><input type="submit" value="提交" class="btnBUTTON" style="width:auto; padding:0 35px;"></p>
+    </div>
+    <input type="text" hidden name="code" value="{$code|default:''}" >
+  </form>
+</div>
+
+<div class="main zh_content" {if !isset($success)} hidden {/if} >
+  <div class="title">完成</div>
+  <div class="icon_zh_4"></div>
+  <div class="contet_suee" >
+    <h1><i class="icon-ok"></i> 恭喜！ 您已成功设置天天逛逛账户密码！</h1>
+    <h2>为了您的账户安全，请您妥善保管好密码！！</h2>
+    <p><a href="{url('user/login')}" class="btnBUTTON">进行登录</a></p>
+  </div>
+</div>
+
+
+
+
+<div class="main zh_bottom">
+  <div class="cory">{$config->get('footer', '')}</div>
+</div>
+</body>
+{include file='after_body.phtml'}
+<script>
+$(document).ready(function() {
+  $('#change-form').submit(function() {
+    $('.msg').remove();
+    var username = $(this).find('input[name="username"]'), error = false,
+    password = $(this).find('input[name="password"]'),
+    repassword = $(this).find('input[name="repassword"]');
+    $('.cz').find('em').remove();
+    if (isEmpy(username.val())) {
+      error = true;
+      $('.username').append('<em><i class="cha"></i>用户名不能为空喔</em>');
+    }
+    if (isEmpy(password.val())) {
+      error = true;
+      $('.password').append('<em><i class="cha"></i>新密码不能为空喔</em>');
+    } else if (password.val().length < 6) {
+      error = true;
+      $('.password').append('<em><i class="cha"></i>新密码有点短喔，至少6位</em>');
+    }else if (password.val() !== repassword.val()) {
+      error = true;
+      $('.password').append('<em><i class="cha"></i>两次密码不一致喔</em>');
+    }
+    if (error) {
+      return false;
+    }
+  });
+});
+
+var msg = "{$msg}";
+console.log(msg);
+if (!isEmpy(msg)) {
+  dialog(msg).open();
+}
+
+function isEmpy(str) {
+  if ( str == '' || str == null) return true;
+  var regu = '^[ ]+$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+
+// function appendMsg(object, msg){
+//   var id = object.attr('name') + 'msg';
+//   if (isEmpy(msg)) {
+//     $('#' + id).remove();
+//   } else {
+//     if ($('#' + id).html()) {
+//       $('#' + id).html(msg);
+//     } else {
+//       object.parent().after('<div id="' + id + '" class="msg"><span>&nbsp;</span><i style="width:292px;text-align:left;display:inline-block" class="from-validate">提示：' + msg + '</i></div>');
+//     }
+//   }
+// }
+</script>
+</html>

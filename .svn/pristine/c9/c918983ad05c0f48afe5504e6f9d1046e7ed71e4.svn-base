@@ -1,0 +1,38 @@
+{include file='before_body.phtml' title=''}
+<body>
+{include file='header.phtml'}
+
+<div class="main">
+  <ul class="help_ul mt15">
+    <li {if $cur=='about'}class="cur"{/if}><a href="{url('about.html')}">关于我们</a></li>
+    <li {if $cur=='job'}class="cur"{/if}><a href="{url('job.html')}">人才招聘</a></li>
+    <li {if $cur=='service'}class="cur"{/if}><a href="{url('service.html')}">服务条款</a></li>
+    <li {if $cur=='co'}class="cur"{/if}><a href="{url('co.html')}">商务合作</a></li>
+    <li {if $cur=='contact'}class="cur"{/if}><a href="{url('contact.html')}">联系我们</a></li>
+    <li><a href="{url('help.html')}">帮助中心</a></li>
+  </ul>
+  <div class="help">
+    <div class="help_title">{$action}<span></span></div>
+    <div class="help_content">
+    {$content}
+    </div>
+  </div>
+</div>
+{literal}
+<style type="text/css">
+.help_ul{clear: both; overflow: hidden; border: 1px solid #e0e0df;}
+.help_ul li{float: left; height: 63px; line-height: 63px; width: 163px; text-align: center; font-size: 16px; font-weight: bold;}
+.help_ul li a{color: #707070;}
+.help_ul li a:hover{color: #ff8800; text-decoration: none;}
+.help_ul .cur{border-left: 1px solid #e0e0df; border-right: 1px solid #e0e0df; width: 161px;}
+.help_ul .cur a{color: #ff8800;}
+.help{clear: both; overflow: hidden; padding: 30px 30px; text-align: center;}
+.help .help_title{clear: both; overflow: hidden; border-bottom: 1px solid #ddd; line-height: 40px; color: #666; font-size: 16px; font-weight: bold; position: relative;}
+.help .help_title span{display: block; width: 200px; height: 1px; background-color: #43ac2d; position: absolute; bottom: 0; left: 40%;}
+.help .help_content{font-size: 14px; color: #666; padding: 30px 0; text-align: left;}
+</style>
+{/literal}
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+</html>

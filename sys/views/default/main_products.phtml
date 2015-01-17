@@ -1,0 +1,74 @@
+<div class="dealbox">
+{if $products}
+{foreach $products as $product}
+  <div class="deal">
+    <div class="con">
+      <div class="images"><a rel="nofollow" target="_blank" href="{$product->link_click}"><img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($product->image_path, 286, 286)}" width="284" height="284" alt="{$product->title}"/></a></div>
+      <div class="title">
+        <span>【包邮】</span>
+        <a target="_blank" href="{$product->link}" title="{$product->title|escape}">{$product->title|escape}</a>
+      </div>
+      <div class="price">
+        <div class="price-left">
+{$product->sell_price|price}
+          <div class="discount">
+            <div class="tag">
+              <span></span>
+              <em>省{intval($product->list_price-$product->sell_price)}元</em>
+            </div>
+            <del>原价: {floatval($product->list_price)}</del>
+          </div>
+        </div>
+        <div class="price-right">
+{if $product->data == 'B'}
+          <a class="to-tianmao" href="{$product->link_click}" target="_blank" rel="nofollow"></a>
+{else}
+          <a class="to-taobao" href="{$product->link_click}" target="_blank" rel="nofollow"></a>
+{/if}
+          <span>已售{$product->sellcount}件</span>
+        </div>
+        <div class="product-buy">
+{if $product->data == 'B'}
+          <a class="btn-buy" href="{$product->link_click}" target="_blank" rel="nofollow">
+            <span>去天猫抢购</span>
+          </a>
+{else}
+          <a class="btn-buy" href="{$product->link_click}" target="_blank" rel="nofollow">
+            <span>去淘宝抢购</span>
+          </a>
+{/if}
+          <span></span>
+        </div>
+      </div>
+      <div class="bottom-info">
+        <div class="lover">
+{if isset($product->user->nickname)}
+          <a href="{urlUser($product->user->uid)}" class="lover-img" target="_blank" title="去逛逛ta的主页">
+            <img src="{urlAvatar($product->user, 50)}" width="30" height="30">
+            <div class="icon-mask"></div>
+          </a>
+          <a href="{urlUser($product->user->uid)}" class="lover-name" target="_blank" title="去逛逛ta的主页">{maskString($product->user->nickname)|escape|default:'匿名用户'}</a>已购买
+{else}
+          <span class="lover-img">
+            <img src="{$tpldir}/images/avatar_50.jpg" width="30" height="30">
+            <div class="icon-mask"></div>
+          </span>
+          <span class="lover-name">匿名用户</span>已购买
+{/if}
+        </div>
+        <div class="grade">
+          <span class="score">{$product->buyerscore}</span>
+          <div class="star">
+            <div class="color"></div>
+            <div class="mask"></div>
+          </div>
+        </div>
+      </div>
+{if $product->updated|date_format:'Y.m.d' == $smarty.now|date_format:'Y.m.d'}
+      <div class="newicon"></div>
+{/if}
+    </div>
+  </div>
+{/foreach}
+{/if}
+</div>

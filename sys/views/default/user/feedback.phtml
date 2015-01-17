@@ -1,0 +1,90 @@
+<!--透明遮罩 start-->
+<div class="messageBg"></div>
+<!--透明遮罩 end-->
+<div id="feedback">
+  <h1>用户反馈</h1>
+  <div class="close"></div>
+  <div class="content">
+    <p class="p20">天天逛逛真诚欢迎您的反馈，以更好的为您服务！</p>
+    <div class="slt">
+      <label>反馈类型</label>
+      <select id="fdSelect" name="type">
+        <option value="0" select="selected">意见建议</option>
+        <option value="1">投诉</option>
+        <option value="2">商家合作</option>
+      </select>
+    </div>
+    <!--意见建议-->
+    
+    <div class="option" id="opt0" style="display:block;">
+        <div>
+          <textarea name="opinion">请输入您的意见或者建议（必填）</textarea>
+          <span></span>
+        </div>
+        <p>为了方便我们进一步跟您联系，请填写如下信息</p>
+        <div>
+          <input type="text" id="fdEmail" name="contact" value="QQ或者邮箱（必填）"/>
+          <span></span>
+        </div>
+        <input type="submit" value="确认提交" class="smt"/>
+    </div>
+ 
+    <!--投诉-->
+    <div class="option" id="opt1">
+        <div>
+          <textarea name="opinion">请输入您的投诉事件（必填）</textarea>
+          <span></span>
+        </div>
+        <p>为了方便我们进一步跟您联系，请填写如下信息</p>
+        <div>
+          <input type="text" id="fdPhone" name="contact" value="手机号码（必填）"/>
+          <span></span>
+        </div>
+        <!-- <p>如事情紧急，可咨询<a href="#">在线客服>></a></p> -->
+        <input type="submit" value="确认提交" class="smt"/>
+    </div>
+    <!--商家合作-->
+    <div class="option" id="opt2">
+      <p class="p20">请将您的<em>姓名</em>、<em>联系方式</em>、<em>公司名称</em>以及<em>合作方式</em>编辑邮件至<em>19022260@qq.com</em>邮箱，会有相关人员与您进行联系。</p>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+/**用户反馈弹出面板**/
+$('#feedback .close').click(function() {
+  $(this).parent().fadeOut();
+  $('.messageBg').fadeOut();
+});
+/**下拉菜单选择显示**/
+$('#fdSelect').change(function() {
+  var fdSelect = $('#fdSelect option:selected').val();
+  $('#opt' + fdSelect).show().siblings('.option').hide();
+});
+validate('#opt0 textarea', 'fdTxt0');
+validate('#opt1 textarea', 'fdTxt1');
+validate('#fdEmail', 'fdEmail');
+validate('#fdPhone', 'fdPhone');
+
+$(".smt").click(function() {
+  var type = $('[name="type"]').val();
+  var opinion = $($('[name="opinion"]')[type]).val(),
+      contact = $($('[name="contact"]')[type]).val();
+
+  if (type == " " || opinion == " " || contact == " " || opinion == "请输入您的意见或者建议（必填）" || contact == "QQ或者邮箱（必填）"|| opinion == "请输入您的投诉事件（必填）" || contact == "手机号码（必填）") {
+    validate('#opt0 textarea', 'fdTxt0');
+    validate('#opt1 textarea', 'fdTxt1');
+    validate('#fdEmail', 'fdEmail');
+    validate('#fdPhone', 'fdPhone');
+  } else {
+  $.post("/user/feedback", { type: type, opinion: opinion, contact: contact }, function(data) {
+    var data = data.result;
+    if (data == -1) {
+      dialog('<h1>抱歉，内容有错误！</h1><input type="button" class="button close" value="朕知道了">').open();
+    } else if (data == 1) {
+      $('.content').remove();
+      $('#feedback').append('<div style="font-size:18px;text-align: center; padding: 60px 0;"><strong>提交成功!</strong><p>亲，感谢你的宝贵意见！</p></div>');
+    }
+  }, 'json');
+  }
+});
+</script>

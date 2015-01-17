@@ -1,0 +1,75 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="我的账户"}
+
+  <div class="container">
+    {include file='merchant/user_sidebar.phtml' match="绑定邮箱"}
+{if isset($verify) && $verify == 1}
+    <div class="main">
+      <h2>绑定邮箱</h2>
+      <div class="change-pwd">
+        <p>请先完成店铺验证，在设置账号安全，<a href="{url('merchant/user/shop_verify')}">店铺验证</a></p>
+      </div>
+    </div>
+{else}
+    <div class="main">
+      <h2>绑定邮箱</h2>
+      <p class="warning">请您绑定邮箱，以获得我们更多的增值服务。同时，请确保绑定的邮箱是您常用的邮箱。</p>
+      <div class="step">
+        <ul>
+          <li class="s-box1 {if $step == '1'}blue{/if}">填写邮箱</li>
+          <li class="s-box2 {if $step == '2'}blue{/if}">验证邮箱</li>
+          <li class="s-box3 {if $step == '3'}blue{/if}">完成</li>
+        </ul>
+        {if $step == '1'}
+        <div class="step3-1"></div>
+        {/if}
+        {if $step == '2'}
+        <div class="step3-2"></div>
+        {/if}
+        {if $step == '3'}
+        <div class="step3-3"></div>
+        {/if}
+      </div>
+      <div class="input-area">
+        {if $step != '3'}
+        <form action="" method="POST">
+        {/if}
+        {if $step == '1'}
+          <div>
+            <label>常用邮箱：</label>
+            <input type="text" name="email" value="">
+            {if isset($msg) && $msg}
+            <div class="error"><i></i>{$msg}</div>
+            {/if}
+          </div>
+        {/if}
+        {if $step == '2'}
+          <div>
+            <label>邮箱验证码：</label>
+            <input type="hidden" name="step" value="2">
+            <input type="text" name="code" value="">
+            {if isset($msg) && $msg}
+            <div class="error"><i></i>{$msg}</div>
+            {/if}
+          </div>
+        {/if}
+        {if $step != '3'}
+          <input type="submit" value="提交" class="btn3">
+        </form>
+        {/if}
+      </div>
+      {if $step == '3'}
+      <div class="change-pwd">
+        <p>邮箱验证已完成；</p><br>
+        <p>前往商品报名中心<a href="{url('merchant')}">【商家报名】</a></p><br>
+        <p>前往安全中心设置支付密码<a href="{url('merchant/user/password')}">【账号安全】</a></p><br>
+        <p>前往资金中心，缴纳保证金<a href="{url('merchant/user/funds')}">【资金管理】</a></p><br>
+      </div>
+      {/if}
+    </div>
+{/if}
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

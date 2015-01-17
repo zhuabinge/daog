@@ -1,0 +1,20 @@
+  <div class="topheader area">
+    <div class="fr">
+      您好，欢迎来到天天逛逛！
+{if !isLogin()}
+      [ <a class="blue loginPrompt" islogin="0" href="javascript:;" rel="nofollow">马上登录</a> | <a class="blue loginPrompt" islogin="1" href="javascript:;" rel="nofollow">快速注册</a> ]
+      <!--登录注册弹出框 start--><span id="prompt"></span><!--登录注册弹出框 end-->
+      <a href="javascript:;" class="loginPrompt" islogin="0" rel="nofollow">我的积分</a>
+      | <a href="javascript:;" class="loginPrompt" islogin="0" rel="nofollow">个人中心</a>
+{else}
+      [ <a class="blue" href="{url('user/center')}" rel="nofollow">{$account->nickname|escape}</a> | <a class="blue" href="{url('user/logout')}" rel="nofollow">退出登录</a> 
+{if isAdmin()}
+      | <a class="blue" href="{url('admin')}" target="_blank">管理后台</a>
+{/if} ]
+      <a href="{url('user/score')}" target="_blank" rel="nofollow">我的积分</a>
+      | <a href="{url('user/likes')}" target="_blank" rel="nofollow">个人中心</a>
+{/if}
+      | <a href="{url('help.html')}" target="_blank" rel="nofollow">帮助中心</a>
+      | <a rel="sidebar" href="javascript:;" onclick="AddFavorite('天天逛逛', '{url("", true)}')" rel="nofollow">收藏</a>
+    </div>
+  </div>

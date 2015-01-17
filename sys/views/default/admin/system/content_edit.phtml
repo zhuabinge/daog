@@ -1,0 +1,77 @@
+{include file='admin/before_body.phtml' title='系统设置'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='system_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/system')}">系统设置</a></li>
+          <li class="current">静态内容编辑</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4><i class="icon-reorder"></i>
+                {if $action=='about'}关于天天逛逛{/if}
+                {if $action=='contact'}联系我们{/if}
+                {if $action=='job'}人才招聘{/if}
+                {if $action=='co'}商家合作{/if}
+                {if $action=='service'}服务条款{/if}
+                {if $action=='footer'}页脚{/if}
+              </h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="" method="POST">
+                
+              <!-- 百度编辑器 -->
+              <div>
+                <style type="text/css">.edui-body-container{
+                  width:1022px!important;
+                }</style><!--覆盖bootstrap的样式,控制文本编辑器的下拉条-->
+                <link rel="stylesheet" type="text/css" href="{$tpldir}/js/umeditor/themes/default/css/umeditor.min.css"/>
+                <!-- 加载编辑器的容器 -->
+                <!-- 从数据库中取出文章内容打印到此处 -->
+                <script id="myEditor" name="content" type="text/plain" style="width:1024px;height:300px;">{$content|default:''}</script>
+              </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary">
+                    <a href="{url('admin/system/content')}" class="btn">返回内容管理列表</a>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<!-- 配置文件 -->
+<script type="text/javascript" src="{$tpldir}/js/umeditor/umeditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$tpldir}/js/umeditor/umeditor.min.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+  var um = UM.getEditor('myEditor');
+</script>
+</html>

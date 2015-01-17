@@ -1,0 +1,156 @@
+{include file='admin/before_body.phtml' title='商家列表'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='merchant'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/merchant/')}">商家中心</a></li>
+          <li class="current">商家列表</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-content no-padding">
+              <form action="{url('admin/merchant')}" method="GET" id="form1" style="margin:0">
+              <div class="row">
+                <div class="dataTables_header clearfix">
+                  <div class="col-md-4">
+                     <div class="input-group"><input type="text" name="seller" value="{$smarty.get.seller|default:''}" placeholder="输入需要搜索的商家名称.." class="form-control"><span class="input-group-addon"><i onclick="document.getElementById('form1').submit();" style="cursor:pointer;" class="icon-search"></i></span></div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/merchant/index?page=%page%')}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </form>
+              <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                <thead>
+                  <tr>
+                    <th>店铺名称</th>
+                    <th>商家店铺地址</th>
+                    <th>商家旺旺</th>
+                    <th>商家联系方式</th>
+                    <th width="130">商家资金</th>
+                    <th width="115">商家评分</th>
+                    <th width="90">亲和度评分</th>
+                    <th width="50">状态</th>
+                    <th width="50">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {if isset($merchantsList) && $merchantsList}
+                {foreach $merchantsList as $sa}
+                  <tr>
+                    <td><a href="{$sa->shop_url|escape}" target="_blank">{$sa->shop_name|escape}</a></td>
+                    <td><a href="{$sa->shop_url|escape}" target="_blank">{$sa->shop_url|escape}</a></td>
+                    <td>{$sa->contact_wangwang|escape}</td>
+                    <td>
+                      电话：{$sa->telphone|escape}<BR>
+                      邮箱：{$sa->email|escape}<BR>
+                      QQ：{$sa->qq|escape}
+                    </td>
+                    <td>
+                      余额：{$sa->deposit|escape}<BR>
+                      技术费：{$sa->margin|escape}<BR>
+                      保证金：{$sa->service_fee|escape}
+                    </td>
+                    <td>
+                      物流评分：{$sa->send_score|escape}<BR>
+                      服务评分：{$sa->server_score|escape}<BR>
+                      描述评分：{$sa->match_score|escape}
+                    </td>
+                    <td>
+                      <a href="#myModal1" data-toggle="modal" class="myModal1" data-mid="{$sa->mid}">活动详情</a>
+                    </td>
+                    <td>
+                      {if $sa->pStatus == 1}
+                      <span class="label label-success">已上线</span>
+                      {else if $sa->pStatus == 2}
+                      <span class="label label-danger">驳回</span>
+                      {else if $sa->pStatus == 3}
+                      <span class="label label-primary">已排期</span>
+                      {else if $sa->pStatus == 4}
+                      <span class="label label-info">已下线</span>
+                      {else if $sa->pStatus == 5}
+                      <span class="label label-warning">已结束</span>
+                      {else if $sa->pStatus == 0}
+                      <span class="label label-default">待审核</span>
+                      {else}
+                      <span class="label label-danger">近期无活动</span>
+                      {/if}<div style="height:10px;"></div>
+                      {if $sa->status == 1}
+                      <span class="label label-success">店铺有效</span>
+                      {else}
+                      <span class="label label-danger">已禁用</span>
+                      {/if}
+                    </td>
+                    <td>
+                    {if access('merchant-edit')}
+                    <!--   <a href="" class="bs-tooltip" data-original-title="审核商家"><i class="icon-ok"></i></a>&nbsp; -->
+                      <a href="{url('admin/merchant/edit/'|cat:$sa->mid)}" class="bs-tooltip" data-original-title="修改商家">修改</a>&nbsp;
+                    {/if}
+                    </td>
+                  </tr>
+                {/foreach}
+                {/if}
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="table-footer">
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/merchant/index?page=%page%')}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<div class="modal fade" id="myModal1" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-content">
+      <div class="modal-header"> 
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">活动详情列表</h4>
+      </div>
+      <div class="modal-body"> 加载中… </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('.myModal1').click(function() {
+  var mid = $(this).attr('data-mid'),
+      url = '/admin/merchant/product?mid=' + mid;
+  $('.modal-body').html('<iframe src="'+ url +'" width="938" height="450" border="0" frameborder="0" scrolling="auto" style="border:0;width:938px;height:450px;"></iframe>');
+});
+</script>
+</html>

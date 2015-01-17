@@ -1,0 +1,101 @@
+{include file='merchant/before_body.phtml' title='【天天逛逛报名入口】 - 天天逛逛商家报名系统'}
+<body>
+{include file='merchant/header.phtml' match="商家报名"}
+
+<div class="wrapper">
+  <div class="banner">
+    <div class="ad">
+      <ul>
+        <li>
+          {html_ad id="merchant-1" width="670" height="270"}
+        </li>
+      </ul>
+    </div>
+    <div class="warn-list">
+      <h2>商家必看</h2>
+      <ul>
+        <li><a href="{url('merchant/rule/detail/1140')}" target="_blank">天天逛逛商家报名规则<img src="{$tpldir}/images/seller-center/new_inline.gif"></a></li>
+        <li><a href="{url('merchant/rule/detail/1240')}" target="_blank">天天逛逛商家保证金协议</a></li>
+        <li><a href="{url('merchant/rule/detail/295')}" target="_blank">天天逛逛商家违规曝光台</a></li>
+        <li><a href="{url('merchant/rule/detail/1340')}" target="_blank">天天逛逛商家收费规则</a></li>
+        <li><a href="{url('merchant/help/detail/2716')}" target="_blank">天天逛逛商家入驻须知规则</a></li>
+        <li><a href="{url('merchant/help/detail/3716')}" target="_blank">天天逛逛商家报名商品规则</a></li>
+        <li><a href="{url('merchant/rule/detail/1640')}" target="_blank">天天逛逛服务体系规则</a></li>
+        <li><a href="{url('merchant/rule/detail/1440')}" target="_blank">天天逛逛商家处罚规则</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="baoming-step">
+    <h2>商品报名<br>审核流程</h2>
+    <ul>
+      <li>
+        <strong>参与活动</strong>
+        <p>报名后会在5个工作日内审核，请耐心等待。</p>
+      </li>
+      <li>
+        <strong>商品审核</strong>
+        <p>审核中，如您的商品符合平台要求，会提示您完成待办事件。</p>
+      </li>
+      <li>
+        <strong>活动排期</strong>
+        <p>排期后请按照平台要求设置商品，否则会影响活动上线。</p>
+      </li>
+      <li>
+        <strong>活动上线</strong>
+        <p>活动上线后如果库存充足，可以在平台展示5天。</p>
+      </li>
+    </ul>
+    <a href="{url('merchant/rule')}" class="link">详细流程>></a>
+  </div>
+  <div class="hot-area">
+    <div class="title">
+      <h2>热门专题活动</h2>
+    </div>
+    <ul class="hot-list">
+    {if isset($channelsList) && $channelsList}
+      {foreach $channelsList as $sa}
+      <li>
+        <h3>{$sa->title|escape}</h3>
+        <p>{$sa->seo_description|escape}</p>
+        <div class="hot-bottom">
+          <a href="{$sa->link}" target="_blank" class="link">商品展示位置>></a>
+          <a href="{url('merchant/activities/apply/'|cat:$sa->cid)}" class="btn">我要报名</a>
+        </div>
+      </li>
+      {/foreach}
+    {/if}
+    </ul>
+  </div>
+  <div class="contact-us">
+    <ul>
+      <li>
+        报名咨询：
+        <a class="icon-wangwang" target="_blank" href="http://amos.alicdn.com/msg.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" ><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" alt="点击这里给我发消息" /></a>
+        <a class="icon-wangwang" target="_blank" href="http://amos.alicdn.com/msg.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" ><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" alt="点击这里给我发消息" /></a>
+      </li>
+      <li>
+        审核咨询：
+        <a class="icon-wangwang" target="_blank" href="http://amos.alicdn.com/msg.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" ><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" alt="点击这里给我发消息" /></a>
+      </li>
+      <li>
+        结算咨询：
+        <a class="icon-wangwang" target="_blank" href="http://amos.alicdn.com/msg.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" ><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" alt="点击这里给我发消息" /></a>
+      </li>
+      <li>
+        结算咨询：
+        <a class="icon-wangwang" target="_blank" href="http://amos.alicdn.com/msg.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" ><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" alt="点击这里给我发消息" /></a>
+        <a class="icon-wangwang" target="_blank" href="http://amos.alicdn.com/msg.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" ><img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid=ttgg_pay&site=cnalichn&s=10&charset=UTF-8" alt="点击这里给我发消息" /></a>
+      </li>
+      <li>
+        廉政举报：
+        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1123166085&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1123166085:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+{include file='merchant/footer.phtml'}
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

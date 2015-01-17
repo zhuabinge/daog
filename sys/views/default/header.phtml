@@ -1,0 +1,27 @@
+<div class="topheader_bg"></div>
+
+<div class="header_bg">
+  <div class="area header">
+    <div class="logo"><a href="{url('')}" title="天天逛逛"></a></div>
+    <ul class="menut">
+{$channelModel = BpfCore::getModel('channel')}
+{$conditions.where.status = "1"}
+{$conditions.where.show_on_home = "1"}
+{$conditions.orderby = "`weight` DESC"}
+{$channelList = $channelModel->getChannels($conditions)}
+      <li {if isset($head) && $head=="home"}class="cur"{/if}><span class="fl"></span><a href="{url('')}">首页</a></li>
+{if isset($channelList) && $channelList}
+{foreach $channelList as $sa}
+      <li {if isset($head) && $head==$sa->seo_path}class="cur"{/if}><span class="fl"></span><a href="{url($sa->link)}">{$sa->title|escape}</a>{if $sa->seo_path == 'yuanwang' || $sa->seo_path == 'choujiang'}<i class="icon"><img src="{$tpldir}/images/new.gif"></i>{/if}</li>
+{/foreach}
+{/if}
+      <li {if isset($head) && $head=="checkin"}class="cur"{/if}><i class="icon"><img src="{$tpldir}/images/new.gif"></i><span class="fl"></span><a href="{url('user/checkin')}">天天签到</a></li>
+    </ul>
+    <div class="search">
+      <form target="_self" action="{url('search')}" method="GET">
+        <input type="text" name="keyword" class="txt" value="{$keyword|default:''}" autocomplete="off" placeholder="输入搜索宝贝">
+        <input type="submit" value="" class="smt">
+      </form>
+    </div>
+  </div>
+</div>

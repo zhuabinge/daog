@@ -1,0 +1,19 @@
+    
+        <nav class="big-nav">
+          <a class="qiandao" id="btn-checkin" href="javascript:;">
+            <em><i></i></em>
+            <span>签到</span>
+          </a>
+          <a class="nanzhuang" href="{url('topic/99m.html')}">
+            <em><i></i></em>
+            <span>9块9包邮</span>
+          </a>
+          <a class="xiebao" href="{url('topic/20t.html')}">
+            <em><i></i></em>
+            <span>20元封顶</span>
+          </a>
+          <a class="more" href="{url('categories')}">
+            <em><i></i></em>
+            <span>分类</span>
+          </a>
+        </nav>

@@ -1,0 +1,457 @@
+    {include file='before_body.phtml' title='双12抽奖，赢取超值豪华大将 - 天天逛逛就是这么任性！'}
+    {include file='after_body.phtml'}
+    <body>
+      {literal}
+      <style type="text/css">
+      html,body{margin:0; padding:0; height:100%;}
+      body{background-color:#ed051f; font:12px/1.5 "微软雅黑","宋体",arial,sans-serif; min-width: 1340px;}
+      a{text-decoration:none;}
+      img{border:none;}
+      .w-header .header-bg1{width:100%; min-width:1340px; height:401px; background:url(/static/default/images/topic/prize_banner_01.png) no-repeat center center;}
+      .w-header .header-bg2{width:100%; min-width:1340px; height:423px; background:url(/static/default/images/topic/prize_banner_02.png) no-repeat center center;}
+      .w-contentbox{width:1174px; height:423px; margin:0 auto; position:relative;}
+      .win-record{position:absolute; left:0; top:51px; width:300px; height:218px; clear:both; overflow:hidden;}
+      .win-title{clear:both; overflow:hidden; margin:15px 0; font-size:15px; color:#fff; font-weight:bold;}
+      .win-title .fl{margin-left:20px;}
+      .win-title .fr{margin-right:42px;}
+      .win-title a:hover{font-weight:bold;}
+      .win-record ul{list-style-type:none; margin:0; padding:0; color:#ffcdcd; line-height:25px; height:500px; position:absolute; top:0;}
+      .win-list1{float:left; position:relative; width:109px; height:150px; overflow:hidden; padding:0 20px; border-right:1px dashed #ffcdcd;}
+      .win-list2{float:right; position:relative; width:110px; height:150px; overflow:hidden; padding:0 20px;}
+      .win-nick, .win-prize{width:100%; height:25px; overflow:hidden;}
+      .w-share{position:absolute; left:190px; bottom:82px;}
+      .w-share a{display:inline-block; width:32px; height:30px;}
+      /*game*/
+      .w-game{position:absolute; top:10px; left:347px; width:605px; height:321px;}
+      .w-game .start-btn{position:absolute; top:107px; left:121px; width:362px; height:104px; background:url(/static/default/images/topic/start_btn.gif); cursor:pointer; text-indent:-9999px;}
+      .w-game .g-prize{display:none; position:absolute; width:120px; height:107px; background:url(/static/default/images/topic/game_mask.png) no-repeat;}
+      .w-game .g-prize1{left:0; top:0;}
+      .w-game .g-prize2{left:121px; top:0;}
+      .w-game .g-prize3{left:242px; top:0;}
+      .w-game .g-prize4{left:363px; top:0;}
+      .w-game .g-prize5{left:484px; top:0;}
+      .w-game .g-prize6{left:484px; top:107px;}
+      .w-game .g-prize7{left:484px; top:214px;}
+      .w-game .g-prize8{left:363px; top:214px;}
+      .w-game .g-prize9{left:242px; top:214px;}
+      .w-game .g-prize10{left:121px; top:214px;}
+      .w-game .g-prize11{left:0; top:214px;}
+      .w-game .g-prize12{left:0; top:107px;}
+      /*win info container*/
+      .w-container{width:1045px; margin:30px auto;}
+      .info-boxs{clear:both; overflow:hidden; width:1052px;}
+      .info-boxs .info-box{float:left; margin-right:11px; position:relative;}
+      .info-box > a{display:block; position:absolute; left:65px; top:65px; background:url(/static/default/images/topic/hover_bg.png) no-repeat; width:94px; height:94px;}
+      .info-details .details1-1{width:100%; height:377px; background:url(/static/default/images/topic/text1-1.png) no-repeat; margin-top:20px; position:relative;}
+      .info-details .details1-2{width:100%; height:427px; background:url(/static/default/images/topic/text1-2.png) no-repeat;}
+      .info-details .details2-1{width:100%; height:538px; background:url(/static/default/images/topic/text2-1.png) no-repeat; margin-top:40px;}
+      .info-details .details2-2{width:100%; height:541px; background:url(/static/default/images/topic/text2-2.png) no-repeat;}
+      .info-details .details3-1{width:100%; height:509px; background:url(/static/default/images/topic/text3-1.png) no-repeat; margin-top:40px;}
+      .info-details .details3-2{width:100%; height:482px; background:url(/static/default/images/topic/text3-2.png) no-repeat;}
+      .details1-1 > a{display:block; position:absolute; left:435px; width:110px; height:25px; line-height:25px; color:#fff; background-color:#0272fe; text-align:center; font-weight:bold;}
+      .details1-1 > a:hover{background-color:#3d91fa;}
+      .details1-1 .btn1{top:188px;}
+      .details1-1 .btn2{top:218px;}
+      .footer{margin-top: -20px;}
+      </style>
+      {/literal}
+      {include file='header.phtml' head=$channel->seo_path}
+
+      <div class="wrapper">
+        <div class="w-header">
+          <div class="header-bg1"></div>
+          <div class="header-bg2">
+            <div class="w-contentbox">
+              <!--会员中奖榜-->
+              <div class="win-record">
+                <div class="win-title">
+                  <span class="fl">中奖公布榜</span>
+                  <span class="fr">我的中奖记录</span>
+                </div>
+                <div class="win-lists win-list1" id="winList1">
+                  <!--一个ul存放10个li，已定制高度-->
+                  <ul>
+                    {foreach $list as $l}
+                    <li>
+                      <div class="win-nick">{maskString($l->user->nickname|escape)}</div>
+                      <div class="win-prize" title="{$l->body|escape}">{$l->body|escape}</div>
+                    </li>
+                    {/foreach}
+                  </ul>
+                </div>
+                <div class="win-lists win-list2" id="winList2">
+                  <!--一个ul存放10个li，已定制高度-->
+                  <ul>
+                    {foreach $userList as $l}
+                    <li>
+                      <div class="win-nick">{maskString($l->user->nickname|escape)}</div>
+                      <div class="win-prize" title="{$l->body|escape}">{$l->body|escape}</div>
+                    </li>
+                    {/foreach}
+                  </ul>
+                </div>
+              </div>
+              <!--分享到-->
+              <div class="w-share">
+                <a rel="nofollow" target="_blank" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.ttgg.com%2Ftopic%2Fchoujiang.html%230-qzone-1-43942-d020d2d2a4e8d1a374a433f596ad1440&title=%E5%8F%8C12%E6%8A%BD%E5%A5%96%EF%BC%8C%E8%B5%A2%E5%8F%96%E8%B6%85%E5%80%BC%E8%B1%AA%E5%8D%8E%E5%A4%A7%E5%B0%86%20-%20%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%B0%B1%E6%98%AF%E8%BF%99%E4%B9%88%E4%BB%BB%E6%80%A7%EF%BC%81&desc=&summary=&site=&pics=http://www.ttgg.com/static/default/images/topic/800x400CJ.jpg" title="分享到QQ空间和朋友网"></a>
+                <a rel="nofollow" target="_blank" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fwww.ttgg.com%2Ftopic%2Fchoujiang.html%230-tsina-1-36802-397232819ff9a47a7b7e80a40613cfe1&title=%E5%8F%8C12%E6%8A%BD%E5%A5%96%EF%BC%8C%E8%B5%A2%E5%8F%96%E8%B6%85%E5%80%BC%E8%B1%AA%E5%8D%8E%E5%A4%A7%E5%B0%86%20-%20%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%B0%B1%E6%98%AF%E8%BF%99%E4%B9%88%E4%BB%BB%E6%80%A7%EF%BC%81&appkey=1343713053&searchPic=false&pic=http://www.ttgg.com/static/default/images/topic/800x400CJ.jpg&searchPic=false" title="分享到新浪微博"></a>
+              </div>
+              <!--抽奖模块-->
+              <div class="w-game">
+                <div class="start-btn" id="startBtn" >6</div>
+                <div class="g-prize g-prize1"></div>
+                <div class="g-prize g-prize2"></div>
+                <div class="g-prize g-prize3"></div>
+                <div class="g-prize g-prize4"></div>
+                <div class="g-prize g-prize5"></div>
+                <div class="g-prize g-prize6"></div>
+                <div class="g-prize g-prize7"></div>
+                <div class="g-prize g-prize8"></div>
+                <div class="g-prize g-prize9"></div>
+                <div class="g-prize g-prize10"></div>
+                <div class="g-prize g-prize11"></div>
+                <div class="g-prize g-prize12"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-container">
+          <!--奖品盒-->
+          <div class="info-boxs">
+            <div class="info-box">
+              <img src="/static/default/images/topic/info_box1.png" alt=""/>
+              <a id="box1" href="javascript:void(0);" title="点击查看详情"></a>
+            </div>
+            <div class="info-box">
+              <img src="/static/default/images/topic/info_box2.png" alt=""/>
+              <a id="box2" href="javascript:void(0);" title="点击查看详情"></a>
+            </div>
+            <div class="info-box">
+              <img src="/static/default/images/topic/info_box3.png" alt=""/>
+            </div>
+            <div class="info-box">
+              <img src="/static/default/images/topic/info_box4.png" alt=""/>
+            </div>
+          </div>
+          <div class="info-details">
+            <div class="details1-1">
+              <a href="javascript:void(0);" class="btn1" id="btn1">查看详情</a>
+              <a href="javascript:void(0);" class="btn2" id="btn2">查看详情</a>
+            </div>
+            <div class="details1-2"></div>
+            <div class="details2-1" id="details2-1"></div>
+            <div class="details2-2"></div>
+            <div class="details3-1" id="details3-1"></div>
+            <div class="details3-2"></div>
+          </div>
+        </div>
+      </div>
+
+      {include file='footer.phtml'}
+    </body>
+    {include file='after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#startBtn').click(function(){
+    dialog('<h1>亲，抽奖已经结束了咯~~</h1><h2>让我们愉快地玩耍吧！</h2><a href="{url('user/checkin')}" class="button btn1 close">去签到页</a><a href="{url('topic/yuanwang.html')}" class="button btn1 close" style="margin-right:0;">马上许愿</a>').open();
+  });
+});
+   //抽奖开始
+ //   function start(){
+ //    if ($('#dazhao').val() == 1 && $('#scores').val()<10) {
+ //        dialog(
+ //        '<h2 style="margin-bottom:10px;">很遗憾，您当前积分不够10积分</h2>' +
+ //        '<h2 style="margin-bottom:10px;">无法抽奖！</h2>' +
+ //        '<p class="big-p">登录、签到、分享商品、评论商品都可以挣积分喔~~</p>' + 
+ //        '<a href="/" class="button btn1">去逛逛双十二</a>' +
+ //        '&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url('user/score')}" class="button btn1" target="_blank">去挣取积分</a>'
+ //        ).open();
+ //      return;
+ //    };
+ // if($('#double').val()=='1'){
+ //    $('#double').attr("value",0);
+
+ //    $.ajax(
+ //    {
+ //     type: "GET",
+ //     url: "/product/callback",
+ //     dataType: "json",
+ //     async:false,
+ //     success: function(data){
+ //      $('#startBtn').text(data['result']);
+ //      $('#scores').attr("value",data['scores']);
+ //      $('#alert').attr("value",0);
+ //      $('#dazhao').attr("value",1);
+ //    },
+ //    error: function()
+ //    {
+ //    }
+ //  }
+ //  );
+
+ //    /**抽奖控制方法**/
+ //      var locate = 1;   //当前位置，默认为1，即左上角第一个位置
+ //      var timeRcorder = 0;  //记录替换性跳动的次数
+ //      //ajax获得结果
+
+ //      var newLocate = parseInt($('#startBtn').text());    //新的停放位置，从序号1至12
+
+ //      var runTime = parseInt(36 + newLocate - (2 * locate) + 1);
+
+ //      var timer2;   //点击事件触发的循环计时器
+
+ //      function singleRun(n) {
+ //        //执行一次替换性的跳动
+ //        n0 = n - 1;   //前一个方框
+ //        if(n0 == 0) {   //使队列链化
+ //          n0 = 12;
+ //        }
+ //        $('.g-prize' + n).show();
+ //        $('.g-prize' + n0).hide();
+ //      }
+
+
+
+ //      function startRun(run) {
+ //        //触发跳动事件
+ //        singleRun(locate);
+ //        locate ++;
+ //        timeRcorder ++;
+ //        if(locate == 13) {    //使队列链化
+ //          locate = 1;
+ //        }
+ //        if(timeRcorder > runTime) {
+ //          clearInterval(timer2);
+ //          timeRcorder = 0;    //计数器重新置零
+ //          locate = 1; //重置开始位置为第一个位置，即左上角第一个位置
+ //          $('#double').attr("value",1);
+ //          switch($('#startBtn').text())
+ //          {
+ //            case '1':
+ //            dialog(
+ //              '<h1>不得了啦！恭喜您抽中8天7夜港泰游~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">您这么牛，你妈妈知道吗！<br>赶紧填写以下信息，好让小伙伴联系您！！！</p>' +
+ //              '<div class="dream-input"><div class="input-item"><label>姓名：</label><input type="text" value=""/></div>' +
+ //              '<div class="input-item"><label>电话：</label><input type="text" value=""/></div>' +
+ //              '<div class="input-item"><label>地址：</label><input type="text" value=""/></div></div>' +
+ //              '<a href="" target="_blank" class="button close">确定提交</a>'
+ //              ).open();
+ //            break;
+ //            case '2':
+ //            dialog(
+ //              '<h1>恭喜您抽中5积分~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">又中奖了！传说中的吉星高照？！那赶紧再抽几把！！！</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '3':
+ //            dialog(
+ //              '<h1>恭喜您抽中20积分~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">又中奖了！传说中的吉星高照？！那赶紧再抽几把！！！</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '4':
+ //            dialog(
+ //              '<h1>不得了啦！恭喜您抽中4天3夜港澳游~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">您这么牛，你妈妈知道吗！<br>赶紧填写以下信息，好让小伙伴联系您！！！</p>' +
+ //              '<div class="dream-input"><div class="input-item"><label>姓名：</label><input type="text" value=""/></div>' +
+ //              '<div class="input-item"><label>电话：</label><input type="text" value=""/></div>' +
+ //              '<div class="input-item"><label>地址：</label><input type="text" value=""/></div></div>' +
+ //              '<a href="" target="_blank" class="button close">确定提交</a>'
+ //              ).open();
+ //            break;
+ //            case '5':
+ //            dialog(
+ //              '<h1>恭喜您抽中50积分~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">又中奖了！传说总的吉星高照？！那赶紧再抽几把！！！</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '6':
+ //            dialog(
+ //              '<h1>很遗憾，没能中奖。剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">没给邻居弟弟发糖吃吧？难怪这次没中奖~~</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '7':
+ //            dialog(
+ //              '<h1>恭喜您抽中20积分~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">又中奖了！传说总的吉星高照？！那赶紧再抽几把！！！</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '8':
+ //            dialog(
+ //              '<h1>恭喜您抽中5积分~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">又中奖了！传说总的吉星高照？！那赶紧再抽几把！！！</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '9':
+ //            dialog(
+ //              '<h1>不得了啦！恭喜您抽中4天3夜港澳游~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">您这么牛，你妈妈知道吗！<br>赶紧填写以下信息，好让小伙伴联系您！！！</p>' +
+ //              '<div class="dream-input"><div class="input-item"><label>姓名：</label><input type="text" value=""/></div>' +
+ //              '<div class="input-item"><label>电话：</label><input type="text" value=""/></div>' +
+ //              '<div class="input-item"><label>地址：</label><input type="text" value=""/></div></div>' +
+ //              '<a href="" target="_blank" class="button close">确定提交</a>'
+ //              ).open();
+ //            break;
+ //            case '10':
+ //            dialog(
+ //              '<h1>恭喜您抽中20积分~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">又中奖了！传说总的吉星高照？！那赶紧再抽几把！！！</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '11':
+ //            dialog(
+ //              '<h1>恭喜您抽中50积分~剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">又中奖了！传说总的吉星高照？！那赶紧再抽几把！！！</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            case '12':
+ //            dialog(
+ //              '<h1>很遗憾，没能中奖。剩余积分：'+$('#scores').val()+'</h1>' +
+ //              '<p class="big-p">没给邻居弟弟发糖吃吧？难怪这次没中奖~~</p>' +
+ //              '<a href="javascript:void(0);" onclick="start()" class="button btn1 close">再抽一次</a>' +
+ //              '<a href="javascript:void(0);" class="button btn2 close">稍后继续</a>'
+ //              ).open();
+ //            break;
+ //            default:
+ //            break;
+ //          }
+ //        }
+ //      }
+ //      timer2 = setInterval(startRun, 75);//抽奖结束
+ //    }
+ //  }
+
+ //    $(document).ready(function() {
+
+ //      /**页面内链接缓慢跳至**/
+ //      var details1Top = $('#details2-1').offset().top - 55;
+ //      var details2Top = $('#details3-1').offset().top - 55;
+ //      $('#box1').click(function() {
+ //        $('html, body').animate({ scrollTop : details1Top }, 300);
+ //        console.log(details1Top);
+ //      });
+ //      $('#box2').click(function() {
+ //        $('html, body').animate({ scrollTop : details2Top }, 300);
+ //      });
+ //      $('#btn1').click(function() {
+ //        $('html, body').animate({ scrollTop : details1Top }, 300);
+ //      });
+ //      $('#btn2').click(function() {
+ //        $('html, body').animate({ scrollTop : details2Top }, 300);
+ //      });
+
+      /**会员中奖榜列表无限滚动效果**/
+      function scroll(id) {
+        $(id).find('ul').animate({
+          'top' : '-=' + '50px'
+        }, 500, function() {
+          $(this).animate({ 'top' : '0' }, 0);
+          $(this).find('li:first-child').clone().appendTo(this);  //将当前列表第一条拷贝作为列表最后一条
+          $(this).find('li:first-child').remove();  //删除列表第一条
+        });
+      }
+      //控制自动向上滚动，以及鼠标移入时停止滚动
+      function autoScoll() {
+        var winTimer1 = setInterval(function() { scroll('#winList1') }, 2000);
+        var winTimer2 = setInterval(function() { scroll('#winList2') }, 2000);
+        var listCount1 = $('#winList1 ul li').length;
+        var listCount2 = $('#winList2 ul li').length;
+        //若列表小于4个，不设滚动效果
+        if(listCount1 < 4) {
+          clearInterval(winTimer1);
+        } else {
+          $('#winList1').hover(function() {
+            clearInterval(winTimer1);
+          }, function() {
+            winTimer1 = setInterval(function() { scroll('#winList1') }, 2000);
+          });
+        }
+        if(listCount2 < 4) {
+          clearInterval(winTimer2);
+        } else {
+          $('#winList2').hover(function() {
+            clearInterval(winTimer2);
+          }, function() {
+            winTimer2 = setInterval(function() { scroll('#winList2') }, 2000);
+          });
+        }
+      }
+      //触发会员中奖榜列表无限滚动事件
+      autoScoll();
+
+ //       //绑定抽奖按钮点击事件
+ //       $('#startBtn').click(function() {
+
+ //      //抽奖弹窗
+ //      {if !isLogin()}
+ //      dialog('<h1>亲，你还木有登录哦~~</h1><a href="{url('user/login')}" target="_blank" class="button close">马上登录</a>').open();
+ //      {/if}
+ //      {if isLogin()}
+
+ //      if ($('#dazhao').val() == 0) {
+ //      dialog(
+ //        '<h2>每天有一次免费抽奖机会哦！</h2>' +
+ //        '<h2>让我们愉快地玩耍吧！</h2>' +
+ //        '<a href="javascript:void(0);" onclick="start()"  class="button btn1 close">我要抽奖</a>' +
+ //        '<a href="javascript:void(0);" class="button btn2 close">取消抽奖</a>'
+ //        ).open();
+ //      }else  if ($('#scores').val() >= 10){
+ //     if($('#alert').val()=='1'){
+ //      dialog(
+ //        '<h2>抽奖提示：剩余积分：'+$('#scores').val()+'</h2>' +
+ //        '<h2>每次抽奖将消耗10积分！</h2>' +
+ //        '<a href="javascript:void(0);" onclick="start()"  class="button btn1 close">继续抽奖</a>' +
+ //        '<a href="javascript:void(0);" class="button btn2 close">取消抽奖</a>' +
+ //        '<div class="no-alert"><input type="checkbox" value="neveralert" checked/>不再提示</div>'
+ //        ).open();
+ //       }
+ //       else{
+ //        start();
+ //       }
+
+ //      }
+
+ //      else if ($('#scores').val() < 10){
+ //      dialog(
+ //        '<h2 style="margin-bottom:10px;">很遗憾，您当前积分不够10积分</h2>' +
+ //        '<h2 style="margin-bottom:10px;">无法抽奖！</h2>' +
+ //        '<p class="big-p">登录、签到、分享商品、评论商品都可以挣积分喔~~</p>' + 
+ //        '<a href="/" class="button btn1">去逛逛双十二</a>' +
+ //        '&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url('user/score')}" class="button btn1" target="_blank">去挣取积分</a>'
+ //        ).open();
+ //    }
+
+ //      // dialog(
+ //      //   '<h2>快分享给小伙伴们看看，<br>让他们都来仰慕下吧~</h2>' +
+ //      //   '<div>分享至：</div>'
+ //      // ).open();
+
+ //       {/if}
+
+ //     });
+
+
+
+
+
+ //     });
+    </script>
+    </html>

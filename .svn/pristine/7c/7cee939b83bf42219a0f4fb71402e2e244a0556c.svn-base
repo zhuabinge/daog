@@ -1,0 +1,184 @@
+
+<div class="row row-bg">
+  <div class="col-sm-6 col-md-3">
+    <div class="statbox widget box box-shadow">
+      <div class="widget-content">
+        <div class="visual cyan">
+          <i class="icon-user"></i>
+        </div>
+        <div class="title">注册量（{$dashboard->date|default:0}）</div>
+        <div class="value">{$dashboard->register->reg_count|default:0}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="statbox widget box box-shadow">
+      <div class="widget-content">
+        <div class="visual green">
+          <i class="icon-bell-alt"></i>
+        </div>
+        <div class="title">登录量（{$dashboard->date|default:0}）</div>
+        <div class="value">{$dashboard->login->login_count|default:0}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="statbox widget box box-shadow">
+      <div class="widget-content">
+        <div class="visual yellow">
+          <i class="icon-star"></i>
+        </div>
+        <div class="title">集分宝总数</div>
+        <div class="value">{$dashboard->jf_count|default:0}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="statbox widget box box-shadow">
+      <div class="widget-content">
+        <div class="visual purple">
+          <i class="icon-user">
+          </i>
+        </div>
+        <div class="title">用户总量</div>
+        <div class="value">{$dashboard->user_count|default:0}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div id="container_user" style="min-width:300px;height:400px"></div>
+  </div>
+  <div class="col-md-4">
+    <div id="container_jf" style="min-width:300px;height:400px"></div>
+  </div>
+  <div class="col-md-4">
+    <div id="container_page" style="min-width:300px;height:400px"></div>
+  </div>
+</div>
+
+
+<script>
+$(function(){
+  $('#container_user').highcharts({
+      chart: {
+        type: 'area'
+      },
+      title: {
+        text: '用户活跃度报表'
+      },
+      xAxis: {
+        categories: [{$infodash['date']} ,{$dashboard->date|default:0}],
+      },
+      yAxis: {
+        title: { text: '' }
+      },
+      tooltip: {
+        shared: true
+      },
+      credits: {
+        enabled: false
+      },
+      plotOptions: {
+        areaspline: {
+          fillOpacity: 1
+        }
+      },
+      series: [{
+        name: '用户总量',
+        data: [{$infodash['users_count']} ,{$dashboard->user_count|default:0}]
+      }, {
+        name: '注册量',
+        data: [{$infodash['users_incre']} ,{$dashboard->register->reg_count|default:0}]
+      }, {
+        name: '登录量',
+        data: [{$infodash['login_count']} ,{$dashboard->login->login_count|default:0}]
+      }, {
+        name: '评论总数',
+        data: [{$infodash['comments_count']} ,{$dashboard->comment_count|default:0}]
+      }, {
+        name: '签到量',
+        data: [{$infodash['checkins_count']} ,{$dashboard->checkins_count|default:0}]
+      }]
+  });
+
+  $('#container_jf').highcharts({
+    chart: {
+      type: 'area'
+    },
+    title: {
+      text: '积分报表'
+    },
+    xAxis: {
+      categories: [{$infodash['date']} ,{$dashboard->date|default:0}],
+    },
+    yAxis: {
+      title: { text: '' }
+    },
+    tooltip: {
+      shared: true
+    },
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      areaspline: {
+        fillOpacity: 1
+      }
+    },
+    series: [{
+      name: '积分总数',
+      data: [{$infodash['scores_amount']} ,{$dashboard->scores_count|default:0}]
+    }, {
+      name: '积分增量',
+      data: [{$infodash['scores_incre']} ,{$dashboard->scores_incre|default:0}]
+    }, {
+      name: '集分宝总数',
+      data: [{$infodash['jf_amount']} ,{$dashboard->jf_count|default:0}]
+    }, {
+      name: '集分宝增量',
+      data: [{$infodash['jf_incre']} ,{$dashboard->jf_incre|default:0}]
+    }]
+  });
+
+  $('#container_page').highcharts({
+    chart: {
+      type: 'area'
+    },
+    title: {
+      text: '页面浏览量报表'
+    },
+    xAxis: {
+      categories: [{$infodash['date']} ,{$dashboard->date|default:0}],
+    },
+    yAxis: {
+      title: { text: '' }
+    },
+    tooltip: {
+      shared: true
+    },
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      areaspline: {
+        fillOpacity: 1
+      }
+    },
+    series: [
+    // {
+    //   name: 'PV',
+    //   data: [{$infodash['page_views']} ,{$online->today->nb_visits|default:0}]
+    // }, {
+    //   name: 'UV',
+    //   data: [{$infodash['unique_vistors']} ,{$online->today->nb_uniq_visitors|default:0}]
+    // }, 
+    {
+      name: '点击量',
+      data: [{$infodash['item_clicks']} ,{$dashboard->item_clicks|default:0}]
+    }]
+  });
+});
+</script>

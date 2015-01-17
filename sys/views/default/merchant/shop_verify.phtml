@@ -1,0 +1,127 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="我的账户"}
+
+  <div class="container">
+    {include file='merchant/user_sidebar.phtml' match="店铺信息"}
+
+    <div class="main">
+      <h2>认证店铺</h2>
+      <div class="step">
+        <ul>
+          <li class="s-box1 {if $step == '1'}blue{/if}">账号认证</li>
+          <li class="s-box2 {if $step == '2'}blue{/if}">完善信息</li>
+          <li class="s-box3 {if $step == '3'}blue{/if}">认证成功</li>
+        </ul>
+        {if $step == '1'}
+        <div class="step3-1"></div>
+        {/if}
+        {if $step == '2'}
+        <div class="step3-2"></div>
+        {/if}
+        {if $step == '3'}
+        <div class="step3-3"></div>
+        {/if}
+
+      </div>
+       {if $step == '1'}
+      <p class="warning">在店铺任意一件商品标题后面添加验证码，提交商品链接进行认证。完成认证后再删除标题后的验证码。</p>
+      <p class="s-title">添加验证码示意图：</p>
+      <div class="example-pic">
+        <i class="code">ffWdc9A7</i>
+      </div>
+      <div class="input-area">
+        <form action='{url('merchant/user/shop_verify')}' method='post' id="submit">
+          <div>
+            <label class="indent1">验证码：</label>
+            <span class="color">ffWdc9A7</span>
+          </div>
+          <div>
+            <label>商品链接：</label>
+            <input name='url' type="text" value="http://" class="long-input">
+            {if isset($message) && $message}
+            <div class="error"><i></i>{$message}</div>
+            {/if}
+          </div>
+          <input type="submit" value="我要报名" class="btn3">
+          <input type='hidden' name='step' value='1' />
+        </form>
+      </div>
+      {/if}
+
+      {if $step == '2'}
+      <div class="input-area">
+        <form action='{url('merchant/user/shop_verify')}' method='POST'>
+          <input type='hidden' name='step' value='2' />
+          <div>
+            <label>店铺名称：</label>
+            {$shop_name}
+            <input name='shopName' type="hidden" value='{$shop_name}' readonly/>
+          </div>
+          <div>
+            <label>掌 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  柜：</label>
+            {$seller}
+            <input name='seller' type="hidden" value='{$seller}' readonly/>
+          </div>
+          <div>
+            <label>店铺类型：</label>
+            {if $merchant_type==C}淘宝{else}天猫{/if}
+            <input name='merchantType' type="hidden" value='{if $merchant_type==C}C{else}B{/if}' readonly/>
+          </div>
+          <div>
+            <label>主营类目：</label>
+            <select name="category">
+            {if isset($cateList) && $cateList}
+              {foreach $cateList as $sa}
+              <option vale='{$sa->cid}'>{$sa->name|escape}</option>
+              {/foreach}
+            {/if}
+            </select>
+          </div>
+          <div>
+            <label>店铺地址：</label>
+            {$shop_url}
+            <input name='shopUrl' type="hidden" value='{$shop_url}' readonly>
+            <input name='shopId' type="hidden" value='{$shop_sid}' readonly>
+          </div>
+
+          <input type="submit" value="我要报名" class="btn3">
+        </form>
+      </div>
+      {/if}
+      {if $step == '3'}
+      <div class="change-pwd">
+        {if isset($msg) && $msg}
+          <p style="color:red;">{$msg}</p><br>
+        {else}
+          <p>店铺验证已完成；</p><br>
+          <p>前往商品报名中心<a href="{url('merchant')}">【商家报名】</a></p><br>
+          <p>前往安全中心设置支付密码<a href="{url('merchant/user/password')}">【账号安全】</a></p><br>
+          <p>前往资金中心，缴纳保证金<a href="{url('merchant/user/funds')}">【资金管理】</a></p><br>
+        {/if}
+      </div>
+      {/if}
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+<script type="text/javascript">
+function isEmpy(str) {
+  if ( str == '' || str == null) return true;
+  var regu = '^[ ]+$';
+  var re = new RegExp(regu);
+  return re.test(str);
+}
+$(document).ready(function(){
+  $('#submit').submit(function(e) {
+    if (isEmpy($(this).find("input[name='url']").val())) {
+      e.preventDefault();
+      dialog('<h1>链接地址有错误，请重试！</h1><input type="button" class="button close" value="我知道了">').open();
+    } else {
+      $(this).find('.btn3').attr('value', '抓取中..');
+      $(this).find('.btn3').attr('type', 'button');
+    };
+  });
+});
+</script>
+</html>

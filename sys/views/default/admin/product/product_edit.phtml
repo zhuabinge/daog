@@ -1,0 +1,460 @@
+{include file='admin/before_body.phtml' title='商品管理'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+
+  {$pid = $product->pid|default:''}
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/product')}">商品管理</a></li>
+          <li class="current">{if $pid}修改{else}添加{/if}商品</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>
+                <i class="icon-reorder"></i>
+              </h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/product/edit/'|cat:$pid)}" method="POST"  enctype="multipart/form-data">
+                <input type="hidden" name="files" id="files" value="{json_encode(array_keys($product->images|default:array()))}">
+                <input type="hidden" name="cover" id="cover" value="">
+                <input type="hidden" name="edit_status" id="edit_status" value="0">
+                <input type="hidden" name="data" value='{$product->data|default:""}'>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    商品所属类目：
+                  </label>
+                  <div class="col-md-9 clearfix">
+                    <select name="parent_cid" class="input-width-large select2 required" id="sel1" data-cid="{if isset($category->parent_cid) && $category->parent_cid != 0}{$category->parent_cid}{elseif isset($category->cid)}{$category->cid}{/if}" data-selected="{$product->cid|default:0}" data-tree="{json_encode($categoryList)|escape}">
+                      <option value="0">请选择</option>
+                      {if isset($categoryList) && $categoryList}
+                        {foreach $categoryList as $sa}
+                          <option value="{$sa->cid}"{if $sa->cid == $category->parent_cid|default:0 || $sa->cid == $category->cid|default:0} selected="selected"{/if}>{$sa->name|escape}</option>
+                        {/foreach}
+                      {/if}
+                    </select>&nbsp;
+                    <select name="cid" class="input-width-large select2" id="sel2"><option value="0">请选择</option></select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商品标题：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="title" value="{$product->title|default:''|escape}" class="form-control input-width-xxlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    促销标题：
+                  </label>
+                  <div class="col-md-9">
+                    <textarea rows="5" cols="5" name="feature" id="pub_content" maxlength="70" class="form-control input-width-xxlarge">{$product->feature|default:''|escape}</textarea>
+                    <BR>文字输入，请勿超越<span id="Num">0</span>/70个字符
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商品正文：
+                  </label>
+                  <div class="col-md-8">
+                    <!-- 百度编辑器 -->
+                  <div><!--覆盖bootstrap的样式,控制文本编辑器的下拉条-->
+                    <link rel="stylesheet" type="text/css" href="{$tpldir}/js/umeditor/themes/default/css/umeditor.min.css"/>
+                    <style type="text/css">.edui-editor-body .edui-body-container{ padding: 0; }</style>
+                    <!-- 加载编辑器的容器 -->
+                    <!-- 从数据库中取出文章内容打印到此处 -->
+                    <script id="myEditor" name="body" type="text/plain" style="width:100%;height:600px;">{$product->body|default:''}</script>
+                  </div>
+                    <!-- <textarea rows="5" cols="5" name="body" class="form-control input-width-xxlarge required">{$product->body|default:''|escape}</textarea> -->
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商品链接：
+                  </label>
+                  <div class="col-md-8">
+                    <textarea rows="5" cols="5" name="url" class="form-control required url">{$product->url|default:''|escape}</textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商品市场价：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="list_price" value="{$product->list_price|default:''}" class="form-control input-width-small required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商品销售价：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="sell_price" value="{$product->sell_price|default:''}" class="form-control input-width-small required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    标签：
+                  </label>
+                  <div class="col-md-8">
+                    <input name="tags" value="{$productTags|default:''}" class="select2-select-02 full-width-fix" multiple data-placeholder="输入您所需要的标签" type="hidden">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    频道：
+                  </label>
+                  <div class="col-md-8">
+                   <select name="channels[]" class="select2-select-00 full-width-fix" multiple>
+                     {foreach $channelsList|default:array() as $channelId => $channelName }
+                       <option value="{$channelId}" {if in_array($channelId, $productChannels|default:array())}selected="selected"{/if} >
+                        {$channelName}
+                       </option>
+                     {/foreach}
+                  </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    商品排序：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="sort" value="{$product->sort|default:0}" class="form-control input-width-small required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 商品图片：
+                  </label>
+                  <div class="col-md-8">
+                    <div class="dropzone"></div>
+                    <p class="help-block">
+                      仅限上传图片
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    排期时间：
+                  </label>
+                  <div class="col-md-9" style="z-index:999;">
+                    <input class="form-control input-width-large datepicker-gud" type="text" size="30" name="scheduling" value="{$product->scheduling|date_format:'Y-m-d G:i'|default:0}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    结束时间：
+                  </label>
+                  <div class="col-md-9" style="z-index:999;">
+                    <input class="form-control input-width-large datepicker" type="text" size="30" name="expired" value="{$product->expired|date_format:'Y-m-d G:i'|default:0}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 状态：
+                  </label>
+                  {$status = $product->status|default:'-1'}
+                  <div class="col-md-9">
+                    <select name="status" class="select2 input-width-xlarge" data-minimum-results-for-search="-1">
+                      <option value="0" {if $status == 0}selected{/if}>待审核</option>
+                      <option value="1" {if $status == 1}selected{/if}>已上线</option>
+                      <option value="2" {if $status == 2}selected{/if}>驳回</option>
+                      <option value="3" {if $status == 3}selected{/if}>已排期</option>
+                      <option value="4" {if $status == 4}selected{/if}>已下线</option>
+                      <option value="5" {if $status == 5}selected{/if}>已结束</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    橱窗广告：
+                  </label>
+                  {$is_ads = $product->is_ads|default:'-1'}
+                  <div class="col-md-9">
+                    <label class="checkbox-inline">
+                      <div class="checker">
+                        <input type="checkbox" class="uniform" name="is_ads" value="1"{if $is_ads == 1}checked{/if}>
+                      </div>推广
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary submit-all">
+                    <input type="submit" name="edit_status" value="保存并操作下一个商品" class="btn btn-primary submit-all">
+                    <input type="button" id="submit-preview" value="预览" class="btn">
+                    <a href="{url('admin/product')}" class="btn">返回商品列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="logs"></div>
+      <!-- /end -->
+
+    </div>
+  </div>
+</div>
+
+{include file='admin/after_body.phtml'}
+<style type="text/css">
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 40%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
+</style>
+<script type="text/javascript">
+var numNow = 0;
+var textLong;
+function addListener(element,e,fn){
+  if(element.addEventListener){
+    element.addEventListener(e,fn,false);
+  } else {
+    element.attachEvent("on" + e,fn);
+  }
+}
+var Textarea = document.getElementById("pub_content");
+addListener(Textarea,"keyup", function(){
+  var Value = document.getElementById("pub_content").value;
+  if(Value.length >= 70){
+    Value = document.getElementById("pub_content").innerHTML = Value.substr(0,70);
+  }
+  if( numNow >= 0 && numNow <= 70){
+    document.getElementById("Num").innerHTML = Value.length;
+  }
+});
+$(document).ready(function() {
+  $('.datepicker').datetimepicker({
+    dateFormat: 'yy-mm-dd',
+    dayNamesMin: [ "日", "一", "二", "三", "四", "五", "六" ],
+    monthNames: [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" ],
+    timeOnlyTitle: '选择时间',
+    timeText: '时间',
+    hourText: '小时',
+    minuteText: '分钟',
+    secondText: '秒钟',
+    millisecText: '毫秒',
+    microsecText: '微秒',
+    timezoneText: '时区',
+    currentText: '现在时间',
+    closeText: '确定',
+  });
+  $('.datepicker-gud').datetimepicker({
+    dateFormat: 'yy-mm-dd',
+    dayNamesMin: [ "日", "一", "二", "三", "四", "五", "六" ],
+    monthNames: [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" ],
+    timeOnlyTitle: '选择时间',
+    timeText: '时间',
+    hourText: '小时',
+    minuteText: '分钟',
+    secondText: '秒钟',
+    millisecText: '毫秒',
+    microsecText: '微秒',
+    timezoneText: '时区',
+    currentText: '现在时间',
+    closeText: '确定',
+    timeFormat: '10:00',
+  });
+  $('#logs').load('{url('admin/product/logs/'|cat:$pid)}');
+  $("#validate").validate({
+    messages:{
+      feature:"请输入不超过70个字符",
+      title:"商品标题填写错误，请输入内容",
+      body:"商品正文填写错误，请重新输入",
+      url:"商品链接填写错误，请重新输入",
+      list_price:"商品市场价填写错误",
+      sell_price:"商品销售价填写错误"
+    }
+  });
+  $(".select2-select-02").select2({
+    tags: {$tagsList}
+  });
+  $(".select2-select-00").select2({ allowClear:true });
+  var dSel1 = $('#sel1'), dSel2 = $('#sel2'), categoryList;
+  if (dSel1.length && dSel2.length) {
+    var categorylist = $.parseJSON(dSel1.attr('data-tree')), categoryCid = parseInt(dSel1.attr('data-cid'), 10), categorySelected = parseInt(dSel1.attr('data-selected'), 10);
+    if (categoryCid && categorylist[categoryCid].children) {
+      var found = false;
+      for (i in categorylist[categoryCid].children) {
+        cate = categorylist[categoryCid].children[i];
+        option = $('<option></option>');
+        option.val(cate.cid);
+        option.text(cate.name);
+        dSel2.append(option);
+        if (cate.cid == categorySelected) {
+          found = true;
+        }
+      }
+      dSel2.select2('val', found ? categorySelected : '0');
+    };
+    dSel1.change(function() {
+      dSel2.empty().append('<option value="0">请选择</option>');
+      var value = this.value, i, cate, option;
+      for (i in categorylist[value].children) {
+        cate = categorylist[value].children[i];
+        option = $('<option></option>');
+        if (cate.cid == categorySelected) {
+          option.attr('selected', 'selected');
+        }
+        option.val(cate.cid);
+        option.text(cate.name);
+        dSel2.append(option);
+      }
+      dSel2.select2('val', '0');
+    });
+  }
+
+  var dDropzone = $('.dropzone');
+  if (dDropzone.length) {
+    var coverFile;
+{if isset($product->images)}
+    coverFile = '{key($product->images)}';
+{/if}
+    try {
+      dDropzone.dropzone({
+        paramName: "image_path",
+        url: "{url('admin/product/dropfiles')}",
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 10,
+        maxFilesize: 2,
+        // maxFiles: 10,
+        addRemoveLinks : true,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
+        dictResponseError: '上传文件发生错误',
+        dictRemoveFile: '删除',
+        dictMaxFilesExceeded: '上传失败，超过上传限制',
+        init: function() {
+          var myDropzone = this;
+          myDropzone.on('addedfile', function(file) {
+            var btnSetCover = $('<a class="dz-cover">设为首图</a>');
+            if (typeof file.fid !== undefined && file.fid == coverFile) {
+              btnSetCover.addClass('selected');
+            }
+            btnSetCover.click(function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              dDropzone.find('> div.dz-preview > a.dz-cover.selected').removeClass('selected');
+              $(this).addClass('selected');
+              if (file.fid) {
+                coverFile = file.fid;
+              } else {
+                coverFile = file.name;
+              }
+            });
+            $(file.previewElement).append(btnSetCover);
+          });
+          myDropzone.on('successmultiple', function(files, response) {
+            var files, newfiles, i;
+            files = $.parseJSON($('#files').val());
+            newfiles = $.parseJSON(response);
+            for (i in newfiles) {
+              files.push(i);
+              if (newfiles[i] == coverFile) {
+                // 设为主图
+                $('#cover').val(i);
+              }
+            }
+            $('#files').val(JSON.stringify(files));
+            $('#validate').submit();
+          });
+          myDropzone.on('removedfile', function(file) {
+            var files = $.parseJSON($('#files').val()), newfiles = [], i;
+            for (i in files) {
+              if (files[i] != file.fid) {
+                newfiles.push(files[i]);
+              }
+            }
+            $('#files').val(JSON.stringify(newfiles));
+          });
+{foreach array_keys($product->images|default:array()) as $fid}
+{$sa = $productImagesList[$fid]}
+          var mockFile = { fid: {$sa->file_id}, name: "{$sa->org_filename}", size: {$sa->size} };
+          myDropzone.emit("addedfile", mockFile);
+          myDropzone.emit("thumbnail", mockFile, "{urlStatic($sa->file_path, 125, 125)}" );
+{/foreach}
+
+          $(".submit-all").click(function(e) {
+            e.preventDefault();
+            var result = $('#validate').valid();
+            if (result) {
+              if ($(this).val() != '保存') {
+                $('#edit_status').val(1);
+              };
+              if (myDropzone.getQueuedFiles().length) {
+                myDropzone.processQueue();
+              } else {
+                $('#cover').val(coverFile);
+                $('#validate').submit();
+              }
+            }
+          });
+        }
+      });
+    } catch(e) {
+      alert('批量上传图片不支持老版本浏览器，请更换浏览器重试');
+    }
+  }
+});
+</script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="{$tpldir}/js/umeditor/umeditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$tpldir}/js/umeditor/umeditor.min.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+  var um = UM.getEditor('myEditor');
+//iframe弹出层调用
+  $('#submit-preview').click(function(){
+    var images = new Array();
+    $("div.dz-image-preview").each(function(){
+      images.push($(this).find('.dz-details > img').attr('src'));
+    });
+    $.cookie('body', '', { expires: -1, path: '/' });
+    $.cookie('images', images , { expires: 1, path: '/' });
+    $.cookie('body', um.getContent().trim() , { expires: 1, path: '/' });
+    $.cookie('title', $('[name="title"]').val() , { expires: 1, path: '/' });
+    $.cookie('sell_price', $('[name="sell_price"]').val() , { expires: 1, path: '/' });
+    $.cookie('list_price', $('[name="list_price"]').val() , { expires: 1, path: '/' });
+    $.cookie('feature', $('[name="feature"]').val() , { expires: 1, path: '/' });
+    $.cookie('url', $('[name="url"]').val() , { expires: 1, path: '/' });
+    $.webox({
+      height:550,
+      width:1000,
+      bgvisibel:true,
+      title:'商品预览',
+      iframe:'{url('admin/product/preview')}'
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+{include file='admin/before_body.phtml' title='后台首页'}
+<body>
+
+<div id="container" class="sidebar-closed">
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li>{$ads->name}</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div id="dashboard-spinner">
+        <a href="{url($ads->url)}" target="_blank"><img src="{urlStatic($ads->image_path)}"></a>
+      </div>
+
+      
+  	  <div class="row">
+        {$time = $smarty.get.time|default:''}
+        <div class="col-md-12" style="margin-top:30px;">
+          <a href="{url('admin/ad/view/'|cat:$ads->aid)}" class="btn">今天</a>
+          {if $time == ''}
+            {$time = ($smarty.now|date_format:"%Y%m%d"-1)}
+          {else}
+            {$time = ($time - 1)}
+          {/if}
+          <a href="{url('admin/ad/view/'|cat:$ads->aid|cat:'?time='|cat:$time)}" class="btn">昨天</a>
+   <!--        <a href="{url('admin/ad/view/'|cat:$ads->aid|cat:'?time='|cat:$time|cat:'&day=7')}" class="btn">最近7天</a>
+          <a href="{url('admin/ad/view/'|cat:$ads->aid|cat:'?time='|cat:$time|cat:'&day=30')}" class="btn">最近30天</a> -->
+        </div>
+  	    <div class="col-md-12">
+  		    <div id="container_all" style="min-width:1000px;height:400px"></div>
+  		  </div>
+
+        <div class="col-md-12">
+          <div id="container_clicks" style="min-width:1000px;height:400px"></div>
+        </div>
+
+        <div class="col-md-12">
+          <div id="container_tclicks" style="min-width:1000px;height:400px"></div>
+        </div>
+  	  </div>
+      <!-- /end -->
+    </div>
+  </div>
+
+</div>
+{include file='admin/after_body.phtml'}
+
+<script>
+$(function(){
+  var pad2 = function(n) { return n < 10 ? ('0' + n) : n };
+  $('#container_all').highcharts({    
+    chart: {
+      type: 'area'
+    },
+    title: {
+      text: '展示数据概况'
+    },
+    xAxis: {
+      tickLength: 3,
+      labels: {
+        showLastLabel: false,
+        formatter: function() {
+          var d = new Date(this.value * 60000);
+          return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + pad2(d.getMinutes());
+        }
+      }
+    },
+    yAxis: {
+      title: {
+        text: '数量 / 分钟'
+      },
+      labels: {
+        align: 'left',
+        x: 0,
+        y: -2,
+        formatter: function() {
+          return Highcharts.numberFormat(this.value, 0);
+        }
+      }
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+      shared: true,
+      crosshairs: true,
+      formatter: function() {
+        var d = new Date(this.x * 60000), tip = '';
+        $.each(this.points, function() {
+          tip += '<br>' + this.series.name + ': <b>' + Highcharts.numberFormat(this.y, 0) + '</b>'
+        });
+        return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + pad2(d.getMinutes()) + tip;
+      }
+    },
+    plotOptions: {
+      area: {
+        pointStart: {$strtotime},
+        pointInterval: 1,
+        lineWidth: 1,
+        states: { hover: { lineWidth: 1}},
+        marker: {
+          enabled: false,
+          symbol: 'circle',
+          radius: 1,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        }
+      }
+    },
+    series: [{
+      name: '昨天',
+      data: [{$yestInfodash['views']}],
+      color: '#f8cdc4'
+    }, {
+      name: '今天',
+      data: [{$infodash['views']}],
+      color: '#48bef4'  
+    }]
+  });
+
+  $('#container_tclicks').highcharts({    
+    chart: {
+      type: 'area'
+    },
+    title: {
+      text: 'UV数据概况'
+    },
+    xAxis: {
+      tickLength: 3,
+      labels: {
+        showLastLabel: false,
+        formatter: function() {
+          var d = new Date(this.value * 60000);
+          return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + pad2(d.getMinutes());
+        }
+      }
+    },
+    yAxis: {
+      title: {
+        text: '数量 / 分钟'
+      },
+      labels: {
+        align: 'left',
+        x: 0,
+        y: -2,
+        formatter: function() {
+          return Highcharts.numberFormat(this.value, 0);
+        }
+      }
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+      shared: true,
+      crosshairs: true,
+      formatter: function() {
+        var d = new Date(this.x * 60000), tip = '';
+        $.each(this.points, function() {
+          tip += '<br>' + this.series.name + ': <b>' + Highcharts.numberFormat(this.y, 0) + '</b>'
+        });
+        return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + pad2(d.getMinutes()) + tip;
+      }
+    },
+    plotOptions: {
+      area: {
+        pointStart: {$strtotime},
+        pointInterval: 1,
+        lineWidth: 1,
+        states: { hover: { lineWidth: 1}},
+        marker: {
+          enabled: false,
+          symbol: 'circle',
+          radius: 1,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        }
+      }
+    },
+    series: [{
+      name: '昨天',
+      data: [{$yestInfodash['tclicks']}],
+      color: '#f8cdc4'  
+    }, {
+      name: '今天',
+      data: [{$infodash['tclicks']}],
+      color: '#48bef4'  
+    }]
+  });
+
+  $('#container_clicks').highcharts({    
+    chart: {
+      type: 'area'
+    },
+    title: {
+      text: '点击数据概况'
+    },
+    xAxis: {
+      tickLength: 3,
+      labels: {
+        showLastLabel: false,
+        formatter: function() {
+          var d = new Date(this.value * 60000);
+          return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + pad2(d.getMinutes());
+        }
+      }
+    },
+    yAxis: {
+      title: {
+        text: '数量 / 分钟'
+      },
+      labels: {
+        align: 'left',
+        x: 0,
+        y: -2,
+        formatter: function() {
+          return Highcharts.numberFormat(this.value, 0);
+        }
+      }
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+      shared: true,
+      crosshairs: true,
+      formatter: function() {
+        var d = new Date(this.x * 60000), tip = '';
+        $.each(this.points, function() {
+          tip += '<br>' + this.series.name + ': <b>' + Highcharts.numberFormat(this.y, 0) + '</b>'
+        });
+        return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + pad2(d.getMinutes()) + tip;
+      }
+    },
+    plotOptions: {
+      area: {
+        pointStart: {$strtotime},
+        pointInterval: 1,
+        lineWidth: 1,
+        states: { hover: { lineWidth: 1}},
+        marker: {
+          enabled: false,
+          symbol: 'circle',
+          radius: 1,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        }
+      }
+    },
+    series: [{
+      name: '昨天',
+      data: [{$yestInfodash['clicks']}],
+      color: '#f8cdc4'  
+    }, {
+      name: '今天',
+      data: [{$infodash['clicks']}],
+      color: '#48bef4'   
+    }]
+  });
+});
+</script>
+</html>

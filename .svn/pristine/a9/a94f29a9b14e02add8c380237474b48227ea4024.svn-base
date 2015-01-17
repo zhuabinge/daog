@@ -1,0 +1,126 @@
+{include file='before_body.phtml' title='天天逛逛登陆注册页'}
+	<body>
+		<div id="wrapper">
+			<div class="scroller">
+				<header>
+					<h1>登录</h1>
+					<a class="back" href="javascript:window.history.back();"></a>
+					<a class="head-fr" href="">注册</a>
+				</header>
+				<div class="login">
+					<div class="title">
+						<h2>天天逛逛账号登录</h2>
+					</div>
+					<form action="" id="login" name="login" method="POST">
+						<div class="opt-box">
+							<div class="opt-group">
+								<label for="loginName" class="lg-name">
+									<i></i>
+								</label>
+								<div class="opt">
+									<input type="text" id="loginName" name="username" placeholder="输入手机/昵称">
+								</div>
+							</div>
+							<div class="opt-group">
+								<label for="loginPwd" class="lg-pwd">
+									<i></i>
+								</label>
+								<div class="opt">
+									<input type="password" id="loginPwd" name="password" placeholder="输入密码">
+								</div>
+							</div>
+						</div>
+						<input type="submit" class="btn" value="登录">
+					</form>
+					<p class="p-right">
+						<a target="_blank" href="">忘记密码？</a>
+					</p>
+					<div class="title t-blow">
+						<h2>第三方账号快速登录</h2>
+					</div>
+					<div class="btn-below">
+						<a target="_blank" href="{url('user/qqLogin')}">
+							<i></i>
+							<span>QQ登录</span>
+						</a>
+					</div>
+				</div>
+				<footer>
+					<a id="backTop" href="javascript:void(0);">
+						<i></i>
+					</a>
+				</footer>
+			</div>
+		</div>
+{include file='after_body.phtml'}
+<script>
+$(function () {
+  $('#login').submit(function() {
+    var from = $(this), error = false,
+    username = from.find("input[name='username']"),
+    password = from.find("input[name='password']");
+    $('.from-msg').remove();
+    if (isEmpy(username.val())) {
+      appendMsg(username, '用户名不能为空', 'error');
+      error = true;
+    }
+    if (isEmpy(password.val())) {
+      appendMsg(password, '密码不能为空', 'error');
+      error = true;
+    }
+    if (error){
+      return false;
+    }
+  });
+
+  $('#regist').submit(function() {
+    var from = $(this), error = false,
+    username = from.find("input[name='username']"),
+    email = from.find("input[name='email']"),
+    captcha = from.find("input[name='captcha']"),
+    repassword = from.find("input[name='repassword']"),
+    password = from.find("input[name='password']");
+    $('.from-msg').remove();
+    if (isEmpy(username.val())) {
+      appendMsg(username, '用户名不能为空', 'error');
+      error = true;
+    } else if(!username.val().match(/\w{0,16}/)) {
+        appendMsg(username, '用户名只能由字母或下划线或数字组合哦,最长只能16位', 'error');
+        error = true;
+    } else {
+        appendMsg(username, '', 'success');
+    }
+
+    if (isEmpy(password.val())) {
+      appendMsg(password, '密码不能为空', 'error');
+      error = true;
+    } else if (!password.val().match(/\w{6,20}/)) {
+      appendMsg(password, '只能由6~20位的字母或下划线或数字组合', 'error');
+      error = true;
+    }  else {
+      appendMsg(password, '', 'success');
+      if (password.val() === repassword.val()) {
+        appendMsg(repassword, '', 'success');
+      } else {
+        appendMsg(repassword, '两次密码不一样', 'error');
+        error = true;
+      }
+    }
+
+    if (!isEmpy(email.val()) && !isEmail(email.val())){
+      appendMsg(email, '邮箱地址格式不正确', 'error');
+      error = true;
+    }
+
+    if (isEmpy(captcha.val())) {
+      appendMsg(captcha, '验证码不能为空', 'error');
+      error = true;
+    }
+    if (error){
+      return false;
+    }
+  });
+});
+</script>
+	</body>
+</html>

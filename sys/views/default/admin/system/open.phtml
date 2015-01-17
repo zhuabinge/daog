@@ -1,0 +1,93 @@
+{include file='admin/before_body.phtml' title='积分设置'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='system_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/system')}">系统设置</a></li>
+          <li class="current">开放平台信息设置</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4><i class="icon-reorder"></i> 开放平台信息设置</h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">APP ID：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="appid" value="{$appid}" class="form-control input-width-medium required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">APP KEY：</label>
+                  <div class="col-md-9">
+                    <input type="text" name="appkey" value="{$appkey}" class="form-control input-width-xxlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">百度统计：</label>
+                  <div class="col-md-9">
+                    <textarea rows="5" cols="5" name="baidu" class="form-control input-width-xxlarge">{$baidu}</textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">营销QQ代码：</label>
+                  <div class="col-md-9">
+                    <textarea rows="5" cols="5" name="wpaqq" class="form-control input-width-xxlarge">{$wpaqq}</textarea>
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#validate").validate({
+    messages:{
+      appid: 'APP ID 不能为空',
+      appkey: 'APP KEY 不能为空',
+    }
+  });
+});
+function switchTab(ProTag, ProBox) {
+  for (i = 1; i < 3; i++) {
+    if ("con" + i == ProBox) {
+      document.getElementById(ProBox).style.display = "";
+    } else {
+      document.getElementById("con" + i).style.display = "none";
+    }
+  }
+}
+</script>
+</html>

@@ -1,0 +1,51 @@
+{include file='before_body.phtml'}
+{literal}
+<style>
+.error{width:570px;height:320px;margin-left:-285px;margin-top:-200px;position:absolute;top:50%;left:50%;font-family:"微软雅黑"}
+.error .content{padding: 120px 0 0 300px; font-size: 24px; }
+.error .content strong{display: block; color: #43ac2c;}
+.error .content p{font-size: 12px; padding: 10px 0;}
+.error .fh{margin:60px 0 0; padding: 0 10px; line-height: 32px; border-top: 1px solid #ddd;}
+</style>
+{/literal}
+<body style="overflow:hidden;background:#fff;">
+<div class="error" style="background:url({url('static/default/images/error_bg.jpg')}) no-repeat">
+  <div class="content">
+    <strong>你逛错了啦！</strong>
+    <strong>你要逛的页面不存在！</strong>
+    <p><a href="{url('')}">返回首页</a> | 系统将在 <span id="timer">5</span> 秒自动返回首页</p>
+  </div>
+  <div class="fh">
+    <a href="{url('')}">首页</a> |
+    <a href="{url('topic/99m.html')}">9块9包邮</a> |
+    <a href="{url('topic/20t.html')}">20元封顶</a> |
+    <a href="{url('user/center')}">个人中心</a> |
+    <a href="{url('user/score')}">我的积分</a> |
+    <a href="{url('user/score')}">积分兑换</a> |
+    <a href="{url('help.html')}">帮助中心</a> |
+    <a href="{url('user/checkin')}">签到送礼</a>
+  </div>
+</div>
+{if BpfConfig::get('debug', false)}
+<fieldset style="color:#f00;position:relative;top:10px;left:10px;z-index:1000;background:#fff">
+  <legend><a href="javascript:void(0)" onclick="$(this).parent().next().toggle()"><i class="icon-search"></i> 调试信息</a></legend>
+  <pre style="display:none;font-family:Courier New,monospace;line-height:150%">{$exception}</pre>
+</fieldset>
+{/if}
+</body>
+{include file='after_body.phtml'}
+{if !BpfConfig::get('debug', false)}
+<script type="text/javascript">
+var funcTimer = function() {
+  var jumpTo = document.getElementById('timer').innerHTML
+  if (--jumpTo < 0) {
+    location.href = '{url('')}';
+  } else {
+    document.getElementById('timer').innerHTML = jumpTo;
+    setTimeout(funcTimer, 1000);
+  }
+};
+funcTimer();
+</script>
+{/if}
+</html>

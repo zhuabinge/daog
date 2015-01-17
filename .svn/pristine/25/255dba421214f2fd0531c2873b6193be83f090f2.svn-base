@@ -1,0 +1,52 @@
+{include file='before_body.phtml' title='天天逛逛独家优惠，天天送集分宝9.9包邮20元封顶秒杀在天天逛逛'}
+	<body>
+		<div id="wrapper">
+			<div class="scroller">
+				<header>
+					<a class="back" href="javascript:window.history.back();"></a>
+					<div class="search-form">
+						<form target="_self" action="{url('search')}" method="GET">
+							<div class="s-outer">
+								<div class="s-inner">
+        					<input type="text" name="keyword" class="txt" value="{$keyword|default:''}" autocomplete="off" placeholder="输入搜索宝贝">
+        					<input type="submit" value="GO!" class="smt">
+								</div>
+							</div>
+						</form>
+					</div>
+				</header>
+				<nav class="big-nav nav3">
+          <a class="qiandao" id="btn-checkin" href="javascript:;">
+            <em><i></i></em>
+            <span>签到</span>
+          </a>
+          <a class="c99" href="{url('topic/99m.html')}">
+            <em><i></i></em>
+            <span>9块9包邮</span>
+          </a>
+          <a class="c20" href="{url('topic/20t.html')}">
+            <em><i></i></em>
+            <span>20元封顶</span>
+          </a>
+				</nav>
+				<nav class="cate-nav">
+{foreach $cates as $cate}  
+					<div class="cate-box">
+						<a  href="{$cate->link}">
+							<img src="{urlStatic($cate->image_path)}" alt="">
+							<sup class="mask"></sup>
+							<span>{$cate->name}</span>
+						</a>
+					</div>
+{/foreach}
+				</nav>
+				<footer>
+					<a id="backTop" href="javascript:void(0);">
+						<i></i>
+					</a>
+				</footer>
+			</div>
+		</div>
+{include file='after_body.phtml'}
+</body>
+</html>

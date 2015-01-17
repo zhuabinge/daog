@@ -1,0 +1,512 @@
+{include file='before_body.phtml' title='奔跑吧年货，买！买！买！年前最后一场大促~~~'}
+{include file='after_body.phtml'}
+<body>
+{literal}
+<style type="text/css">
+html, body{margin:0; padding:0;}
+body{background-color:#eee; font:12px/1.5 '微软雅黑',arial; color:#3d3d3d;}
+img{border:none;}
+.headeryuandan{width:100%;}
+.headeryuandan .hbg1 img{width:100%; height:auto;}
+.headeryuandan .hbg2 img{width:100%; height:auto;}
+.container{width:100%; position:relative;}
+.title-bar{width:100%; height:150px; position:relative;}
+.t-bar1{background:url(/static/default/images/topic/title_bg1.png) no-repeat center center;}
+.t-bar2{background:url(/static/default/images/topic/title_bg2.png) no-repeat center center;}
+.t-bar3{background:url(/static/default/images/topic/title_bg3.png) no-repeat center center;}
+.t-bar4{background:url(/static/default/images/topic/title_bg4.png) no-repeat center center;}
+.t-bar5{background:url(/static/default/images/topic/title_bg5.png) no-repeat center center;}
+.title-bar .t-logo{width:150px; position:absolute; top:-62px; left:50%; margin-left:-75px;}
+.t-logo .icons-logo, .t-logo .title{background:url(/static/default/images/topic/section_logo.png) no-repeat; margin:0 auto;}
+.t-logo .icons-logo{width:123px; height:123px;}
+.t-logo .circle{width:27px; height:49px; margin:7px auto 0 auto; background:url(/static/default/images/topic/clock.gif) no-repeat; width:55px; height:50px;}
+.t-bar1 .icons-logo{background-position:-9px 0;}
+.t-bar1 .title{background-position:0 -123px; width:141px; height:56px;}
+.t-bar2 .icons-logo{background-position:-151px 0;}
+.t-bar2 .title{background-position:-159px -123px; width:104px; height:56px;}
+.t-bar3 .icons-logo{background-position:-417px 0;}
+.t-bar3 .title{background-position:-425px -123px; width:104px; height:56px;}
+.t-bar4 .icons-logo{background-position:-284px 0;}
+.t-bar4 .title{background-position:-292px -123px; width:103px; height:56px;}
+.t-bar5 .icons-logo{background-position:-550px 0;}
+.t-bar5 .title{background-position:-558px -123px; width:104px; height:56px;}
+.t-logo .hover-txt{display:none; position:absolute; left:150px; top:-23px; clear:both; overflow:hidden; width:500px; z-index:100;}
+.hover-txt > i{display:block; float:left; background:url(/static/default/images/topic/hover_txt_bg.png) no-repeat 0 0; width:50px; height:114px;}
+.hover-txt .txt{float:left; background:url(/static/default/images/topic/hover_txt_bg.png) repeat-x top right; height:114px; padding:60px 125px 0 0;}
+.hover-txt .txt p{margin:0; padding:0; width:180px; height:40px; line-height:20px; color:#222; overflow:hidden; font-size: 14px;}
+.deals{clear:both; overflow:hidden; width:966px; margin:40px auto 80px auto;}
+.deal{width:300px; float:left; margin:0 0 15px 15px; border:1px solid #e9eaea; background-color:#fff;}
+.dealon{background-color:#23b7b0; color:#fff; border-color:#23b7b0;}
+.dealnow{background-color:#f72862; color:#fff; border-color:#f72862;}
+.dealover{background-color:#a0a0a0; color:#fff; border-color:#a0a0a0;}
+.deal .title{position:relative; padding:0 10px; margin:5px 0; width:276px; height:40px; line-height:20px; overflow:hidden; font-size:14px;}
+.deal .title span{position:absolute; left:2px; top:0;}
+.deal .title a{text-decoration:none; color:#3d3d3d; padding-left:48px;}
+.dealon .title a, .dealnow .title a, .dealover .title a{color:#fff;}
+.detail{position:relative; padding:5px 10px;}
+.detail .price span{font-size:32px; font-family:arial; color:#f72862;}
+.dealon .price span, .dealnow .price span, .dealover .price span{color:#fff;}
+.detail .price span small{font-size:15px;}
+.detail .price del{color:#b5b5b7;}
+.dealon .price del, .dealnow .price del, .dealover .price del{color:#fff;}
+.detail .source{position:absolute; right:10px; top:6px; color:#b5b5b7;}
+.dealnow .source, .dealover .source{display:none;}
+.source i, .b-btn a{display:block; background:url(/static/default/images/topic/icon.png) no-repeat; position:absolute; right:0;}
+.source .tm{background-position:-18px -109px; width:20px; height:21px;}
+.source .tb{background-position:-48px -109px; width:24px; height:21px;}
+.source span{display:block; padding-top:20px;}
+.b-btn{display:none; position:absolute; right:10px; top:10px;}
+.dealnow .b-btn, .dealover .b-btn{display:block;}
+.b-btn a{display:block; width:86px; height:32px;}
+.b-btn1 a{background-position:0 -36px;}
+.b-btn2 a{background-position:0 0;}
+.b-btn3 a{background-position:0 -72px;}
+.menu{position:fixed; top:35px; left:50%; margin-left:550px; z-index:50; display: none;}
+.menu .logo{display:block; background:url(/static/default/images/topic/menu_logo.gif) no-repeat; width:107px; height:149px; margin-left:2px;}
+.menu .menu-li{background:url(/static/default/images/topic/menu.png) no-repeat; width:111px; height:362px;}
+.menu-li a{display:block; width:107px; height:46px; margin-left:2px;}
+.menu-li a#menu1:hover{background:url(/static/default/images/topic/y1.jpg) no-repeat;}
+.menu-li a#menu2:hover{background:url(/static/default/images/topic/y5.jpg) no-repeat;}
+.menu-li a#menu3:hover{background:url(/static/default/images/topic/y4.jpg) no-repeat;}
+.menu-li a#menu4:hover{background:url(/static/default/images/topic/y3.jpg) no-repeat;}
+.menu-li a#menu5:hover{background:url(/static/default/images/topic/y2.jpg) no-repeat;}
+#backTop{width:73px; height:79px; margin:53px 0 0 20px;}
+</style>
+{/literal}
+{include file='header.phtml' head=$channel->seo_path}
+{$productModel = BpfCore::getModel('product')}
+  <div class="wrapper">
+    <div class="headeryuandan">
+      <div class="hbg1"><img src="{$tpldir}/images/topic/yuandan_b1.jpg" alt=""/></div>
+      <div class="hbg2"><img src="{$tpldir}/images/topic/yuandan_b2.jpg" alt=""/></div>
+    </div>
+    <div class="container">
+      <div class="menu">
+        <i class="logo"></i>
+        <div class="menu-li">
+          <a href="javascript:void(0);" id="menu1"></a>
+          <a href="javascript:void(0);" id="menu2"></a>
+          <a href="javascript:void(0);" id="menu3"></a>
+          <a href="javascript:void(0);" id="menu4"></a>
+          <a href="javascript:void(0);" id="menu5"></a>
+          <a href="javascript:void(0);" id="backTop"></a>
+        </div>
+      </div>
+      <div class="title-bar t-bar1">
+        <div class="t-logo">
+          <div class="icons-logo"></div>
+          <div class="title"></div>
+          <div class="circle"></div>
+          <div class="hover-txt">
+            <i></i>
+            <div class="txt">
+{$rand = rand(1, 5)}
+{if $rand == 1}
+  {$content = '全场低至一折起哦！'}
+{elseif $rand == 2}
+  {$content = '全国包邮，爽歪歪！'}
+{elseif $rand == 3}
+  {$content = '给力，买买买'}
+{elseif $rand == 4}
+  {$content = '再不抢购就没啦！'}
+{else}
+  {$content = '我读书少你别骗我！'}
+{/if}
+              <p>{$content}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deals">
+{$conditions.orderby = '`sort` DESC'}
+{$conditions.channel = 100}
+{$conditions.tags = 11260}
+{$productList = $productModel->getProducts($conditions, 1, 9)}
+{if isset($productList) && $productList}
+{foreach $productList as $sa}
+        <div class="deal">
+          <div class="img">
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">
+              <img src="{urlStatic($sa->image_path, 310, 310)}" alt="{$sa->title|escape}" width="300" height="300">
+            </a>
+          </div>
+          <div class="title">
+            <span>【包邮】</span>
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">{$sa->title|escape}</a>
+          </div>
+          <div class="detail">
+            <div class="price">
+              <span><small>¥</small>{$sa->sell_price}</span>
+              <del>原价 {$sa->list_price}</del>
+            </div>
+            <div class="source">
+              {$data = json_decode($sa->data)}
+              {if isset($data->type) && $data->type == 'B'}
+              <i class="tb"></i>
+              {else}
+              <i class="tm"></i>
+              {/if}
+              <span>{$sa->sellcount}人关注</span>
+            </div>
+            <div class="b-btn b-btn1">
+              <a target="_blank" title="{$sa->title|escape}" href="{$sa->link_click}"></a>
+            </div>
+          </div>
+        </div>
+{/foreach}
+{/if}
+      </div>
+      <div class="title-bar t-bar2">
+        <div class="t-logo">
+          <div class="icons-logo"></div>
+          <div class="title"></div>
+          <div class="circle"></div>
+          <div class="hover-txt">
+            <i></i>
+            <div class="txt">
+{$rand = rand(1, 9)}
+{if $rand == 1}
+  {$content = '有钱就是任性！'}
+{elseif $rand == 2}
+  {$content = '小笼包也有春天！'}
+{elseif $rand == 3}
+  {$content = '再买就剁手！'}
+{elseif $rand == 4}
+  {$content = '买买买！'}
+{elseif $rand == 5}
+  {$content = '画面太美我不敢看！'}
+{elseif $rand == 6}
+  {$content = '且行且珍惜！'}
+{elseif $rand == 7}
+  {$content = '觉得自己萌萌哒！'}
+{elseif $rand == 8}
+  {$content = '讨厌！'}
+{elseif $rand == 9}
+  {$content = '不抢购，整个人都不好了！'}
+{else}
+  {$content = '过日子要精打细算！'}
+{/if}
+              <p>{$content}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deals">
+{$conditions.tags = 11261}
+{$productList = $productModel->getProducts($conditions, 1, 9)}
+{if isset($productList) && $productList}
+{foreach $productList as $sa}
+        <div class="deal">
+          <div class="img">
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">
+              <img src="{urlStatic($sa->image_path, 310, 310)}" alt="{$sa->title|escape}" width="300" height="300">
+            </a>
+          </div>
+          <div class="title">
+            <span>【包邮】</span>
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">{$sa->title|escape}</a>
+          </div>
+          <div class="detail">
+            <div class="price">
+              <span><small>¥</small>{$sa->sell_price}</span>
+              <del>原价 {$sa->list_price}</del>
+            </div>
+            <div class="source">
+              {$data = json_decode($sa->data)}
+              {if isset($data->type) && $data->type == 'B'}
+              <i class="tb"></i>
+              {else}
+              <i class="tm"></i>
+              {/if}
+              <span>{$sa->sellcount}人关注</span>
+            </div>
+            <div class="b-btn b-btn1">
+              <a target="_blank" title="{$sa->title|escape}" href="{$sa->link_click}"></a>
+            </div>
+          </div>
+        </div>
+{/foreach}
+{/if}
+      </div>
+      <div class="title-bar t-bar3">
+        <div class="t-logo">
+          <div class="icons-logo"></div>
+          <div class="title"></div>
+          <div class="circle"></div>
+          <div class="hover-txt">
+            <i></i>
+            <div class="txt">
+{$rand = rand(1, 6)}
+{if $rand == 1}
+  {$content = '我还是安静的做个美男子算了！'}
+{elseif $rand == 2}
+  {$content = '那么，问题来了，年货折扣哪家强？'}
+{elseif $rand == 3}
+  {$content = '我也是醉了'}
+{elseif $rand == 4}
+  {$content = '这么低的折扣，我竟无言以对'}
+{elseif $rand == 5}
+  {$content = '带我装逼带我飞'}
+{else}
+  {$content = '这个鱼塘我承包了'}
+{/if}
+              <p>{$content}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deals">
+{$conditions.tags = 11262}
+{$productList = $productModel->getProducts($conditions, 1, 9)}
+{if isset($productList) && $productList}
+{foreach $productList as $sa}
+        <div class="deal">
+          <div class="img">
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">
+              <img src="{urlStatic($sa->image_path, 310, 310)}" alt="{$sa->title|escape}" width="300" height="300">
+            </a>
+          </div>
+          <div class="title">
+            <span>【包邮】</span>
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">{$sa->title|escape}</a>
+          </div>
+          <div class="detail">
+            <div class="price">
+              <span><small>¥</small>{$sa->sell_price}</span>
+              <del>原价 {$sa->list_price}</del>
+            </div>
+            <div class="source">
+              {$data = json_decode($sa->data)}
+              {if isset($data->type) && $data->type == 'B'}
+              <i class="tb"></i>
+              {else}
+              <i class="tm"></i>
+              {/if}
+              <span>{$sa->sellcount}人关注</span>
+            </div>
+            <div class="b-btn b-btn1">
+              <a target="_blank" title="{$sa->title|escape}" href="{$sa->link_click}"></a>
+            </div>
+          </div>
+        </div>
+{/foreach}
+{/if}
+      </div>
+      <div class="title-bar t-bar4">
+        <div class="t-logo">
+          <div class="icons-logo"></div>
+          <div class="title"></div>
+          <div class="circle"></div>
+          <div class="hover-txt">
+            <i></i>
+            <div class="txt">
+{$rand = rand(1, 5)}
+{if $rand == 1}
+  {$content = 'baby，baby，oh my baby！'}
+{elseif $rand == 2}
+  {$content = '粑粑麻麻，我要，我要！'}
+{elseif $rand == 3}
+  {$content = '爸比，这个超酷！'}
+{elseif $rand == 4}
+  {$content = '这么便宜，麻麻你们造么？'}
+{else}
+  {$content = '妈咪再也不用担心我的学习了！'}
+{/if}
+              <p>{$content}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deals">
+{$conditions.tags = 11263}
+{$productList = $productModel->getProducts($conditions, 1, 9)}
+{if isset($productList) && $productList}
+{foreach $productList as $sa}
+        <div class="deal">
+          <div class="img">
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">
+              <img src="{urlStatic($sa->image_path, 310, 310)}" alt="{$sa->title|escape}" width="300" height="300">
+            </a>
+          </div>
+          <div class="title">
+            <span>【包邮】</span>
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">{$sa->title|escape}</a>
+          </div>
+          <div class="detail">
+            <div class="price">
+              <span><small>¥</small>{$sa->sell_price}</span>
+              <del>原价 {$sa->list_price}</del>
+            </div>
+            <div class="source">
+              {$data = json_decode($sa->data)}
+              {if isset($data->type) && $data->type == 'B'}
+              <i class="tb"></i>
+              {else}
+              <i class="tm"></i>
+              {/if}
+              <span>{$sa->sellcount}人关注</span>
+            </div>
+            <div class="b-btn b-btn1">
+              <a target="_blank" title="{$sa->title|escape}" href="{$sa->link_click}"></a>
+            </div>
+          </div>
+        </div>
+{/foreach}
+{/if}
+      </div>
+      <div class="title-bar t-bar5">
+        <div class="t-logo">
+          <div class="icons-logo"></div>
+          <div class="title"></div>
+          <div class="circle"></div>
+          <div class="hover-txt">
+            <i></i>
+            <div class="txt">
+{$rand = rand(1, 5)}
+{if $rand == 1}
+  {$content = '时间都去哪儿了！'}
+{elseif $rand == 2}
+  {$content = '爸妈辛苦了！'}
+{elseif $rand == 3}
+  {$content = '家和万事兴！'}
+{elseif $rand == 4}
+  {$content = '抢购，蛮拼的！'}
+{else}
+  {$content = '过日子要精打细算！'}
+{/if}
+              <p>{$content}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deals">
+{$conditions.tags = 11264}
+{$productList = $productModel->getProducts($conditions, 1, 9)}
+{if isset($productList) && $productList}
+{foreach $productList as $sa}
+        <div class="deal">
+          <div class="img">
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">
+              <img src="{urlStatic($sa->image_path, 310, 310)}" alt="{$sa->title|escape}" width="300" height="300">
+            </a>
+          </div>
+          <div class="title">
+            <span>【包邮】</span>
+            <a target="_blank" href="{$sa->link_click}" title="{$sa->title|escape}">{$sa->title|escape}</a>
+          </div>
+          <div class="detail">
+            <div class="price">
+              <span><small>¥</small>{$sa->sell_price}</span>
+              <del>原价 {$sa->list_price}</del>
+            </div>
+            <div class="source">
+              {$data = json_decode($sa->data)}
+              {if isset($data->type) && $data->type == 'B'}
+              <i class="tb"></i>
+              {else}
+              <i class="tm"></i>
+              {/if}
+              <span>{$sa->sellcount}人关注</span>
+            </div>
+            <div class="b-btn b-btn1">
+              <a target="_blank" title="{$sa->title|escape}" href="{$sa->link_click}"></a>
+            </div>
+          </div>
+        </div>
+{/foreach}
+{/if}
+      </div>
+    </div>
+  </div>
+
+{include file='footer.phtml'}
+{include file='after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.side-panel').remove();
+  /**商品框鼠标移上效果**/
+  $('.deal').hover(function() {
+    $(this).find('.source').hide();
+    if(!$(this).hasClass('dealnow') && !$(this).hasClass('dealover')) {
+{if $channel->scheduling <= $smarty.now && $channel->expired >= $smarty.now}
+      $(this).addClass('dealnow').find('.b-btn1').show();
+      //马上抢样式
+      $('.dealnow').find('.b-btn').addClass('b-btn2').removeClass('b-btn1 b-btn3');
+{elseif $channel->expired <= $smarty.now}
+      $(this).addClass('dealover').find('.b-btn1').show();
+      //马上抢样式
+      $('.dealover').find('.b-btn').addClass('b-btn3').removeClass('b-btn1 b-btn2');
+{else}
+      $(this).addClass('dealon').find('.b-btn1').show();
+{/if}
+    }
+  }, function() {
+{if $channel->scheduling <= $smarty.now && $channel->expired >= $smarty.now}
+      $(this).removeClass('dealnow').find('.b-btn1').hide();
+{elseif $channel->expired <= $smarty.now}
+      $(this).removeClass('dealover').find('.b-btn1').hide();
+{else}
+      $(this).removeClass('dealon').find('.b-btn1').hide();
+{/if}
+    if(!$(this).hasClass('dealnow') && !$(this).hasClass('dealover')) {
+      $(this).find('.source').show();
+    }
+  });
+
+  /**导航跳滑动固定效果**/
+  var offsetTop = $('.menu').offset().top;
+  var stick = function(){
+    var scrollTop = $(window).scrollTop();
+    if(scrollTop > 540){
+      $('.menu').stop().animate({ 
+        'margin-left':'483',
+        'opacity':'show'
+      }, 200, 'easeOutBack');
+    } else {
+      $('.menu').stop().animate({ 
+        'margin-left':'550',
+        'opacity':'hide'
+      }, 150, 'easeOutBack');
+    }
+  }
+  //运行控制函数
+  stick();
+  $(window).scroll(function(){
+    stick();
+  });
+
+  /**导航主链接缓慢跳转效果**/
+  $('#backTop').click(function(){
+    $('html,body').animate({ scrollTop:'0' },400);
+  });
+  var sort1Top = $('.t-bar1').offset().top;
+  var sort2Top = $('.t-bar2').offset().top;
+  var sort3Top = $('.t-bar3').offset().top;
+  var sort4Top = $('.t-bar4').offset().top;
+  var sort5Top = $('.t-bar5').offset().top;
+  $("#menu1").click(function(){
+    $('html,body').animate({ scrollTop:(sort1Top - 70) },400);
+  });
+  $("#menu2").click(function(){
+    $('html,body').animate({ scrollTop:(sort2Top - 70) },400);
+  });
+  $("#menu3").click(function(){
+    $('html,body').animate({ scrollTop:(sort3Top - 70) },400);
+  });
+  $("#menu4").click(function(){
+    $('html,body').animate({ scrollTop:(sort4Top - 70) },400);
+  });
+  $("#menu5").click(function(){
+    $('html,body').animate({ scrollTop:(sort5Top - 70) },400);
+  });
+
+  /**标题栏提示气泡显示**/
+  $('.t-logo').hover(function() {
+    $(this).find('.hover-txt').fadeIn(300);
+  }, function() {
+    $(this).find('.hover-txt').fadeOut(300);
+  });
+});
+</script>
+</body>
+</html>

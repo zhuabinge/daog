@@ -1,0 +1,50 @@
+{include file='before_body.phtml' title='找回密码'}
+<body>
+
+<div class="zh_top">
+  <div class="main">
+    <a class="fl" href="{url('')}"><img src="{$tpldir}/images/logo.png"></a>
+    <span class="fr"><a href="{url('')}">返回首页 &gt;&gt;</a></span>
+  </div>
+</div>
+
+<div class="main zh_content" {if $step !== 'step1'}hidden{/if}>
+  <div class="title">填写用户名</div>
+  <div class="icon_zh_1"></div>
+<form action="{url('user/forgot')}" method="POST" id="login-form">
+  <div class="content">
+    <p class="app"><input type="text" name="username" value="{$smarty.post.username|default:""}" class="btnTEXT" placeholder="用户名">{if isset($msg) && $msg != ''}<em><i class="cha"></i>{$msg}</em>{/if}</p>
+    <p><input type="submit" value="发送邮件" class="btnBUTTON"></p>
+  </div>
+</form>
+</div>
+<div class="main zh_content" {if $step !== 'step2'}hidden{/if} >
+  <div class="title">验证身份</div>
+  <div class="icon_zh_2"></div>
+  <div class="contet2">
+    <p>我们已将“[ <span>{$username|default:""}</span>账户 ] 找回密码”发送到您的邮箱</p>
+    <p>{$email|default:""}中，请在尽快收信重置密码。</p>
+  </div>
+  <div class="contet2_b">
+    <p>还没收到验证邮件？</p>
+    <p>尝试到广告、垃圾邮件目录里找找看，或者  <a href="{url('user/forgot')}">重新发送</a>  找回密码邮件</p>
+  </div>
+</div>
+<div class="main zh_bottom">
+  <div class="cory">{$config->get('footer', '')}</div>
+</div>
+</body>
+{include file='after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.btnBUTTON').click(function(e){
+    var username = $('[name="username"]').val();
+    $('.app').find('em').remove();
+    if (username == '') {
+      $('.app').append('<em><i class="cha"></i>用户名不能为空</em>');
+      e.preventDefault();
+    };
+  });
+});
+</script>
+</html>

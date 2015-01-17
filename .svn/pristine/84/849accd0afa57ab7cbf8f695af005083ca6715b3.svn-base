@@ -1,0 +1,4 @@
+<script type="text/javascript" src="{$tpldir}/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$tpldir}/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$tpldir}/js/admin.js"></script>
+{html_js}

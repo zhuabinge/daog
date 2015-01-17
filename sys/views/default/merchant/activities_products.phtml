@@ -1,0 +1,171 @@
+{include file='merchant/before_body.phtml' title='【天天逛逛报名入口】 - 天天逛逛商家报名系统'}
+<body>
+{include file='merchant/header.phtml' match="活动管理"}
+  {$page = $smarty.get.page|default:1}
+  {$status = $smarty.get.status|default:''}
+  <div class="container">
+    <div class="full-area">
+      <div class="act-menu">
+        <ul>
+          <li {if isset($status) && $status == ''}class="first-li"{/if}>
+            <a href="{url('merchant/activities/products')}">全部（{$allCount[6]|default:0}）</a>
+          </li>
+          <li {if isset($status) && $status == 0 && $status != ''}class="first-li"{/if}>
+            <a href="{url('merchant/activities/products?page=1&status=0')}">待审核（{$allCount[0]|default:0}）</a>
+          </li>
+          <li {if isset($status) && $status == 1}class="first-li"{/if}>
+            <a href="{url('merchant/activities/products?page=1&status=1')}">已上线（{$allCount[1]|default:0}）</a>
+          </li>
+          <li {if isset($status) && $status == 2}class="first-li"{/if}>
+            <a href="{url('merchant/activities/products?page=1&status=2')}">驳回（{$allCount[2]|default:0}）</a>
+          </li>
+          <li {if isset($status) && $status == 3}class="first-li"{/if}>
+            <a href="{url('merchant/activities/products?page=1&status=3')}">已排期（{$allCount[3]|default:0}）</a>
+          </li>
+          <li {if isset($status) && $status == 4}class="first-li"{/if}>
+            <a href="{url('merchant/activities/products?page=1&status=4')}">已下线（{$allCount[4]|default:0}）</a>
+          </li>
+          <li {if isset($status) && $status == 5}class="first-li"{/if}>
+            <a href="{url('merchant/activities/products?page=1&status=5')}">已结束（{$allCount[5]|default:0}）</a>
+          </li>
+        </ul>
+      </div>
+<!--       <div class="search-bar">
+        <form action="" method="get" name="" target="_self">
+          <label>淘宝商品CID</label>
+          <input type="text" value="">
+          <label>活动类型</label>
+          <select>
+            <option>请选择</option>
+            {foreach $activities ad $a}
+            <option value='{$a->aid}'>{$a->title}</option>
+            {/foreach}
+          </select>
+          <input type="submit" value="查询" class="btn2">
+        </form>
+      </div> -->
+      <ul class="act-th">
+        <li class="act-th1">活动详情</li>
+        <li class="act-th2">审核专员</li>
+        <li class="act-th3">审核信息</li>
+        <li class="act-th4">操作</li>
+      </ul>
+      <div class="act-items">
+      {if isset($activities_products) && $activities_products}
+        {foreach $activities_products as $ap}
+        <div class="single-item">
+          <div class="top">
+            <ul>
+              <li>活动类型：<span class="item-type">{$ap->apid|escape}</span><i class="icon-taobao"></i></li>
+              <li>商品ID：{$ap->mall_pid}</li>
+              <li>更新时间：{$ap->created|date_format:'Y-m-d G:i:s'}</li>
+            </ul>
+          </div>
+          <div class="item-detail">
+            <div class="col4-1">
+              <div class="fl">
+                <a href="{$ap->url}" target="_blank">
+                  <img src="{urlStatic($ap->image_path, 150, 150)}" width="120" height="120">
+                </a>
+              </div>
+              <div class="fr">
+                <a href="{$ap->url}" target="_blank">{$ap->title|escape}</a>
+                <ul class="detail-list">
+                  <li>所属分类：<b>{$ap->category->name|escape}</b></li>
+                  <li>原价：<b>{$ap->list_price}元</b></li>
+                  <li>活动价：<b>{$ap->sell_price}元</b></li>
+                  <li>邮费类型：<b>
+                    {if $ap->free == 1}
+                    包邮
+                    {elseif $ap->free == 2}
+                    不包邮
+                    {elseif $ap->free == 3}
+                    部分地区不包邮
+                    {else}
+                    未设置
+                    {/if}
+                  </b></li>
+                  <li>发货周期：<b>{$ap->delivery}天</b></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col4-2">
+            {if isset($ap->nickname) && $ap->nickname}
+              <span>{$ap->nickname}</span>
+            {else}
+              <span>小天</span>
+            {/if}
+            </div>
+            <div class="col4-3">
+              <ul>
+                <li>审核状态：<em>
+                 {if $ap->status==0}
+                 待审核
+                 {/if}
+                 {if $ap->status==1}
+                 已上线
+                 {/if}
+                 {if $ap->status==2}
+                 驳回
+                 {/if}
+                 {if $ap->status==3}
+                 已排期
+                 {/if}
+                 {if $ap->status==4}
+                 已下线
+                 {/if}
+                 {if $ap->status==5}
+                 已结束
+                 {/if}
+                 </em></li>
+             <!--    <li>小编留言：</li> -->
+              </ul>
+            </div>
+            <div class="col4-4">
+            {if $ap->status==2 || $ap->status==5 || $ap->status==4}
+               <a href="{url('merchant/activities/apply/'|cat:$ap->aid|cat:'?mall_id='|cat:$ap->mall_pid|cat:'&apid='|cat:$ap->pid)}">编辑活动详情</a>
+            {else}
+               不可编辑
+            {/if}
+            </div>
+          </div>
+<!--           <div class="item-note">
+            <div class="fl">样品邮寄说明：</div>
+            <div class="fr">
+              <p>
+                收货地址：广州市天河区 收件人：天天逛逛网：小天（收） 邮编：100230
+              </p>
+              <p class="red-note">
+                提示：必须保证实际发货商品与邮寄样品完全一致，若发现存在任何不一致的，天天逛逛有权立即终止与该商家的合作并（或）扣除其全部保证金！
+              </p>
+              <p>
+                注：样品邮寄前请务必下载最新样品邮寄资料单word文档，填写相关信息后随样品一并寄出！样品邮寄前请务必下载最新样品邮寄资料单word文档，填写相关信息后随样品一并寄出！样品邮寄前请务必下载最新样品邮寄资料单word文档，填写相关信息后随样品一并寄出！
+              </p>
+            </div>
+          </div> -->
+<!--           <div class="express-info">
+            <div class="fl">发货信息：</div>
+            <div class="fr">
+              <ul>
+                <li>快递公司：韵达快递</li>
+                <li>快递单号：123456789</li>
+                <li>样品数量：1</li>
+                <li>发货日期：2014-10-17</li>
+              </ul>
+              <a href="" class="change-btn">修改发货信息</a>
+            </div>
+          </div> -->
+        </div>
+        {/foreach}
+        {/if}
+
+        <!--分页-->
+        <div class="newPage clearbox tc">
+          {html_pagination page="$page" rows="$rows" count="$count" url="{url('merchant/activities/products?page=%page%&status='|cat:$status)}" showinfo="0"}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

@@ -1,0 +1,416 @@
+{include file='before_body.phtml' title='每日签到，签到就领集分宝_天天逛逛签到页面'}
+<body style="background:#f34d51;">
+{include file='header.phtml' head='checkin'}
+
+<style type="text/css">
+body{ font:12px/1.5 "微软雅黑",arial,sans-serif;min-width: 1340px;}
+.header1{ width:100%; min-width: 1240px; height:613px; background:url({$tpldir}/images/head_background.png) no-repeat center center; position:relative; z-index:1000;}
+.header1 .box{ width:1200px; margin:0 auto; height:613px; position:relative;}
+.header1 .box .link{ display:block; position:absolute; top:382px; right:205px; color:#97e8f2; font-size:14px;}
+.header1 .sharp_{ position: absolute; bottom: 27px; right: 73px; z-index: 9999;}
+.header1 .sharp_ a{ width: 25px; height: 25px; display: inline-block; float: left; margin-right: 5px; cursor: pointer;}
+.main{ width:1200px; position:relative; margin:0 auto; margin-top: -50px; border:5px solid #fff; background-color:#f8e6c4;}
+.main .top{ background-color:#e09663; width:1240px; height:90px; margin-top:100px; margin-left:-20px;}
+.main .top:before{ content:""; background:url({$tpldir}/images/qiandao_icon.png) no-repeat 0 -156px; width:15px; height:92px; position:absolute; top:93px; left:-17px; z-index:-50;}
+.main .top:after{ content:""; background:url({$tpldir}/images/qiandao_icon.png) no-repeat -17px -156px; width:15px; height:79px; position:absolute; top:94px; right:-18px; z-index:-50;}
+.main .top .user-img{ width:108px; height:108px; border:4px solid #fff; -moz-border-radius:50% 50%; -webkit-border-radius:50% 50%; border-radius:50% 50%; -moz-box-shadow:0 1px 1px #ccc; -webkit-box-shadow:0 1px 1px #ccc; box-shadow:0 1px 1px #ccc; float:left; position:relative; overflow:hidden; margin-left:50px; margin-top:-35px; margin-right:15px;}
+.main .top .user-info{ font-size:15px; color:#8f3600; float:left; padding-top:15px;}
+.main .top .user-info > b{ font-size:22px; font-weight:normal; line-height:30px; margin-right:15px;}
+.main .top .user-info span{ font-size:16px; color:#fff600;}
+.main .top .user-info > span{ margin-right:15px;}
+.main .top .user-info > p{ margin-top:10px; color:#fff;}
+.main .top .user-info .exchange{ display:inline-block; *zoom:1; *display:inline; background:url({$tpldir}/images/qiandao_icon.png) no-repeat -62px -217px; width:26px; height:20px; margin-bottom:-4px; margin-left:5px;}
+.main .top .user-nologin{ font-size:24px; color:#8f3600; float:left; line-height:90px;}
+.main .top .user-nologin a{ color:#ff0006; margin-right:15px;}
+.main .top .fr{ margin-right:50px; margin-top:8px;}
+.main .top .b-btn{ display:block; background:url({$tpldir}/images/qiandao_icon.png) no-repeat; width:244px; height:76px; cursor:pointer;}
+.main .top .no-qiandao:hover{ background:url({$tpldir}/images/new_icon_v2.png)  -12px -238px no-repeat;}
+.main .top .no-qiandao{ background-position:0 0;}
+.main .top .has-qiandao{ background-position:0 -78px;}
+.main .content{ padding:25px 25px;}
+.main .content .box{ width:100%; height:auto; background-color:#fff; clear:both; overflow:hidden;}
+.box .calendar{ width:840px;}
+.box .calendar .top-bar{ height:55px; clear:both; border-bottom:1px solid #e5a882; background-color:#e09663;}
+.top-bar .date-now{ color:#ffccaa; font-size:24px; line-height:55px; margin:0; padding-left:15px;}
+.top-bar .select-month{ font-size:16px; color:#fff; background:url({$tpldir}/images/qiandao_icon.png) no-repeat -108px -156px; width:136px; height:28px; margin-right:15px; margin-top:14px;}
+.top-bar .select-month p{ margin:0; padding-left:15px; line-height:28px;}
+.top-bar p.fr{ font-size:15px; color:#ffccaa; margin:0; margin-right:5px; line-height:55px; padding-right: 10px;}
+.top-bar p.fr em{ font-style:normal;}
+
+.calendar .container{ width:100%; height: 560px; clear:both; overflow:hidden; background:url({$tpldir}/images/calendar_back.png) repeat;}
+.calendar .week{ font-size:20px; color:#8f3600; clear:both; overflow:hidden; background:url({$tpldir}/images/calendar_back.png) repeat;}
+.calendar .week span{ float:left; display:block; width:120px; height:80px; line-height:80px; text-align:center;}
+.calendar .date-num{ list-style-type:none; margin:0; padding:0;}
+.calendar .date-num li{ float:left; position:relative; width:120px; height:80px; line-height:80px; text-align:center; color:#ffccaa; font-size:22px;}
+.calendar .date-num li.frontYellow{ color:#fce11a; cursor: pointer;}
+.calendar .date-num li.cur{ cursor: pointer;}
+.calendar .date-num li.front .success{ display:inline-block; *zoom:1; *display:inline; background:url({$tpldir}/images/qiandao_icon.png) no-repeat -47px -156px; width:46px; height:46px; position:absolute; bottom:3px; right:3px;}
+.calendar .date-num li.front .shuai{ display:inline-block; *zoom:1; *display:inline; background:url({$tpldir}/images/new_icon_v1.png) no-repeat -378px -103px; width:27px; height:30px; position:absolute; bottom:10px; right:10px;}
+.calendar .date-num li.cur span{ position: absolute; top: 0; left: 0; color: #fff; background-color: #f8720f; width: 120px; height: 24px; line-height: 24px; font-size: 13px; text-align: center; display: block;}
+.box .daren{ width:310px;}
+.box .daren h2{ font-family:"宋体",arial,sans-serif; font-size:14px; color:#333; height:35px; line-height:35px; padding:0; margin: 10px 0 10px 22px;}
+.box .daren .space{ margin-left:10px;}
+.daren .outer-box{ height:560px; overflow:hidden; position:relative;}
+.daren .inner-box{ height:auto; position:absolute; top:0; left:0;}
+.single-daren{ clear:both; overflow:hidden; height:80px;}
+.single-daren .fl{ width:50px; height:50px; position:relative; margin-left:20px; overflow:hidden;}
+.single-daren .fl a{ display:block;}
+.single-daren .fl a img{ border:none;}
+.single-daren .fl a .icon-mask{ background:url({$tpldir}/images/credit/credit_icon.png) no-repeat 0 -181px; width:50px; height:50px; position:absolute; top:0; left:0; z-index:100;}
+.single-daren .fr{ width:225px; margin-left:10px; margin-right:5px; margin-top:5px;}
+.single-daren .fr a{ color:#000; font-size:12px; line-height:20px; text-decoration:none;}
+.single-daren .fr a:hover{ text-decoration:underline;}
+.single-daren .fr p{ margin-top:0px; color:#a9a9a9;}
+.single-daren .fr p b{ font-weight:normal;}
+.single-daren .fr p em{ font-style:normal; margin-left:3px; margin-right:3px;}
+.main .content .intro h2{ background:url({$tpldir}/images/qiandao_icon.png) no-repeat; margin-top:50px;}
+.main .content .intro .heading1{ background-position:0 -252px; width:162px; height:30px; margin-bottom: 10px;}
+.main .content .intro .heading2{ background-position:0 -287px; width:206px; height:32px; margin-bottom: 10px;}
+.main .content .intro p{ color:#343434; font-size:14px; padding: 5px 0;}
+.main .content .intro a{ color:#149dae;background:url({$tpldir}/images/new_icon_v2.png) -28px -68px no-repeat; width: 125px; height: 32px; display: inline-block; text-align: center; line-height: 32px; color: #fff; text-decoration: none; margin-left: 5px;}
+.main .content .intro a:hover{ background:url({$tpldir}/images/new_icon_v2.png) -28px -112px no-repeat;}
+.main .content .intro .num{ font-style:normal; font-size:17px; color:#fff; background-color:#919191; display:inline-block; *zoom:1; *display:inline; padding:0px 8px; margin-right:10px;}
+
+{$code = $smarty.get.code|default:''}
+{$status = $smarty.get.status|default:0}
+{if $code}
+/**messages**/
+.alert-box{ width:889px; position:relative; margin:50px auto; left:50%;/*FF IE7*/top: 50%;/*FF IE7*/margin-left:-460px!important;/*FF IE7 该值为本身宽的一半 */margin-top:-400px!important;/*FF IE7 该值为本身高的一半*/
+margin-top:0px;position:fixed!important;/*FF IE7*/position:absolute;/*IE6*/ z-index: 1999;}
+.alert-box .header2{ background:url({$tpldir}/images/alert_icon.png) no-repeat 0 0; width:889px; height:143px;}
+.header2 .close{ display:block; background:url({$tpldir}/images/alert_icon.png) no-repeat -604px -459px; width:64px; height:64px; position:absolute; right:-41px; top:23px; cursor:pointer;}
+.alert-box .container1{ background-color:#ea5420; -moz-border-bottom-left-radius:5px; -webkit-border-bottom-left-radius:5px; border-bottom-left-radius:5px; -moz-border-bottom-right-radius:5px; -webkit-border-bottom-right-radius:5px; border-bottom-right-radius:5px; padding-bottom:10px; padding-top:50px; overflow:hidden; clear:both;}
+.alert-box .container1 .title{ background:url({$tpldir}/images/alert_icon.png) no-repeat 0 -145px; width:499px; height:59px; margin-left:150px; margin-bottom:40px;}
+.alert-box .container1 .p1{ background:url({$tpldir}/images/alert_icon.png) no-repeat 0 -206px; width:583px; height:58px; margin-left:95px;}
+.alert-box .container1 .btn-right,.alert-box .container1 .btn-right2{ position:absolute; top:300px; right:60px;}
+.alert-box .container1 .btn-right a{ display:block; background:url({$tpldir}/images/alert_icon.png) no-repeat -296px -473px; width:125px; height:47px;}
+.alert-box .container1 .btn-right2 a{ display:block; background:url({$tpldir}/images/alert_icon.png) no-repeat -433px -473px; width:125px; height:47px;}
+.alert-box .container1 .p2{ margin-left:150px;}
+.alert-box .container1 .p3{ text-align:center; margin-top:10px;}
+.alert-box .container1 .p2 span,.alert-box .container1 .p3 span{ display:inline-block; *zoom:1; *display:inline;}
+.alert-box .container1 .p2 .p2-1{ background:url({$tpldir}/images/alert_icon.png) no-repeat 0 -266px; width:198px; height:56px; margin-bottom:-5px;}
+.alert-box .container1 .p2 .p2-2{ background:url({$tpldir}/images/alert_icon.png) no-repeat -200px -266px; width:102px; height:56px; margin-bottom:-5px;}
+.alert-box .container1 .p3 .p3-1{ background:url({$tpldir}/images/alert_icon.png) no-repeat 0 -324px; width:223px; height:34px; margin-bottom:-10px;}
+.alert-box .container1 .p3 .p3-2{ background:url({$tpldir}/images/alert_icon.png) no-repeat -225px -324px; width:164px; height:34px; margin-bottom:-10px;}
+.alert-box .container1 .p4{ background:url({$tpldir}/images/alert_icon.png) no-repeat -391px -324px; width:396px; height:34px; margin:10px auto; margin-top:15px;}
+.alert-box .container1 .p2 b{ font-size:60px;}
+.alert-box .container1 .p3 b{ font-size:22px;}
+.alert-box .container1 .p2 b,.alert-box .container1 .p3 b{ color:#f6ff00; font-family:"微软雅黑",arial,sans-serif;}
+.container1 .btn-bottom{ clear:both; overflow:hidden; margin:0 25px 25px 25px;}
+.container1 .btn-bottom .btn1,.container1 .btn-bottom .btn2{ display:block; background:url({$tpldir}/images/alert_icon.png) no-repeat; width:302px; height:99px;}
+.container1 .btn-bottom .btn1{ background-position:0 -360px;}
+.container1 .btn-bottom .btn2{ background-position:-302px -360px;}
+.alert-box .container1 .user-info{  position: absolute; left: 35px;}
+.alert-box .container1 .user-info div{ width:818px; height:70px; line-height:70px; margin:0 auto; background-color:#ec6637; color:#fff; text-align:center; font-family:"微软雅黑",arial,sans-serif; font-size:18px;}
+.container1 .user-info .user-img{ display:inline-block; *zoom:1; *display:inline; width:42px; height:42px; margin-bottom:-14px; overflow:hidden; -moz-border-radius:50% 50%; -webkit-border-radius:50% 50%; border-radius:50% 50%;}
+.container1 .user-info .user-img img{ border:none;}
+.container1 .user-info a{ color:#000; text-decoration:none;}
+.container1 .user-info a:hover{ text-decoration:underline;}
+.container1 .user-info span{ color:#fff000;}
+/*once more box*/
+.alert-box .container1 .po1{ margin-top:100px; margin-bottom:90px;}
+.alert-box .container1 .po-btn1 .btn1,.alert-box .container1 .po-btn1 .btn2{ margin:0 auto; margin-top:50px;}
+.alert-box .container1 .po-p2{ margin-left:180px; margin-top:80px; margin-bottom:70px;}
+.alert-box .container1 .po-btn-right{ right:170px; top:290px;}
+.alert-box .container1 .po-title{ margin:0 auto; margin-bottom:-20px; margin-top:30px;}
+.alert-box .container1 .gif{ clear: both; overflow: hidden; text-align: center;}
+/*分享滑出框*/
+.alert-box .share-popup{ background:url({$tpldir}/images/alert_icon.png) no-repeat 0 -463px; width:289px; height:114px; display:none;}
+.alert-box .po-popup1{ position:absolute; bottom:130px; left:300px;}
+.alert-box .po-popup2{ position:absolute; bottom:200px; left:30px;}
+.messageBg{ z-index: 1998;}
+{/if}
+</style>
+
+{if $code && $status === 0}
+<div class="alert-box">
+  <div class="header2">
+    <span class="close msgclose"></span>
+  </div>
+  <div class="container1">
+    <div class="gif">
+      <img src="{$tpldir}/images/jinbi.gif" height="250">
+    </div>
+    <div class="title po-title"></div>
+    <div class="btn-bottom po-btn1">
+      <!--领取大礼包-->
+      <a href="{url('user/emailLogin')}" class="msgclose btn2"></a>
+    </div>
+    {$userModel = BpfCore::getModel('user')}
+    {$ScoresLogs = $userModel->getUsersScoresLogs('email')}
+    <div style="position: relative; height:70px; overflow: hidden; clear:both;">
+    <div class="user-info">
+      {if isset($ScoresLogs) && $ScoresLogs}
+      {foreach $ScoresLogs as $sa}
+        {$info = $userModel->getUser($sa->uid)}
+      <div>
+      <a href="{urlUser($info->uid)}" class="user-img"><img src="{urlAvatar($info, 50)}" width="48" height="48"></a>
+      <a href="{urlUser($info->uid)}">{$info->nickname}</a>
+      领取了 <span>{$sa->scores}</span> 积分大礼包
+      </div>
+      {/foreach}
+      {/if}
+    </div>
+    </div>
+  </div>
+</div>
+<div class="messageBg"></div>
+{/if}
+
+  <div class="wrapper">
+    <div class="header1">
+      <div class="box">
+        <a href="#jfb" class="link">什么是集分宝？</a>
+        <div class="sharp_">
+          <a rel="nofollow" target="_blank" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.ttgg.com%2Fuser%2Fcheckin%230-qzone-1-95268-d020d2d2a4e8d1a374a433f596ad1440&title=%E9%9B%86%E5%88%86%E5%AE%9D%E5%A4%A9%E5%A4%A9%E9%80%81%EF%BC%81%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%85%A8%E6%96%B0%E6%94%B9%E7%89%88%E9%80%81%E5%A4%A7%E7%A4%BC%EF%BC%81%E4%BB%80%E4%B9%88%E5%8F%AB%E5%9C%9F%E8%B1%AA%EF%BC%9F%E8%BF%9B%E6%9D%A5%E5%91%8A%E8%AF%89%E4%BD%A0%EF%BC%81&desc=&summary=每天签到随机发放0-1000积分，连续签到7天额外奖励 5 积分，1 积分可兑换 1 集分宝;&site=&pics=http%3A%2F%2Fwww.ttgg.com%2Fstatic%2Fdefault%2Fimages%2Fsharp_jb_background.jpg" title="分享到QQ空间和朋友网"></a>
+          <a rel="nofollow" target="_blank" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fwww.ttgg.com%2Fuser%2Fcheckin%230-tsina-1-13839-397232819ff9a47a7b7e80a40613cfe1&title=%E9%9B%86%E5%88%86%E5%AE%9D%E5%A4%A9%E5%A4%A9%E9%80%81%EF%BC%81%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%85%A8%E6%96%B0%E6%94%B9%E7%89%88%E9%80%81%E5%A4%A7%E7%A4%BC%EF%BC%81%E4%BB%80%E4%B9%88%E5%8F%AB%E5%9C%9F%E8%B1%AA%EF%BC%9F%E8%BF%9B%E6%9D%A5%E5%91%8A%E8%AF%89%E4%BD%A0%EF%BC%81&appkey=1343713053&pic=http%3A%2F%2Fwww.ttgg.com%2Fstatic%2Fdefault%2Fimages%2Fsharp_jb_background.jpg&searchPic=false" title="分享到新浪微博"></a>
+          <a rel="nofollow" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fwww.ttgg.com%2Fuser%2Fcheckin%230-sqq-1-30252-9737f6f9e09dfaf5d3fd14d775bfee85&title=%E9%9B%86%E5%88%86%E5%AE%9D%E5%A4%A9%E5%A4%A9%E9%80%81%EF%BC%81%E5%A4%A9%E5%A4%A9%E9%80%9B%E9%80%9B%E5%85%A8%E6%96%B0%E6%94%B9%E7%89%88%E9%80%81%E5%A4%A7%E7%A4%BC%EF%BC%81%E4%BB%80%E4%B9%88%E5%8F%AB%E5%9C%9F%E8%B1%AA%EF%BC%9F%E8%BF%9B%E6%9D%A5%E5%91%8A%E8%AF%89%E4%BD%A0%EF%BC%81&desc=&summary=&site=baidu&pics=http%3A%2F%2Fwww.ttgg.com%2Fstatic%2Fdefault%2Fimages%2Fsharp_jb_background.jpg" title="发送给QQ好友和群组"></a>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="top">
+        <div class="fl">
+          <div class="user-img">
+            <img src="{urlAvatar($account, 160)}" width="108" height="108" alt="用户头像">
+          </div>
+          {if $account->uid}
+          <div class="user-info">
+            <b>{$account->nickname|default:'匿名用户'|escape}</b>
+            积分：
+            <span>{$account->scores|default:0}<a href="{url('user/score')}" rel="nofollow" target="_blank" class="exchange"></a></span>
+            集分宝：
+            <span>{$account->jf|default:0}</span>
+            <p>
+              {if isset($checkins[$today]->ranking) && isset($checkins[$today]->running)}
+              今日第<span>{$checkins[$today]->ranking|default:0}</span>个签到，并连续签到<span>{$checkins[$today]->running|default:0}</span>天，
+              {/if}
+              连签<span>7</span>天可额外获得<span>5</span>积分哦！</p>
+          </div>
+          {else}
+          <div class="user-nologin">您好！您还没登录，请先 <a rel="nofollow" href="{url('user/login')}" target="_blank">登录</a><a rel="nofollow" href="{url('user/register')}" target="_blank">注册</a></div>
+          {/if}
+        </div>
+        <div class="fr">
+{if isset($checkins[$today])}
+          <span class="b-btn has-qiandao btn-login"></span>
+{else}
+          <span class="b-btn no-qiandao btn-checkin" id="btn-checkin"></span>
+{/if}
+        </div>
+      </div>
+      <div class="content">
+        <div class="box">
+          <div class="calendar fl">
+            <div class="top-bar">
+              <p class="date-now fl">{$smarty.now|date_format:'Y年n月j日'}</p>
+              {if isset($reward) && isset($checkins[$today]->running) && 0 == ($checkins[$today]->running % 7)}
+              <p class="fr">恭喜您连续签到7天额外获得5积分奖励</p>
+              {else}
+              <p class="fr">还差{$reward}天可以额外获得5积分奖励</p>
+              {/if}
+            </div>
+            <div class="container">
+              <div class="week">
+                <span>周日</span>
+                <span>周一</span>
+                <span>周二</span>
+                <span>周三</span>
+                <span>周四</span>
+                <span>周五</span>
+                <span>周六</span>
+              </div>
+              <ul class="date-num" id="checkin">
+{for $var = 1 to $firstDayWeek}
+          <li></li>
+{/for}
+{for $var = 1 to $lastDay}
+{$d = sprintf('%s%02d%02d', $year, $month, $var)}
+{if $var < $day}
+{if isset($checkins[$d])}
+          <li class="front" data-ranking="{$checkins[$d]->ranking}"><i class="success"></i>{$var}</li>
+{else}
+          <li class="front cur"><i class="shuai"></i>{$var}</li>
+{/if}
+{elseif $var == $day}
+{if isset($checkins[$d])}
+          <li class="front" data-ranking="{$checkins[$d]->ranking}"><i class="success"></i>今天</li>
+{else}
+          <li class="front frontYellow" id="btn-checkin">今天</li>
+{/if}
+{else}
+          <li class="newday">{$var}</li>
+{/if}
+{/for}
+              </ul>
+            </div>
+          </div>
+          <div class="daren fr">
+            <h2>签到达人榜</h2>
+      <div class="outer-box"><div class="inner-box">
+              {foreach $userCheckins as $checkin}
+              <div class="single-daren">
+                <div class="fl">
+                  <a href="{$checkin->link}" target="_blank">
+                    <img src="{urlAvatar($checkin, 50)}" alt="" width="50" height="50">
+                    <div class="icon-mask"></div>
+                  </a>
+                </div>
+                <div class="fr">
+                  <a href="{$checkin->link}" target="_blank">{$checkin->nickname|escape}</a>
+                  <p>签到成功，<b>赚取<em>{$checkin->checkin_scores}</em>积分</b><b class="space">连签<em>{$checkin->running}</em>天</b></p>
+                </div>
+              </div>
+              {/foreach}
+            </div></div>
+          </div>
+        </div>
+        <div class="intro">
+          <h2 class="heading1"></h2>
+          <p><i class="num">1</i>每天签到随机发放0-1000积分，连续签到7天额外奖励 5 积分；</p>
+          <p><i class="num">2</i>1 积分可兑换 1 集分宝<a rel="nofollow" href="{url('user/score')}" target="_blank">点击兑换</a></p>
+          <p><i class="num">3</i>签到成功后分享到QQ空间可获得2积分奖励，（分享站内商品可获得1积分）</p>
+        </div>
+        <div class="intro" id="jfb">
+          <h2 class="heading2"></h2>
+          <p><i class="num">1</i>集分宝是由淘宝提供的积分服务，100集分宝抵扣1元钱；</p>
+          <p><i class="num">2</i>集分宝可以在淘宝全场购物抵现，还可以在支付宝上支付水电煤，还信用卡等；</p>
+          <p><i class="num">3</i>当天签到得集分宝在当天晚上22:00左右发放，请提前<a rel="nofollow" href="{url('user/safe')}" target="_blank">填写支付宝账号</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+<script>
+(function() {
+  $('#checkin').delegate('> li.cur', 'mouseenter', function(e) {
+    $(e.target).append('<span>暂时还不能补签喔</span>');
+  }).delegate('> li.yet', 'mouseenter', function(e) {
+    var dEl = $(e.target);
+    dEl.append('<span>当天第 ' + dEl.attr('data-ranking') + ' 名签到</span>');
+  }).delegate('> li.cur, > li.yet', 'mouseleave', function(e) {
+    $(e.target).children('span').remove();
+  }).delegate('> li span', 'mouseleave', function(e) {
+    $(e.target).remove();
+  });
+  // 倒计时
+  var jumpTo = 4;
+  var funcTimer = function(i) {
+    if (--jumpTo < 1) {
+      location.href = '{url('')}';
+    } else {
+      document.getElementById('timer').innerHTML = jumpTo;
+      setTimeout(funcTimer, 1000);
+    }
+  };
+  $('#btn-checkin, #top-checkin').click(function(e) {
+    e.preventDefault();
+{if isLogin()}
+    $.post('{url('user/checkin')}', { code: '{$checkinCode}' }, function(data) {
+      var data = data.result;
+      if (data == -1) {
+        dialog('<h1>签到失败，请重新签到</h1> <a href="{url('user/checkin')}" class="button">确认</a>').open(null, function() {
+          location.reload();
+        });
+      } else if (data) {
+        var dP = $('#top-checkin').parent();
+        $('#top-checkin').remove();
+        dP.append('<span class="btn-qd"></span>');
+        dialog([
+          '<div class="jinbi"></div>',
+          '<h1>签到排名 ' + data.ranking + ' 名，已连续签到 ' + data.r + ' 天</h1>',
+          '<h1>共赚取 ' + data.s + ' 个积分</h1>',
+          '<h1><em id="timer">3</em>秒后将为您跳转至首页</h1>'
+        ].join('')).open(function(){
+          funcTimer();
+        });
+        $('.inner-box').append('<div class="single-daren"><div class="fl"><a href="{$account->link}" target="_blank"><img src="{urlAvatar($account, 50)}" alt="" width="50" height="50"><div class="icon-mask"></div></a></div><div class="fr"><a href="{$account->link}" target="_blank">{$account->nickname|escape}</a><p>签到成功，<b>赚取<em>' + data.s + '</em>积分</b><b class="space">连签<em>' + data.r + '</em>天</b></p></div></div>');
+        $('.frontYellow').html('<i class="success"></i>今天').removeClass('frontYellow');
+        $('.btn-checkin').removeClass().addClass('b-btn has-qiandao btn-login');
+      } else {
+        dialog('<div class="jinbi"></div><h1>今天已签到</h1>').open();
+      }
+    }, 'json');
+{else}
+    dialog('<h1>亲，你还木有登录哦~~</h1><a href="{url('user/login')}" class="button">点击这里登录</a>').open();
+{/if}
+  });
+
+{if $code && $status == 0}
+$('.msgclose').click(function(){
+  $('.alert-box').remove();
+  $('.messageBg').remove();
+});
+var q = 1, runcode, innercode = $('div.user-info');
+var user_info = $('div.user-info > div').height();
+function performcode(){
+  if (q > {count($ScoresLogs) - 1}) { q = 0; };
+  var w = q * user_info;
+  innercode.animate({ 'top': '-' + w }, 500);
+  q++;
+}
+runcode = setInterval(performcode, 3000);
+$('.user-info').hover(function(){
+  clearInterval(runcode);
+}, function(){
+  runcode = setInterval(performcode, 3000);
+});
+{/if}
+{if $code && $status == 1 && isLogin()}
+$.post('{url('user/jfreceive')}', function(data) {
+  if (data.result == -1) {
+    var info = '<div class="alert-box" style="margin-top:-350px!important;"><div class="header2"><span class="close msgclose"></span></div><div class="container1"><div class="p1 po1"></div><!--去签到--><div class="btn-right"><a href="{url("user/checkin")}"></a></div><div class="p4"></div><div class="btn-bottom po-btn1"><!--分享给好友--><a href="javascript:;" class="btn1" id="btn1"></a></div><!--分享按钮弹出层--><div class="share-popup po-popup1"><div style="margin:28px 0 0 33px;" class="bdsharebuttonbox"><a href="javascript:;" class="bds_more" data-cmd="more"></a><a href="javascript:;" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="javascript:;" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="javascript:;" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div></div></div></div><div class="messageBg"></div>';
+    $('body').append(info);
+    {literal}
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"集分宝天天送！天天逛逛全新改版送大礼！什么叫土豪？进来告诉你！","bdMini":"2","bdMiniList":false,"bdPic":"http://www.ttgg.com/static/default/images/sharp_jb_background.jpg","bdStyle":"0","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName("head")[0]||body).appendChild(createElement("script")).src="http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion="+~(-new Date()/36e5)];
+    {/literal}
+    $('#btn1').click(function(){
+      $('.share-popup').slideToggle(200);
+    });
+    $('.msgclose').click(function(){
+      location.href = '{url('user/checkin')}';
+    });
+  } else if (data) {
+    var info = '<div class="alert-box" style="margin-top:-350px!important;"><div class="header2"><span class="close"></span></div><div class="container1"><!--去签到--><div class="btn-right2 po-btn-right"><a href="{url("user/score")}" target="_blank"></a></div><div class="p2 po-p2"><span class="p2-1"></span><b>' + data.result + '</b><span class="p2-2"></span></div><div class="p3"><span class="p3-1"></span><b>' + data.count + '</b><span class="p3-2"></span></div><div class="p4"></div><div class="btn-bottom po-btn1"><!--分享给好友--><a href="javascript:;" class="btn1" id="btn1"></a></div><!--分享按钮弹出层--><div class="share-popup po-popup1"><div class="bdsharebuttonbox" style="margin:28px 0 0 33px;"><a href="javascript:;" class="bds_more" data-cmd="more"></a><a href="javascript:;" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="javascript:;" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="javascript:;" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div></div></div></div><div class="messageBg"></div>';
+    $('body').append(info);
+    {literal}
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"集分宝天天送！天天逛逛全新改版送大礼！什么叫土豪？进来告诉你！","bdMini":"2","bdMiniList":false,"bdPic":"http://www.ttgg.com/static/default/images/sharp_jb_background.jpg","bdStyle":"0","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName("head")[0]||body).appendChild(createElement("script")).src="http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion="+~(-new Date()/36e5)];
+    {/literal}
+    $('#btn1').click(function(){
+      $('.share-popup').slideToggle(200);
+    });
+    $('.msgclose').click(function(){
+      location.href = '{url('user/checkin')}';
+    });
+  };
+}, 'json');
+{elseif $status == 1 && !isLogin()}
+location.href = '{url('user/checkin?code='|cat:randomString(32))}';
+{/if}
+
+{if isset($userCheckins) && count($userCheckins) > 8}
+  var i = 1, run, inner = $('div.inner-box');
+  var single_daren = $('div.single-daren').height();
+  function perform(){
+    if (i > {count($userCheckins) - 7}) { i = 0; };
+    var k = i * single_daren;
+    inner.animate({ 'top': '-' + k });
+    i++;
+  }
+  run = setInterval(perform, 2000);
+  $('.single-daren').hover(function(){
+    clearInterval(run);
+  }, function(){
+    run = setInterval(perform, 2000);
+  });
+{/if}
+
+/**去掉右侧导航**/
+$('.side-panel').remove();
+
+})();
+</script>
+</html>

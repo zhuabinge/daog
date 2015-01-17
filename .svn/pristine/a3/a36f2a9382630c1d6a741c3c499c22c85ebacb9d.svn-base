@@ -1,0 +1,145 @@
+
+  {$productModel = BpfCore::getModel('product')}
+  {$conditions.where.status = 1}
+  {$conditions.orderby = 'RAND()'}
+  {$product = $productModel->getProducts($conditions,1,25)}
+    <div class="sidebar">
+<!--       <div class="sidebar-box">
+        <h2>我的近期动态</h2>
+        <ul class="action-ul">
+          <li>
+            <p><i class="icon-qiandao"></i>签到成功，<b>赚取<em>3</em>积分</b><b class="space">连签<em>3</em>天</b></p>
+            <span>今天</span>
+          </li>
+          <li>
+            <p><i class="icon-love-empty"></i>喜欢了宝贝<a href="#"><b class="space">带盖陶瓷汤碗保鲜碗汤碗保鲜碗</b></a></p>
+            <span>今天</span>
+          </li>
+          <li>
+            <p><i class="icon-love-empty"></i>喜欢了宝贝<a href="#"><b class="space">带盖陶瓷汤碗保鲜碗汤碗保鲜碗</b></a></p>
+            <span>昨天</span>
+          </li>
+          <li>
+            <p><i class="icon-love-empty"></i>喜欢了宝贝<a href="#"><b class="space">带盖陶瓷汤碗保鲜碗</b></a></p>
+            <span>昨天</span>
+          </li>
+          <li>
+            <p><i class="icon-shopping-cart"></i>购买了宝贝<a href="#"><b class="space">带盖陶瓷汤碗保鲜碗</b></a></p>
+            <span>前天</span>
+          </li>
+        </ul>
+      </div> -->
+      <div class="sidebar-box">
+        <h2>大家都在看</h2>
+        <div class="all-page">
+          <div class="a-page">
+            {section name=product start=0 loop=5}
+            {$i = $smarty.section.product.index}
+            <div class="single-card">
+              <div class="fl">
+                <a href="{$product[$i]->link}" target="_blank"><img src="{urlStatic($product[$i]->image_path, 94, 94)}" alt="{$product[$i]->title}" width="94" height="94"></a>
+              </div>
+              <div class="fr">
+                <a href="{$product[$i]->link}" class="card-title" target="_blank">{$product[$i]->title}</a>
+                <a href="{$product[$i]->link_click}" class="go-to" target="_blank">去购买</a>
+                <span>(<em>{$product[$i]->views}</em>)</span>
+              </div>
+            </div>
+            {/section}
+          </div>
+          <div class="a-page">
+            {section name=product start=5 loop=10}
+            {$i = $smarty.section.product.index}
+            <div class="single-card">
+              <div class="fl">
+                <a href="{$product[$i]->link}" target="_blank"><img src="{urlStatic($product[$i]->image_path, 94, 94)}" alt="{$product[$i]->title}" width="94" height="94"></a>
+              </div>
+              <div class="fr">
+                <a href="{$product[$i]->link}" class="card-title" target="_blank">{$product[$i]->title}</a>
+                <a href="{$product[$i]->link_click}" class="go-to" target="_blank">去购买</a>
+                <span>(<em>{$product[$i]->views}</em>)</span>
+              </div>
+            </div>
+            {/section}
+          </div>
+          <div class="a-page">
+            {section name=product start=10 loop=15}
+            {$i = $smarty.section.product.index}
+            <div class="single-card">
+              <div class="fl">
+                <a href="{$product[$i]->link}" target="_blank"><img src="{urlStatic($product[$i]->image_path, 94, 94)}" alt="{$product[$i]->title}" width="94" height="94"></a>
+              </div>
+              <div class="fr">
+                <a href="{$product[$i]->link}" class="card-title" target="_blank">{$product[$i]->title}</a>
+                <a href="{$product[$i]->link_click}" class="go-to" target="_blank">去购买</a>
+                <span>(<em>{$product[$i]->views}</em>)</span>
+              </div>
+            </div>
+            {/section}
+          </div>
+          <div class="a-page">
+            {section name=product start=15 loop=20}
+            {$i = $smarty.section.product.index}
+            <div class="single-card">
+              <div class="fl">
+                <a href="{$product[$i]->link}" target="_blank"><img src="{urlStatic($product[$i]->image_path, 94, 94)}" alt="{$product[$i]->title}" width="94" height="94"></a>
+              </div>
+              <div class="fr">
+                <a href="{$product[$i]->link}" class="card-title" target="_blank">{$product[$i]->title}</a>
+                <a href="{$product[$i]->link_click}" class="go-to" target="_blank">去购买</a>
+                <span>(<em>{$product[$i]->views}</em>)</span>
+              </div>
+            </div>
+            {/section}
+          </div>
+          <div class="a-page">
+            {section name=product start=20 loop=25}
+            {$i = $smarty.section.product.index}
+            <div class="single-card">
+              <div class="fl">
+                <a href="{$product[$i]->link}" target="_blank"><img src="{urlStatic($product[$i]->image_path, 94, 94)}" alt="{$product[$i]->title}" width="94" height="94"></a>
+              </div>
+              <div class="fr">
+                <a href="{$product[$i]->link}" class="card-title" target="_blank">{$product[$i]->title}</a>
+                <a href="{$product[$i]->link_click}" class="go-to" target="_blank">去购买</a>
+                <span>(<em>{$product[$i]->views}</em>)</span>
+              </div>
+            </div>
+            {/section}
+          </div>
+        </div>
+        <div class="alternate-operate">
+          <span class="prev" id="alter_prev"><i></i></span>
+          <span class="next" id="alter_next"><i></i></span>
+        </div>
+      </div>
+      <div class="sidebar-box">
+        <h2>热门活动推荐</h2>
+        <div class="ad">
+          {html_ad id="score-1" width="250" height="350"}
+        </div>
+      </div>
+      {$userModel = BpfCore::getModel('user')}
+      {$userCheckins = $userModel->getUserCheckinsByDate(null, 5)}
+      <div class="sidebar-box">
+        <h2>签到达人榜</h2>
+        <ul class="qiandao-ul">
+          {if isset($userCheckins) && $userCheckins}
+          {foreach $userCheckins as $sa}
+          <li>
+            <div class="fl">
+              <a href="{$sa->link}" target="_blank">
+                <img src="{urlAvatar($sa, 50)}" alt="{$sa->nickname|escape}" width="50" height="50">
+                <div class="icon-mask"></div>
+              </a>
+            </div>
+            <div class="fr">
+              <a href="{$sa->link}" target="_blank">{$sa->nickname|escape}</a>
+              <p>签到成功，<b>赚取<em>{$sa->checkin_scores}</em>积分</b><b class="space">连签<em>{$sa->running}</em>天</b></p>
+            </div>
+          </li>
+          {/foreach}
+          {/if}
+        </ul>
+      </div>
+    </div>

@@ -1,0 +1,89 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="规则中心"}
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="rule-01">
+        <h2>卖家专栏</h2>
+        <ul class="rule-toggle">
+          <li>
+            <i class="open"></i>
+            <a href="{url('merchant/rule/detail/1140')}">报名规则</a>
+          </li>
+          <li>
+            <i class="open"></i>
+            <a href="{url('merchant/rule/detail/1240')}">保证金规则</a>
+          </li>
+          <li>
+            <i class="open"></i>
+            <a href="{url('merchant/rule/detail/1340')}">收费规则</a>
+          </li>
+          <li>
+            <i class="open"></i>
+            <a href="{url('merchant/rule/detail/1440')}">处罚规则</a>
+          </li>
+          <li>
+            <i class="open"></i>
+            <a href="{url('merchant/rule/detail/1540')}">活动规则</a>
+          </li>
+          <li>
+            <i class="open"></i>
+            <a href="{url('merchant/rule/detail/1640')}">服务体系</a>
+          </li>
+          <li>
+            <i class="open"></i>
+            <a href="{url('merchant/rule/detail/1740')}">交易规则</a>
+          </li>
+        </ul>
+      </div>
+      <div class="rule-02">
+        <h2>违规处理</h2>
+        <ul>
+          <li>
+            <a href="{url('merchant/rule/detail/295')}">违规商家曝光台</a>
+          </li>
+          <li>
+            <a href="{url('merchant/rule/detail/390')}">关于黑名单管理方法</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main">
+      <div class="help">
+        <div class="help-content">
+          <div class="title">
+            <h3>{$title|default:''}</h3>
+          </div>
+          {$content|default:''}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+{include file='merchant/after_body.phtml'}
+<script type="text/javascript">
+// $(document).ready(function() {
+//   $('.rule-toggle > li > i').click(function() {
+//     $(this).siblings('ul').slideToggle(300);
+//     $(this).parent('li').siblings().find('i').addClass('close').removeClass('open').siblings('ul').slideUp();
+//     if($(this).hasClass('close')) {
+//       $(this).addClass('open').removeClass('close').siblings('a').addClass('active').parent('li').siblings().find('a').removeClass('active');
+//     } else {
+//       $(this).addClass('close').removeClass('open').siblings('a').removeClass('active');
+//     }
+//   });
+//   $('.rule-toggle > li > a').click(function() {
+//     $(this).siblings('ul').slideToggle(300);
+//     $(this).parent('li').siblings().find('i').addClass('close').removeClass('open').siblings('ul').slideUp();
+//     if($(this).siblings('i').hasClass('close')) {
+//       $(this).siblings('i').addClass('open').removeClass('close');
+//       $(this).addClass('active').parent('li').siblings().find('a').removeClass('active');
+//     } else {
+//       $(this).removeClass('active').siblings('i').addClass('close').removeClass('open');
+//     }
+//   });
+// });
+</script>
+</html>

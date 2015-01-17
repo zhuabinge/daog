@@ -1,0 +1,130 @@
+{include file='admin/before_body.phtml' title='后台首页'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<style type="text/css">
+#dashboard-spinner{ font-size: 26px; text-align: center; padding-top: 20px; color: #555; }
+</style>
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='dashboard'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i>首页</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+{if access('dashboard-index')}
+      
+      <div id="dashboard-spinner">
+        <i class="icon-spinner icon-spin"></i> 统计报表加载中...
+      </div>
+
+      <div id="main_content"></div>
+
+      <div class="row" style="margin-top:30px;">
+        <div class="col-md-4">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>商品管理</h4>
+            </div>
+            <div class="widget-content">
+              <div class="dd" id="nestable_list_1">
+                <ul class="list-unstyled list-dashboard">
+                  <li><a href="{url('admin/category')}">类目列表</a> 
+                    <div>用于添加修改商品类目</div>
+                  </li>
+                  <li><a href="{url('admin/product')}">商品列表</a>
+                    <div>用于商品添加修改，采集商品，批量操作等</div>
+                  </li>
+                  <li><a href="{url('admin/tag')}">标签列表</a>
+                    <div>用于添加修改标签列表</div>
+                  </li>
+                  <li><a href="{url('admin/channel')}">专题列表</a>
+                    <div>用于添加修改专题列表</div>
+                  </li>
+                  <li><a href="{url('admin/comment')}">评论列表</a>
+                    <div class="exp-b">用于添加修改评论列表</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>用户管理</h4>
+            </div>
+            <div class="widget-content">
+              <div class="dd" id="nestable_list_1">
+                <ul class="list-unstyled list-dashboard">
+                  <li><a href="{url('admin/user')}">用户列表</a> 
+                    <div>用于添加修改用户列表</div>
+                  </li>
+                  <li><a href="{url('admin/role')}">角色列表</a>
+                    <div>用于添加修改角色列表</div>
+                  </li>
+                  <li><a href="{url('admin/role/permission')}">权限列表</a>
+                    <div>用于添加修改权限列表</div>
+                  </li>
+                  <li><a href="{url('admin/user/feedback')}">反馈列表</a>
+                    <div>用于查看修改反馈列表</div>
+                  </li>
+                  <li><a href="{url('admin/user/usersScoresLogs')}">行为列表</a>
+                    <div>用于查看修改行为列表</div>
+                  </li>
+                  <li><a href="{url('admin/user/adminLogs')}">日志列表</a>
+                    <div class="exp-b">用于查看修改日志列表</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>广告管理</h4>
+            </div>
+            <div class="widget-content">
+              <div class="dd" id="nestable_list_1">
+                <ul class="list-unstyled list-dashboard">
+                  <li><a href="{url('admin/ad')}">广告列表</a> 
+                    <div class="exp-b">用于添加修改广告列表</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+{/if}
+      <!-- /end -->
+
+    </div>
+  </div>
+</div>
+</body>
+{include file='admin/after_body.phtml'}
+{if access('dashboard-index')}
+<script>
+$(function(){
+  $('#main_content').load("{url('admin/default/dashboard')}", function() {
+    $('#dashboard-spinner').remove();
+  });
+});
+</script>
+{/if}
+</html>

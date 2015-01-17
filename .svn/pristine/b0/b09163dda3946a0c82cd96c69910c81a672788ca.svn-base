@@ -1,0 +1,125 @@
+{include file='before_body.phtml' title='天天逛逛_我的轨迹'}
+<body>
+{include file='header.phtml' head="user"}
+
+  {include file='user/user_sidebar.phtml' active='我的轨迹'}
+
+  <div class="credit-content">      
+    <div class="main">
+    {if isset($trajectorys)&&$trajectorys}
+        <div class="share">
+      {foreach $trajectorys as $value}
+          <div class="share-goods">
+          {foreach $value->items as $product}
+            <!--一个浏览的宝贝-->
+            <div class="share-box">
+              <div class="single-goods">
+                <a href="{$product->products->url}" target="_blank">
+                  <img src="{urlStatic($product->products->image_path,286,286)}" width="236" height="236">
+                </a>
+              </div>
+              <div class="goods-details">
+                <a href="{$product->products->url}" target="_blank"><h3>{$product->products->title}</h3></a>
+                <p>{$product->products->feature}</p>                
+                <div class="sale-price">促销价：<em>¥{$product->products->sell_price}</em><del>¥{$product->products->list_price}</del></div>
+              </div>
+              <div class="operate">
+                <a href="javascript:void(0);" likeid="{$product->products->pid}" lc="{$product->likes|default:0}" class="delcol"><i class="love-red"></i>喜欢<em>（{$product->likes|default:0}）</em></a>  
+              </div>
+            </div>
+          {/foreach}
+            <div class="time">{$value->date}</div>
+            <div class="red-circle"></div>
+            <div class="vertical-line"></div>          
+          </div>
+      {/foreach}
+        </div> 
+        <div class="newPage clearbox tc">
+         {if isset($other) && $other} 
+           {html_pagination showinfo="1" page="$page" rows="$size" count="$count" url="{url('user/trajectory/'|cat:$userId|cat:'?page=%page%')}"} 
+         {else} 
+           {html_pagination showinfo="1" page="$page" rows="$size" count="$count" url="{url('user/trajectory?page=%page%')}"}
+          {/if}
+        </div>
+    {else}
+        {if isset($other) && $other}
+        <div class="users_Icon buy_other">
+          <span></span>
+          <a href="{url('')}">去随便逛逛</a>
+        </div>
+        {else}
+        <div class="users_Icon buy_info">
+          <span></span>
+          <a href="{url('')}">去随便逛逛</a>
+        </div>
+        {/if}
+    {/if}
+
+    </div>
+    {include file='user/user_right.phtml'}
+  </div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+{literal}
+<script type="text/javascript">
+$("a.delcol").on('click', function () {
+  var obj = $(this);
+  var parent = obj;
+  var id = parent.attr('likeid');
+  adduser(id);
+  var lc = parent.attr('lc');
+  lc = parseInt(lc) + 1;
+  $(this).html('已喜欢 <em>（' + lc + '）</em>');
+});
+function adduser(id){
+  $.post('/user/addlikes', {pid:id}, function(data) {
+    if (data == 'flase') {
+      $('#prompt').load('/user/loginLoad');
+      return false;
+    }
+  }, 'text');
+}
+$(function($) {
+  // 边栏轮播效果
+  var page = 1; //当前页码
+  $("#alter_prev").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==1){
+        $all_page.animate({ left:"-="+v_width*(page_count-1) });
+        page=page_count;
+      }else{
+        $all_page.animate({ left:"+="+v_width });
+        page--;
+      }
+    }
+  });
+  $("#alter_next").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==page_count){
+        $all_page.animate({ left:"0" });
+        page=1;
+      }else{
+        $all_page.animate({ left:"-="+v_width });
+        page++;
+      }
+    }
+  });
+});
+</script>
+{/literal}
+</html>

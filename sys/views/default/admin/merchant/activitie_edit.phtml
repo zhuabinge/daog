@@ -1,0 +1,166 @@
+{include file='admin/before_body.phtml' title=''}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='merchant'}
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/merchant/activities')}">活动列表</a></li>
+          {if $aid == 0}
+            <li class="current">添加活动</li>
+          {else}
+            <li class="current">编辑活动</li>
+            <li class="current">{$activitie->title|default:''|escape}</li>
+          {/if}
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+      <div class="tabbable tabbable-custom">
+        <ul class="nav nav-tabs">
+           <li {if $aid != 0}class="active"{/if}>
+            <a href="#tab_feed_2" data-toggle="tab">
+              管理活动商品
+            </a>
+          </li>
+          <li {if $aid == 0}class="active"{/if}>
+            <a href="#tab_feed_1" data-toggle="tab">
+              {if $aid == 0}
+              添加活动信息
+              {else}
+              编辑活动信息
+              {/if}
+
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane {if $aid == 0}active{/if}" id="tab_feed_1">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder"></i>
+                    {if $aid == 0}
+                    添加活动信息
+                    {else}
+                    修改活动信息
+                    {/if}
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" id="validate" method="POST">
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        <span class="required">  * </span> 活动标题：
+                      </label>
+                      <div class="col-md-9">
+                        <input type="text" name="title" value="{$activitie->title|default:''|escape}" class="form-control input-width-xxlarge required">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        <span class="required">  * </span> 活动内容：
+                      </label>
+                      <div class="col-md-9">
+                        <textarea rows="5" cols="5" name="content" class="form-control input-width-xxlarge">{$activitie->content|default:''|escape}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        <span class="required">  * </span> 频道：
+                      </label>
+                      <div class="col-md-9">
+                        <select name="channel" class="input-width-large select2" data-minimum-results-for-search="-1">
+                            {foreach $channelsList|default:array() as $channel }
+                              {assign var="cid" value=$activitie->cid|default:0}
+                               <option value="{$channel->cid}" {if $channel->cid == $cid }selected="selected"{/if} >
+                                {$channel->title}
+                               </option>
+                             {/foreach}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        <span class="required">  * </span> 结束时间：
+                      </label>
+                      <div class="col-md-9" style="z-index:999;">
+                      {assign var="deadline" value=$activitie->deadline|default:""}
+                       <input class="form-control input-width-large" type="text" id="datepicker" size="30" name="deadline" readonly="readonly" value="{$deadline|date_format:"Y-m-d"}" >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        状态：
+                      </label>
+                      {$status = $activitie->status|default:'-1'}
+                      <div class="col-md-9">
+                        <label class="radio pull-left" style="width:80px;">
+                          <input type="radio" name="status" class="uniform" {if $status == 1}checked{else if $status == -1}checked{/if} value="1">
+                          有效
+                        </label>
+                        <label class="radio">
+                          <input type="radio" name="status" class="uniform" {if $status == 0}checked{/if} value="0">
+                          无效
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group form-actions">
+                      <label class="col-md-3 control-label hidden-xs"></label>
+                      <div class="col-md-9">
+                        <input type="hidden" name="aid" value="{$activitie->aid|default:0}" >
+                        <input type="submit" value="保存" class="btn btn-primary">
+                        <a href="{url('admin/merchant/activities')}" class="btn">返回专题列表</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane {if $aid != 0}active{/if}" id="tab_feed_2">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder"></i>
+                    审核商品
+                  </h4>
+                </div>
+                  <div class="wid" id="products">
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function() {
+  $( "#datepicker" ).datepicker({
+    dateFormat: 'yy-mm-dd',
+    dayNamesMin: [ "日", "一", "二", "三", "四", "五", "六" ],
+    monthNames: [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" ],
+  });
+  {assign var="aid" value=$activitie->aid|default:0}
+  $.ajax({ url: '{url("admin/merchant/activities_getProducts/$aid")}', success: function(data){
+    $('#products').html(data);
+  }});
+
+});
+</script>
+</html>

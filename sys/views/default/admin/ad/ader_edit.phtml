@@ -1,0 +1,79 @@
+{include file='admin/before_body.phtml' title='修改添加广告'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='ad_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/ad/ader')}">广告主管理</a></li>
+          <li class="current">修改添加广告主</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4><i class="icon-reorder"></i></h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/ad/aderEdit/'|cat:$oId)}" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 广告主名称：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="name" value="{$adsName|escape|default:''}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 所属用户：
+                  </label>
+                  <div class="col-md-8">
+                   <select name="uids[]" class="select2-select-00 full-width-fix required" multiple>
+                     {foreach $userList as $sa}
+                       <option value="{$sa->uid}" {if in_array($sa->uid, $adsUid)}selected="selected"{/if}>
+                        {$sa->nickname}
+                       </option>
+                     {/foreach}
+                  </select>
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary">
+                    <a href="{url('admin/ad/ader')}" class="btn">返回广告主列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#validate").validate({
+  });
+  $(".select2-select-00").select2({ allowClear:true });
+});
+</script>
+</html>

@@ -1,0 +1,131 @@
+  <div id="sidebar" class="sidebar-fixed">
+    <div id="sidebar-content">
+      <ul id="nav">
+        {if isset($navigation) && ($navigation == 'dashboard')}
+          <li><a href="{url('admin')}"><i class="icon-home"></i>首页</a></li>
+          {if access('product-view')}
+          <li><a href="{url('admin/product')}"><i class="icon-shopping-cart"></i>商品管理</a></li>
+          {/if}
+          {if access('user-view')}
+          <li><a href="{url('admin/user')}"><i class="icon-user"></i>用户管理</a></li>
+          {/if}
+          {if access('ad-view')}
+          <li><a href="{url('admin/ad')}"><i class="icon-bullhorn"></i>广告管理</a></li>
+          {/if}
+        {/if}
+
+        {if isset($navigation) && ($navigation == 'merchant')}
+          {if access('merchant-view')}
+          <li><a href="{url('admin/merchant')}"><i class="icon-user"></i>商家列表</a></li>
+    <!--       <li><a href="{url('admin/merchant/activities')}"><i class="icon-bell"></i>活动列表</a></li>
+          <li><a href="{url('admin/merchant/products')}"><i class="icon-legal"></i>活动商品审核</a></li> -->
+          <li><a href="{url('admin/merchant/orders')}"><i class="icon-reorder"></i>订单列表</a></li>
+          <li><a href="{url('admin/merchant/invoices')}"><i class="icon-credit-card"></i>发票列表</a></li>
+          {/if}
+        {/if}
+
+        {if isset($navigation) && ($navigation == 'product_view')}
+        {if access('category-view')}
+        <li><a href="{url('admin/category')}"><i class="icon-list"></i>类目列表</a></li>
+        {/if}
+        {if access('product-view')}
+        <li><a href="{url('admin/product')}"><i class="icon-shopping-cart"></i>商品列表</a></li>
+        {/if}
+        {if access('tag-view')}
+        <li><a href="{url('admin/tag')}"><i class="icon-tags"></i>标签列表</a></li>
+        {/if}
+        {if access('channel-view')}
+        <li><a href="{url('admin/channel')}"><i class="icon-copy"></i>专题模块</a>
+          <ul class="sub-menu" style="display:block;">
+            <li>
+              <a href="{url('admin/channel')}">
+                <i class="icon-angle-right"></i> 专题列表
+              </a>
+            </li>
+            <li>
+              <a href="{url('admin/channel/wishing')}">
+                <i class="icon-angle-right"></i> 许愿列表
+              </a>
+            </li>
+            <li>
+              <a href="{url('admin/channel/prizes')}">
+                <i class="icon-angle-right"></i> 抽奖列表
+              </a>
+            </li>
+          </ul>
+        </li>
+        {/if}
+        {if access('comment-view')}
+        <li><a href="{url('admin/comment')}"><i class="icon-comment"></i>评论列表</a></li>
+        {/if}
+        {/if}
+
+        {if isset($navigation) && ($navigation == 'ad_view')}
+        {if access('ad-view')}
+        <li><a href="{url('admin/ad')}"><i class="icon-bullhorn"></i>广告列表</a></li>
+        {/if}
+        {if access('ader-view')}
+        <li><a href="{url('admin/ad/ader')}"><i class="icon-bullhorn"></i>广告主列表</a></li>
+        {/if}
+        {/if}
+
+        {if isset($navigation) && ($navigation == 'user_view')}
+        {if access('user-view')}
+        <li><a href="{url('admin/user')}"><i class="icon-user"></i>用户列表</a></li>
+  <!--       <li><a href="{url('admin/user/setAvatar')}"><i class="icon-user"></i>自动设置头像</a></li> -->
+        {/if}
+        {if access('role-view')}
+        <li><a href="{url('admin/role')}"><i class="icon-group"></i>角色列表</a></li>
+        <li><a href="{url('admin/role/permission')}"><i class="icon-key"></i>权限列表</a></li>
+        {/if}
+        <li><a href="{url('admin/user/feedback')}"><i class="icon-user"></i>反馈列表</a></li>
+        <li><a href="{url('admin/user/usersScoresLogs')}"><i class="icon-user"></i>行为列表</a></li>
+        <li><a href="{url('admin/user/adminLogs')}"><i class="icon-user"></i>日志列表</a></li>
+        {/if}
+
+        {if isset($navigation) && ($navigation == 'system_view')}
+        {if access('score-edit')}
+        <li><a href="{url('admin/system/score')}"><i class="icon-bullhorn"></i>积分设置</a></li>
+        {/if}
+        {if access('open-edit')}
+        <li><a href="{url('admin/system/open')}"><i class="icon-bullhorn"></i>开放平台信息设置</a></li>
+        {/if}
+        {if access('content-edit')}
+        <li><a href="{url('admin/system/content')}"><i class="icon-bullhorn"></i>内容管理</a></li>
+        {/if}
+        {if access('email-edit')}
+        <li><a href="{url('admin/system/email')}"><i class="icon-bullhorn"></i>邮件模板管理</a></li>
+        {/if}
+        {if access('jifenbao')}
+        <li><a href="{url('admin/system/jifenbao')}"><i class="icon-bullhorn"></i>集分宝发放管理</a></li>
+        {/if}
+        {/if}
+      </ul>
+      <div class="sidebar-title">
+        <span>
+          &copy 海萍(上海)科技有限公司
+        </span>
+      </div>
+    <!--   <ol class="notifications">
+        <li>
+          <div>
+            <span>在线人数 <strong>0</strong></span>
+            <span class="time">当前在线的访问人数。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span>积分总数 <strong>0</strong></span>
+            <span class="time">当前用户积分总数。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span>集分宝总数 <strong>0</strong></span>
+            <span class="time">当前用户集分宝总数。</span>
+          </div>
+        </li>
+      </ol> -->
+    </div>
+    <div id="divider" class="resizeable"></div>
+  </div>

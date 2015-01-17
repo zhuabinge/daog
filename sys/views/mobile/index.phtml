@@ -1,0 +1,119 @@
+{include file='before_body.phtml' title='天天逛逛独家优惠，天天送集分宝9.9包邮20元封顶秒杀在天天逛逛' keywords='天天逛逛官网,积分签到,天天逛逛独家优惠,天逛网,天天逛逛天天特价,9.9包邮,20元封顶,ttgg' description='汇集独家特约【淘宝网2-5折商品】，以天天有九块九包邮超值宝贝著名。价格足够低，先到先得。找独家淘宝天猫商城折扣秒杀，请到天天逛逛。【9.9包邮 天天有】'}
+  <body>
+    <div id="wrapper">
+      <div class="scroller">
+        <header>
+          <h1>
+            <a href="{url('')}"></a>
+          </h1>
+          <a class="search" href="{url('categories')}"></a>
+        </header>
+        <div class="addWrap">
+          <div class="swipe" id="mySwipe">
+            <div class="swipe-wrap">
+              <div>{html_ad id="moblie-slider-1" width="618" height="120"}</div>
+              <div>{html_ad id="moblie-slider-2" width="618" height="120"}</div>
+            </div>
+          </div>
+          <ul id="position">
+            <li class="cur"></li>
+            <li class=""></li>
+          </ul>
+        </div>
+{include file='nav.phtml'}
+        <div class="banner">
+          <div class="banner-con">
+            <div class="fl">
+              <div class="b-inner">
+                {html_ad id="moblie-1" width="405" height="469"}
+              </div>
+            </div>
+            <div class="fr">
+              <div class="frt">
+                <div class="b-inner">
+                    {html_ad id="moblie-2" width="608" height="236"}
+                </div>
+              </div>
+              <div class="frb1">
+                <div class="b-inner">
+                    {html_ad id="moblie-3" width="303" height="232"}
+                </div>
+              </div>
+              <div class="frb2">
+                <div class="b-inner">
+                    {html_ad id="moblie-4" width="304" height="232"}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="deals">
+        <input type="hidden" value="{$page+1}" id="page">
+{if $products}
+{foreach $products as $product}
+          <div class="deal">
+            <div class="deal-box">
+              <div class="deal-con">
+                <figure>
+                  <sup>
+{if $product->data == 'B'}
+                    <i class="icon-tm"></i> 
+{else}                   
+                    <i class="icon-tb"></i>
+{/if}            
+                  </sup>
+                  <a target="_blank" href="{$product->link_click}" title="{$product->title|escape}">
+                    <img class="lazy" src="{$tpldir}/images/ttgg.png" data-original="{urlStatic($product->image_path, 286, 286)}" width="284" height="284" alt="{$product->title}"/>                 
+                  </a>
+                  <sub>
+                    <a href="javascript:void(0);">
+                      <i></i>
+                    </a>
+                  </sub>
+                </figure>
+                <h2>
+                  <a target="_blank" href="{$product->link_click}" title="{$product->title|escape}">               
+                    <span>{$product->title|escape}</span>
+                  </a>
+                </h2>
+                <p>
+                  <span><small>¥</small>{$product->sell_price}</span>
+                  <del>¥{floatval($product->list_price)}</del>
+                </p>
+              </div>
+            </div>
+          </div>
+{/foreach}
+{/if}
+          <div id="Loading"></div>
+        </section>
+        <footer>
+          <a id="backTop" href="javascript:void(0);">
+           <i></i>
+          </a>
+        </footer>
+      </div>
+    </div>
+{include file='after_body.phtml'}
+<script type="text/javascript" src="{$tpldir}/js/swipe.min.js"></script>
+<script type="text/javascript" src="{$tpldir}/js/slide.js"></script>
+<script type="text/javascript">
+
+var stop = true;
+$(window).scroll(function(){
+
+    totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+    if($(document).height() <= totalheight){
+        if(stop==true){
+            stop=false;
+            $.post("product/mobile?page="+$("#page").val(),function(txt){
+                $("#Loading").before(txt);
+                document.getElementById("page").value=parseInt($("#page").val())+1;
+                stop=true;
+            },"text");
+        }
+    }
+});
+</script>
+</body>
+</html>

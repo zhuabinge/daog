@@ -1,0 +1,102 @@
+
+  <div class="credit-header">
+    <div class="personal-info">
+      {if isset($other) && $other}
+      <div class="fl">
+        <div class="user-img">
+          <img src="{urlAvatar($other, 160)}" width="120" height="120" alt="用户头像">
+        </div>
+        <div class="user-info">
+          <div class="user-name">
+            <b>{$other->nickname|default:''}</b>
+            <small>{$other->emotion|default:''}</small>
+          </div>
+          <div class="user-credit">
+            <div class="credit-left">
+              <em>{$other->scores|default:0}</em>
+              <br/>积分
+            </div>
+            <div class="vertical-line"></div>
+            <div class="credit-right">
+              <em>{$other->jf|default:0}</em>
+              <br/>已兑换集分宝
+            </div>
+          </div>
+        </div>
+      </div>
+      {else}
+      <div class="fl">
+        <div class="user-img">
+          <img src="{urlAvatar($account, 160)}" width="120" height="120" alt="用户头像">
+        </div>
+        <div class="user-info">
+          <div class="user-name">
+            <b>{$account->nickname|default:''}</b>
+            <small>{$account->emotion|default:''}</small>
+          </div>
+          <div class="user-credit">
+            <div class="credit-left">
+              <em>{$account->scores|default:0}</em>
+              <br/>积分
+            </div>
+            <div class="vertical-line"></div>
+            <div class="credit-right">
+              <em>{$account->jf|default:0}</em>
+              <br/>已兑换集分宝
+            </div>
+          </div>
+        </div>
+      </div>
+      {/if}
+      
+{if !isset($other)}
+      {$userModel = BpfCore::getModel('user')}
+      {$userId = $account->uid}
+      {$year = $smarty.now|date_format:'Ym'}
+      {$today = $smarty.now|date_format:'Ymd'}
+      {$checkins = $userModel->getCheckins($userId, $year)}
+      {$checkinstoday = $checkins[$today]|default:0}
+      <div class="fr">
+        <div class="edit-link">
+        {if $userId}
+          <a href="{url('user/center')}" target="_blank">编辑个人资料</a>
+        {else}
+          <a href="{url('user/login')}" target="_blank">点击登陆</a>
+        {/if}
+        </div>
+        <div class="qiandao">
+          <div class="qiandao-fl">
+            <span>{$smarty.now|date_format:'n'}</span>月<span>{$smarty.now|date_format:'j'}</span>日
+            <br/>
+            连签<em>{$checkinstoday->running|default:0}</em>天
+          </div>
+          <div class="qiandao-fr">
+{if isset($checkins[$today])}
+            <a href="javascript:void(0)" class="has-qiandao"></a>
+{else}
+            <a href="{url('user/checkin')}" target="_blank"></a>
+{/if}
+          </div>
+        </div>
+      </div>
+{/if} 
+    </div>
+    <div class="credit-nav">
+      {if isset($other) && $other}
+      <ul>
+        <li {if isset($active) && $active == '我的喜欢'}class="active"{/if}><a href="{urlUser($other->uid,'user/likes/')}">TA的喜欢</a></li>
+        <li {if isset($active) && $active == '我的积分'}class="active"{/if}><a href="{urlUser($other->uid,'user/score/')}">TA的积分</a></li>
+        <li {if isset($active) && $active == '我的轨迹'}class="active"{/if}><a href="{urlUser($other->uid,'user/trajectory/')}">TA的轨迹</a></li>
+        <li {if isset($active) && $active == '我的分享'}class="active"{/if}><a href="{urlUser($other->uid,'user/share/')}">TA的分享</a></li>
+      </ul>
+      {else}
+      <ul>
+        <li {if isset($active) && $active == '我的喜欢'}class="active"{/if}><a href="{url('user/likes')}">我的喜欢</a></li>
+        <li {if isset($active) && $active == '我的积分'}class="active"{/if}><a href="{url('user/score')}">我的积分</a></li>
+        <li {if isset($active) && $active == '我的轨迹'}class="active"{/if}><a href="{url('user/trajectory')}">我的轨迹</a></li>
+        <li {if isset($active) && $active == '我的分享'}class="active"{/if}><a href="{url('user/share')}">我的分享</a></li>
+        <li {if isset($active) && $active == '账号安全'}class="active"{/if}><a href="{url('user/safe')}">账号安全</a></li>
+      </ul>
+      {/if}
+    </div>
+  </div>

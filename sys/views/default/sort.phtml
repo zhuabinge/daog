@@ -1,0 +1,7 @@
+<div class="tags">
+	{if isset($childCates) && $childCates}
+	{foreach $childCates as $childCate}
+	<a href="{$childCate->link}">{$childCate->name}</a>
+	{/foreach}
+	{/if}
+</div>

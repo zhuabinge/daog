@@ -1,0 +1,21 @@
+{include file='merchant/before_body.phtml'}
+<body>
+{include file='merchant/header.phtml' match="我的账户"}
+
+  <div class="container">
+    {include file='merchant/user_sidebar.phtml' match="我的发票"}
+
+    <div class="main">
+      <h2>我的发票</h2>
+      <div class="color-box">
+        <div>您当前可开发票的金额：<b>{$iCount|default:0}</b>元</div>
+        <div>您已开发票的金额：{$nCount|default:0}元<!-- <a href="" class="link">查看申请记录>></a> --></div>
+      </div>
+      <p class="tip-intro">
+        开发票最低要求金额3000元，每个自然月只能申请一次发票，如需要申请请联系客服。
+      </p>
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

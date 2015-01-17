@@ -1,0 +1,139 @@
+{include file='admin/before_body.phtml' title='商家订单列表'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='merchant'}
+  {$orderStatus = $smarty.get.orderStatus|default:''}
+  {$orderId = $smarty.get.orderId|default:''}
+  {$merchantName = $smarty.get.merchantName|default:''}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/merchant/')}">商家中心</a></li>
+          <li class="current">订单列表</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-content no-padding">
+              <form action="{url('admin/merchant/orders')}" method="GET" id="form1" style="margin:0">
+              <div class="row">
+                <div class="dataTables_header clearfix">
+                  <div class="col-md-2">
+                     <div class="input-group">
+                      <input type="text" name="orderId" value="{$orderId}" placeholder="订单号过滤.." class="form-control">
+                      <span class="input-group-addon" onclick="document.getElementById('form1').submit();"><i  style="cursor:pointer;" class="icon-search"></i></span>
+                     </div>
+                  </div>
+                  <div class="col-md-2">
+                     <div class="input-group">
+                      <input type="text" name="merchantName" value="{$merchantName}" placeholder="商家名称过滤.." class="form-control">
+                      <span class="input-group-addon" onclick="document.getElementById('form1').submit();"><i  style="cursor:pointer;" class="icon-search"></i></span>
+                     </div>
+                  </div>
+                  <div class="col-md-2">
+                     <div class="input-group">
+                     <select name="orderStatus" id="orderStatus" class="select2" style="width: 140px"  data-minimum-results-for-search="-1">
+                        <option value="-1"  {if $orderStatus != '1' && $orderStatus != '0'} selected {/if}>所有订单</option>
+                        <option value="0" {if $orderStatus == '0' && $orderStatus != ''} selected {/if}>订单无效</option>
+                        <option value="1" {if $orderStatus == '1'} selected {/if}>订单有效</option>
+                      </select>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/merchant/orders?page=%page%&orderId='|cat:$orderId|cat:'&orderStatus='|cat:$orderStatus|cat:'&merchantName='|cat:$merchantName)}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <input type="submit"  style="display:none">
+              </form>
+              <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                <thead>
+                  <tr>
+                    <th class="checkbox-column">
+                      <input type="checkbox" class="uniform">
+                    </th>
+                    <th width="100">订单号</th>
+                    <th width="150">商家名称</th>
+                    <th>商品名称</th>
+                    <th>商品数量</th>
+                    <th>商品总价</th>
+                    <th width="80">订单状态</th>
+                    <th width="100">服务费用</th>
+                    <th width="160">创建时间</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {if isset($ordersList) && $ordersList}
+                    {foreach $ordersList as $sa}
+                      <tr>
+                        <td class="checkbox-column">
+                          <input type="checkbox" class="uniform" name="mid[]" value="{$sa->mid}">
+                        </td>
+                        <td>{$sa->order_number|escape}</td>
+                        <td>{$sa->seller|escape}</td>
+                        <td><a href="{$sa->url|escape}" target="_blank" >{$sa->title|escape}</a></td>
+                        <td>{$sa->count|escape}</td>
+                        <td>{$sa->income|escape}</td>
+                        <td>
+                          {if $sa->status == 0 }
+                            <span class="label label-danger">无效</span>
+                          {elseif $sa->status == 1 }
+                            <span class="label label-success">订单有效</span>
+                          {/if}
+                        </td>
+                        <td>
+                          10%
+                          {if $sa->service_status == 1}
+                            <span class="label label-success">已收取</span>
+                          {else}
+                            <span class="label label-danger">未收</span>
+                          {/if}
+                        </td>
+                        <td>{$sa->created|date_format:'Y-m-d G:i:s'}</td>
+                      </tr>
+                    {/foreach}
+                  {/if}
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="table-footer">
+                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="dataTables_paginate paging_bootstrap">
+                    {html_pagination showinfo="1" page="$page" rows="$rows" count="$count" url="{url('admin/merchant/orders?page=%page%&orderId='|cat:$orderId|cat:'&orderStatus='|cat:$orderStatus|cat:'&merchantName='|cat:$merchantName)}"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+  $('#orderStatus').change(function() {
+    document.getElementById('form1').submit();
+  });
+</script>
+</html>

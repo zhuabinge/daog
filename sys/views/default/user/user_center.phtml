@@ -1,0 +1,86 @@
+{include file='before_body.phtml' title='天天逛逛_编辑个人资料'}
+<body>
+{include file='header.phtml' head="user"}
+
+  {include file='user/user_sidebar.phtml'}
+
+  {assign var="nickname" value=$user->nickname|default:""|escape}
+  {assign var="sex" value=$user->sex|default:"0"}
+  {assign var="years" value=range(1970, 2014)}
+  {assign var="months" value=range(1, 12)}
+  <div class="credit-content">
+    <div class="main-full">
+      <form action="{url('user/update')}" method="POST">
+      <ul class="usersInfo">
+        <li><span class="flInfo">头像修改：</span>
+          <div class="fl avatar">
+            <p>选一张您喜欢的照片做头像吧(建议图片尺寸不小于200*200)。<br>支持Jpeg和Gif格式，大小不超过2M</p>
+            <p>
+            <input id="avatar_id" name="avatar_id" type="hidden" value="">
+            <input id="fileupload" style="display:none" type="file" name="avatar_path" data-url="{url('user/uploadavatar')}" multiple>
+            <input type="text" disabled value="" name="avatar_images" class="from-text"> <span class="msgInfo" onclick="$('#fileupload').click()">上传头像</span>
+            </p>
+            <img src="{urlAvatar($user, 160)}" id="avatar_img" width="150" height="150" alt="头像">
+          </div>
+        </li>
+        <li><span class="flInfo">昵称：</span><input type="text" value="{$nickname}" name="nickname" class="from-text"></li>
+        <li><span class="flInfo">个人简介：</span>
+          <textarea class="form-textares" name="emotion" placeholder="亲！！您还未记录自己的心情喔!!!" >{$user->emotion|default:""}</textarea>
+        </li>
+        <li><span class="flInfo">出生年月：</span>
+          <select class="select2" name="year" data-minimum-results-for-search="-1">
+            <option value=""></option>
+            {foreach  item=year from=$years}
+              <option value="{$year}" {if substr($user->birthday, 0, 4)|default:"" == $year} selected {/if} >{$year}</option>
+            {/foreach}
+          </select> &nbsp;&nbsp;
+          <select class="select2" name="month" data-minimum-results-for-search="-1">
+            <option value=""></option>
+            {foreach  item=month from=$months}
+              <option value="{$month}" {if substr($user->birthday, 4)|default:"" == $month} selected {/if} >{$month}</option>
+            {/foreach}
+          </select>
+        </li>
+        <li><span class="flInfo">性别：</span>
+          <input type="radio" name="sex" value="0" {if $sex == '0'} checked="checked"{/if}> 保密 &nbsp;&nbsp;
+          <input type="radio" name="sex" value="1" {if $sex == '1'} checked="checked"{/if}> 男 &nbsp;&nbsp;
+          <input type="radio" name="sex" value="2" {if $sex == '2'} checked="checked"{/if}> 女
+        </li>
+        <li><span class="flInfo">居住地区：</span><input type="text" name="city" value="{$user->city|default:""|escape}" class="from-text"></li>
+        <li><span class="flInfo">QQ：</span><input type="text" name="qq" value="{$user->qq|default:""|escape}" class="from-text">
+{if empty($user->openid)}
+          <a class="msgInfo" href="{url('/user/qqLogin')}">点击进行绑定</a>
+{else}
+          <span class="msgInfo">已绑定</span>
+{/if}
+        </li>
+        <li><span class="flInfo">微博：</span><input type="text" name="weibo" value="{$user->weibo|default:""|escape}" class="from-text"></li>
+        <li><span class="flInfo">&nbsp;</span><input type="submit" value="保存" class="from-button"></li>
+      </ul>
+      </form>
+    </div>
+  </div>
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+<script type="text/javascript">
+  $(".select2").select2();
+{if isset($qqbindMsg)}
+  dialog('<p>{$qqbindMsg}</p>').open();
+{/if}
+  $(function () {
+      $('#fileupload').fileupload({
+          dataType: 'json',
+          done: function (e, data) {
+            if (data.result.msg == 1) {
+              $('#avatar_img').attr('src', '{BpfConfig::get('static.url')}' + data.result.file_path);
+              $('#avatar_id').attr('value', data.result.file_id);
+              $('[name="avatar_images"]').val(data.result.file_path);
+            } else {
+              dialog('<h1>上传头像失败，请大侠重新上传</h1>').open();
+            }
+          }
+      });
+  });
+</script>
+</html>

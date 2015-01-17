@@ -1,0 +1,42 @@
+
+  <div class="header">
+    <div class="box">
+      <div class="big-logo">
+        <a href="{url('')}" title="天天逛逛首页"></a>
+      </div>
+      <div class="small-logo">
+        <a href="{url('merchant')}" title="卖家中心"></a>
+      </div>
+{if !isLogin()}
+      <div class="no-login">
+        <a href="{url('user/login')}" class="login">卖家登录</a>
+        <a href="{url('user/register')}" class="regist">卖家注册</a>
+      </div>
+{else}
+      <div class="has-login">
+        <a href="{url('merchant')}" class="user-img">
+          <img src="{urlAvatar($account, 50)}" width="38" height="38">
+        </a>
+        您好！<a href="{url('merchant')}" class="user-name">{$account->nickname|escape}</a>
+        <a href="{url('user/logout')}">退出</a>
+      </div>
+{/if}
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="box">
+      <ul>
+        <li {if isset($match) && $match == '商家报名'}class="cur"{/if}><a href="{url('merchant')}">商家报名</a></li>
+        <li {if isset($match) && $match == '活动管理'}class="cur"{/if}><a href="{url('merchant/activities/products')}">活动管理</a>
+          <div class="nav-class">
+            <a href="{url('merchant/activities/products')}">商品管理</a>
+            <a href="{url('merchant/activities/order')}">订单管理</a>
+          </div>
+        </li>
+        <li {if isset($match) && $match == '我的账户'}class="cur"{/if}><a href="{url('merchant/user/shop_verify')}">我的账户</a></li>
+        <li {if isset($match) && $match == '规则中心'}class="cur"{/if}><a href="{url('merchant/rule')}">规则中心</a></li>
+        <li {if isset($match) && $match == '卖家帮助'}class="cur"{/if}><a href="{url('merchant/help')}">卖家帮助</a></li>
+      </ul>
+    </div>
+  </div>

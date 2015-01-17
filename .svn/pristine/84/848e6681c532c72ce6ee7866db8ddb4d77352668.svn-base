@@ -1,0 +1,24 @@
+
+    <div class="sidebar">
+      <h1>账号管理</h1>
+      <ul class="side-menu">
+        <li {if isset($match) && $match == '店铺信息'}class="current"{/if}>
+          <a href="{url('merchant/user/shop_verify')}">店铺信息</a>
+        </li>
+        <li {if isset($match) && $match == '修改密码'}class="current"{/if}>
+          <a href="{url('merchant/user/password')}">账号安全</a>
+        </li>
+        <li {if isset($match) && $match == '绑定手机'}class="current"{/if}>
+          <a href="{url('merchant/user/binding_phone')}">绑定手机</a>
+        </li>
+        <li {if isset($match) && $match == '绑定邮箱'}class="current"{/if}>
+          <a href="{url('merchant/user/binding_email')}">绑定邮箱</a>
+        </li>
+        <li {if isset($match) && $match == '资金管理'}class="current"{/if}>
+          <a href="{url('merchant/user/funds')}">资金管理</a>
+        </li>
+        <li {if isset($match) && $match == '我的发票'}class="current"{/if}>
+          <a href="{url('merchant/user/invoices')}">我的发票</a>
+        </li>
+      </ul>
+    </div>

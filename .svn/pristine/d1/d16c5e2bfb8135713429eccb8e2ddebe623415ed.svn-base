@@ -1,0 +1,13 @@
+{if isset($cates) && $cates}
+<div class="side_n_nav_main">
+  <div class="side_n_nav">
+    <div class="nav_title">商品服务分类</div>
+    <ul>
+      {foreach $cates as $cate }
+      <li><a href="{$cate->link}"><i class="{$cate->seo_path}"></i>{$cate->name}</a></li>
+      {/foreach}
+    </ul>
+    <div class="nav_bottom"></div>
+  </div>
+</div>
+{/if}

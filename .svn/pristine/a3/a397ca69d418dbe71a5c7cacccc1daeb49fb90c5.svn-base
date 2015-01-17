@@ -1,0 +1,313 @@
+{include file='before_body.phtml' title=$product->title}
+<body>
+{include file='header.phtml'}
+<div class="area">
+  <div class="main_product">
+    <div class="place-show">
+      <div class="fl"><a href="{url('')}">天天逛逛</a>
+      {if isset($product->category) && $product->category} &gt; <a href="{$product->category->link}">{$product->category->name}</a> {/if}</div>
+      {if isset($product->home_category) && $product->home_category}
+      <div class="fr">
+      {foreach $product->home_category as $sa}
+        <a href="{$sa->link}">{$sa->name}</a>
+      {/foreach}
+      </div>
+      {/if}
+    </div>
+
+    <div class="product">
+    	<div class="fl">
+    	  <div class="big_photo"><img src="{urlStatic($product->image_path, 460, 460)}" width="460" height="460" rel="{urlStatic($product->image_path, 800, 800)}" class="jqzoom"></div>
+    	  {if isset($product->images) && $product->images}
+    	  <ul class="seall_photo" id="thumblist">
+    	  	{foreach $product->images as $key => $sa}
+          {if $sa@index lt 5}
+    	  	<li {if $sa@index == 0}class="tb-selected"{/if}><a href="javascript:;"><img src="{urlStatic($sa, 75, 75)}" width="75" height="75" mid="{urlStatic($sa, 460, 460)}" big="{urlStatic($sa, 800, 800)}"></a></li>
+          {/if}
+    	  	{/foreach}
+    	  </ul>
+    	  {/if}
+    	</div>
+    	<div class="fr">
+    	  <h1>{$product->title|escape}</h1>
+    	  <h2>{$product->feature|escape}</h2>
+        {if isset($product->tags) && $product->tags}
+        <div class="tags">
+          <span class="search-same">搜同款</span>
+          {foreach $product->tags as $key => $sa}
+          <a href="{url('tag/'|cat:$key)}">{$sa}</a>
+          {/foreach}
+        </div>
+        {/if}
+        <div class="sell_price"><strong><small>¥</small>{$product->sell_price}</strong>/包邮</div>
+    	  <div class="price">
+          <div class="price-num">
+    	  	  市场价<del>¥{$product->list_price}</del>
+          </div>
+          <div class="price-cut">
+            <i></i>
+            <b>省{intval($product->list_price-$product->sell_price)}元</b>
+          </div>
+    	  </div>
+        <div class="grade">
+          <span class="sell-count">已售出：{$product->sellcount} 件</span>
+          <span class="v-line">|</span>
+          <span class="title">买家评分：</span>
+          <span class="score">{$product->buyerscore}</span>
+          <div class="star">
+            <div class="color"></div>
+            <div class="mask m-white"></div>
+          </div>
+          <span class="fen">分</span>
+        </div>
+    	  <div class="item-btn mt10">
+          <a href="{$product->link_click}" target="_blank" class="icon_qg">去{if isset($product->data->type) && $product->data->type == 'B'}天猫{else}淘宝{/if}抢购<i></i></a>
+          <a href="javascript:;" class="icon_sc" lks="{$lieks|default:0}" lpid="{$product->pid|default:0}" luid="{$account->uid|default:0}"><i class="{if !$lieks}curr{/if}"></i>{if !$lieks}已收藏{else}收藏{/if}</a>
+    	  </div>
+        <div class="bdshar pt15">
+          <p>分享至：</p>
+          <div class="bdsharebuttonbox"><a href="javascript:;" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" rel="nofollow"></a><a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" rel="nofollow"></a><a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到微信" rel="nofollow"></a></div>
+        <script>window._bd_share_config={ "common":{ "bdUrl":'{url($product->link)}?u={$bduid|default:0}',"bdSnsKey":{ },"bdText":"{$product->title|escape}","bdDesc":'{$product->feature|escape|truncate:115:""}',"bdMini":"2","bdMiniList":false,"bdPic":"{urlStatic($product->image_path)}","bdStyle":"0","bdSize":"24" },"share":{ }};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+        </div>
+    	</div>
+    </div>
+
+    <div class="details mt15">
+    	<div class="fr">
+        <div class="details-title">
+    	    <ul class="dateils-tab">
+    	      <li class="selected" id="one">商品详情</li>
+            {if isset($product->data) && $product->data}
+            <li>买过的人说 <span>{if isset($product->data) && $product->data}{count($product->data->comments)}+{else}0{/if}</span></li>
+            {/if}
+    	    </ul>
+          <div class="tab-right">
+            <div class="price"><strong><small>¥</small>{$product->sell_price}</strong>/包邮</div>
+            <a href="{$product->link_click}" target="_blank" class="icon_qg">去{if isset($product->data->type) && $product->data->type == 'B'}天猫{else}淘宝{/if}抢购<i></i></a>
+          </div>
+        </div>
+    	  <div class="dateils-content">
+  	  	<div class="hide dete-body">{$product->body}</div>
+        {if isset($product->data) && $product->data}
+        <div class="hide com-body">
+          <div class="pl-box"><p>以下是来自{if isset($product->data->type) && $product->data->type == 'B'}天猫{else}淘宝{/if}买家的评论</p></div>
+
+          <div class="comment-box">
+              <div class="com-box">
+                  <div class="cf_b com-big">
+                      <div class="com-list">
+                          <ul class="cf_show">
+                            {foreach $product->data->comments as $sa}
+                            <li>
+                              <div class="cf_fl"><img src="{$sa->avatar}" width="50" height="50"></div>
+                              <div class="cf_fr">
+                                <div class="clearbox">
+                                  <div class="username">{$sa->nick|escape|html_comment}
+                                    {if isset($sa->tmallSweetPic) && $sa->tmallSweetPic != ''}
+                                    <em class="tm-icon"><img src="{$sa->tmallSweetPic}" width="18" height="18"></em>
+                                    {/if}
+                                    {if isset($sa->displayRatePic) && $sa->displayRatePic != ''}
+                                    <em class="tm-icon"><img src="{$sa->displayRatePic}"></em>
+                                    {/if}
+                                  </div>
+                                  <div class="time">{$sa->date|date_format:'Y-m-d G:i:s'} 评论来自 {if isset($product->data->type) && $product->data->type == 'B'}天猫{else}淘宝{/if}</div>
+                                </div>
+                                <div class="content">{$sa->content|escape|html_comment}</div>
+                              </div>
+                            </li>
+                            {/foreach}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              <p class="more"><a href="{$product->link_click}" target="_blank" rel="nofollow">查看更多评论&gt;&gt;</a></p>
+          </div>
+        </div>
+        {/if}
+    	  </div>
+    	</div>
+
+      <div class="fl floatingBox" id="myfloating">
+        <div class="title"><i></i>或许您还喜欢</div>
+        {if isset($likeitem) && $likeitem}
+        <ul class="product_re">
+          {foreach $likeitem as $sa}
+          <li>
+            <div class="photo"><a href="{$sa->link}"><img src="{urlStatic($sa->image_path, 208, 208)}" width="208" height="208"></a></div>
+            <div class="name"><a href="{$sa->link}">{$sa->title|escape}</a></div>
+            <div class="price">
+              <strong><i>¥</i>{$sa->sell_price}</strong>
+              市场价<del>¥{$sa->list_price}</del>
+            </div>
+          </li>
+          {/foreach}
+        </ul>
+        {/if}
+      </div>
+    </div>
+
+    <!--推荐的产品-->
+    <div class="title_un"><i class="icon_xz"></i><strong>买了的人还想买</strong></div>
+
+    <ul class="hot_tuangou hot_product pt10">
+      {if isset($hotPros) && $hotPros}
+      {foreach $hotPros as $hotPro}
+      <li {if $hotPro@last}class="liP"{/if}>
+        <div class="photo">
+          <a href="{$hotPro->link}"><img src="{urlStatic($hotPro->image_path, 300, 300)}" width="300" height="300">
+          </a>
+        </div>
+        <div class="name"><a href="{$hotPro->link}">{$hotPro->title|escape}</a></div>
+        <div class="price">
+          <div class="fl">
+            <em><b>¥</b>{floatval($hotPro->sell_price)}</em>
+            <del><i>¥</i>{floatval($hotPro->list_price)}</del>
+          </div>
+          <div class="fr">{$hotPro->sellcount}人想买</div>
+        </div>
+      </li>
+      {/foreach}
+      {/if}
+    </ul>
+  </div>
+
+  <div class="mod-user mod-abs">
+    <div class="userImages">
+      <a href="{if $account->uid}{urlUser($account->uid)}{else}{url('user/login')}{/if}" target="_blank"><img src="{urlAvatar($account, 160)}" width="110" height="110"></a>
+      <strong>{$account->nickname|default:'<a href="http://www.ttgg.com/user/login">登陆</a>&nbsp;&nbsp;&nbsp;<a href="http://www.ttgg.com/user/register">注册</a>'}</strong>
+    </div>
+    <ul class="userInfo">
+      <li><strong>{$account->scores|default:0}</strong>积分</li>
+      <li><strong>{$account->jf|default:0}</strong>集分宝</li>
+      <li style="border:0;"><strong>{$userCheckinRunning|default:0}天</strong>连续签到</li>
+    </ul>
+    <p class="userDl">共有{count($product->likes)}人一起喜欢、讨论</p>
+    {if isset($product->likes) && $product->likes}
+    {$userModel = BpfCore::getModel('user')}
+    <ul class="userTaolun">
+      {foreach $product->likes as $sa}
+      {$userCheckinRunning = $userModel->getCheckinRunning($sa->uid)}
+      <li>
+        <a href="{urlUser($sa->uid)}" target="_blank">
+          <img src="{urlAvatar($sa, 80)}" width="40" height="40" alt="{$sa->nickname}"/>
+        </a>
+        <div class="hover-info">
+          <i class="arrow arrow-top"></i>
+          <div class="user-info">
+            <a href="{urlUser($sa->uid)}" target="_blank">
+              <img src="{urlAvatar($sa, 160)}" width="100" height="100" alt="{$sa->nickname}"/>
+            </a>
+            <div class="user-name">
+              <a href="{urlUser($sa->uid)}" target="_blank">{$sa->nickname|default:''}</a>
+              <p>{$sa->emotion|default:''}</p>
+            </div>
+          </div>
+          <ul class="user-credit">
+            <li><strong>{$sa->scores|default:0}</strong>积分</li>
+            <li><strong>{$sa->jf|default:0}</strong>集分宝</li>
+            <li><strong>{$userCheckinRunning|default:0}天</strong>连续签到</li>
+          </ul>
+        </div>
+      </li>
+      {/foreach}
+      <li><span class="icon_tl"></span></li>
+    </ul>
+    {/if}
+  </div>
+</div>
+{include file='footer.phtml'}
+{include file='after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  //切换
+  $('.dateils-tab li').click(function() {
+    $(this).addClass("selected").siblings().removeClass();
+    $(".dateils-content > .hide").fadeOut('200').eq($('.dateils-tab li').index(this)).fadeIn('200')
+  });
+  //图片
+  $(".jqzoom").imagezoom();
+  $("#thumblist li a").mouseover(function(){
+    $(this).parents("li").addClass("tb-selected").siblings().removeClass("tb-selected");
+    $(".jqzoom").attr('src',$(this).find("img").attr("mid"));
+    $(".jqzoom").attr('rel',$(this).find("img").attr("big"));
+  });
+  /**商品详细页面导航悬停效果**/
+  var $detailsTitle = $('.details .details-title');
+  var detailsOffsetTop = $detailsTitle.offset().top;
+  var stickMenu = function() {
+    var scrollTop = $(window).scrollTop();  //动态检测与浏览器顶部的距离
+    if ( scrollTop >= detailsOffsetTop ) {
+      $detailsTitle.addClass('fxd');
+      $('.tab-right').css('display','block');
+      // $('#myfloating .title').addClass('fxd').css('position','fixed');
+    } else{
+      $detailsTitle.removeClass('fxd');
+      $('.tab-right').css('display','none');
+      $('.details .dateils-content').css('margin-top','0');
+      // $('#myfloating .title').removeClass('fxd').css('position','relative');
+    }
+  }
+  stickMenu();
+  $(window).scroll(function() {
+    stickMenu();
+  });
+  //监听导航栏目点击事件
+  $('.dateils-tab li').click(function() {
+    if( $detailsTitle.hasClass('fxd') ){
+      $(window).scrollTop(detailsOffsetTop);
+      $('.details .dateils-content').css('margin-top','30px');
+    }
+  });
+  /**商品详情页面右侧个人信息悬停效果**/
+  var modUserOffsetTop = $('.mod-user').offset().top;
+  var stickModUser = function() {
+    var scrollTop = $(window).scrollTop();
+    if(scrollTop >= modUserOffsetTop) {
+      $('.mod-user').addClass('mod-fxd').removeClass('mod-abs');
+    } else {
+      $('.mod-user').addClass('mod-abs').removeClass('mod-fxd');
+    }
+  }
+  stickModUser();
+  $(window).scroll(function() {
+    stickModUser();
+  });
+  /**用户头像鼠标经过时显示一个信息框**/
+  var canHide = false;
+  function doHide() {
+    //将层隐藏
+    if(canHide) {
+      $('.userTaolun li .hover-info').hide();
+    }
+  }
+  $('.userTaolun > li > a').hover(function() {
+    var infoBox = $(this).siblings('.hover-info');
+    var offsetRight = parseInt($(window).width() - $(this).offset().left);   //信息框左边距离浏览器
+    $(this).parent().siblings().find('.hover-info').hide();   //清除其他头像下的提示框
+    $(this).siblings('.hover-info').fadeIn(500);  //显示当前信息框
+    
+    if(offsetRight < 311) {   //如果弹出框碰到浏览器右边，则改变框使其置右
+      infoBox.css('right','0');
+      infoBox.find('i').css('right','0');  //箭头置右
+    } else {
+      infoBox.css('left','0');  
+      infoBox.find('i').css('left','0');
+    }
+    canHide = false;
+  }, function() {
+    canHide = true;
+    window.clearTimeout(t); //清除上一次的定时器
+    var t = window.setTimeout(doHide, 500);  //重新开始及时，后触发层隐藏
+  });
+  $('.userTaolun li .hover-info').hover(function() {
+    canHide = false;
+  }, function() {
+    canHide = true;
+    window.clearTimeout(t);
+    var t = window.setTimeout(doHide, 500);
+  });
+});
+</script>
+</body>
+</html>

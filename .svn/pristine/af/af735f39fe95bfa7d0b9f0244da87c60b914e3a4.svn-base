@@ -1,0 +1,28 @@
+
+{include file='before_body.phtml' title=$tag->title}
+<body>
+{include file='header.phtml'}
+
+<div class="area">
+
+{if $products}
+  <div class="clearbox">
+      <div class="title_un"><strong>为您找到与 "<span>{$tag->title}</span>" 相关的商品{$count}条！</strong></div>
+<!--产品列表-->
+{include file='main_products.phtml'}
+  <!--分页-->
+    <div class="tc">
+    {html_pagination page="$page" rows="$rows" count="$count" url="{$tag->link|cat:'?page=%page%'}" showinfo="0"}
+    </div>
+  </div>
+  {else}
+  <div class="clearbox">
+      <div class="title_un"><strong>该标签下没有找到相关的商品</strong></div>
+  </div>
+  {/if}
+</div>
+
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+</html>

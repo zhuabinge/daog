@@ -1,0 +1,231 @@
+{include file='admin/before_body.phtml' title='编辑专题'}
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/channel/')}">专题</a></li>
+          <li class="current">编辑专题</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>
+                <i class="icon-reorder"></i>
+                编辑专题
+              </h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/channel/edit')}" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 标题：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="title" value="{$title|default:''}" class="form-control input-width-xxlarge required">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    路径：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="seoPath" value="{$seoPath|default:''}" class="form-control input-width-xxlarge">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    是否导航推荐：
+                  </label>
+                  <div class="col-md-9">
+                    <label class="checkbox-inline">
+                      <div class="checker">
+                        <span><input type="checkbox" class="uniform" name="showOnHome" value="1" {if $showOnHome != 0}checked{/if}></span>
+                      </div>导航显示
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    匹配规则：
+                  </label>
+                  <div class="col-md-9">
+                    <label class="radio pull-left" style="padding-left:0">商品标题包含：</label>
+                    <input type="text" name="rules[title]" value="{$rules.title|default:''}" class="form-control input-width-xlarge" style="margin-bottom:5px">
+                    <label class="radio pull-left" style="padding-left:0">促销标题包含：</label>
+                    <input type="text" name="rules[feature]" value="{$rules.feature|default:''}" class="form-control input-width-xlarge" style="margin-bottom:5px">
+                    <label class="radio pull-left" style="padding-left:0">销售价格1：</label>
+{if isset($rules.price1)}
+{$rules.price1 = implode(' ', $rules.price1)}
+{else}
+{$rules.price1 = ''}
+{/if}
+                    <input type="text" name="rules[price1]" value="{$rules.price1}" class="form-control input-width-small" style="margin-bottom:5px">
+                    <label class="radio pull-left" style="padding-left:0">销售价格2：</label>
+{if isset($rules.price2)}
+{$rules.price2 = implode(' ', $rules.price2)}
+{else}
+{$rules.price2 = ''}
+{/if}
+                    <input type="text" name="rules[price2]" value="{$rules.price2}" class="form-control input-width-small">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    排序：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="weight" value="{$weight|default:0}" class="form-control input-width-large">
+                    <BR> 数组越大排序越靠前
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    开始时间：
+                  </label>
+                  <div class="col-md-9" style="z-index:999;">
+                    <input class="form-control input-width-large datepicker-gud" type="text" size="30" name="scheduling" value="{$scheduling|date_format:'Y-m-d G:i'|default:0}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    结束时间：
+                  </label>
+                  <div class="col-md-9" style="z-index:999;">
+                    <input class="form-control input-width-large datepicker" type="text" size="30" name="expired" value="{$expired|date_format:'Y-m-d G:i'|default:0}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    状态：
+                  </label>
+                  <div class="col-md-9">
+                    <label class="radio pull-left" style="width:80px;">
+                      <input type="radio" name="status" class="uniform" {if $status == 1 } checked {/if} value="1" />
+                     启用
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" {if $status == 0 } checked {/if} value="0" />
+                       禁用
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    SEO 关键词：
+                  </label>
+                  <div class="col-md-9">
+                    <textarea rows="5" cols="5" name="seoKey" class="form-control input-width-xxlarge">{$seoKey|default:''}</textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    SEO 描述：
+                  </label>
+                  <div class="col-md-9">
+                    <textarea rows="5" cols="5" name="seoDescription" class="form-control input-width-xxlarge">{$seoDescription|default:''}</textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    模板路径：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="template" value="{$template|default:''}" class="form-control input-width-large">
+                    <BR> 不需要增加任何后缀路径；
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="hidden" name="cid" value="{$cid|default:0}" >
+                    <input type="submit" value="保存" class="btn btn-primary">
+                    <a href="{url('admin/channel/')}" class="btn">返回专题列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+<style type="text/css">
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 40%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.datepicker').datetimepicker({
+    dateFormat: 'yy-mm-dd',
+    dayNamesMin: [ "日", "一", "二", "三", "四", "五", "六" ],
+    monthNames: [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" ],
+    timeOnlyTitle: '选择时间',
+    timeText: '时间',
+    hourText: '小时',
+    minuteText: '分钟',
+    secondText: '秒钟',
+    millisecText: '毫秒',
+    microsecText: '微秒',
+    timezoneText: '时区',
+    currentText: '现在时间',
+    closeText: '确定',
+  });
+  $('.datepicker-gud').datetimepicker({
+    dateFormat: 'yy-mm-dd',
+    dayNamesMin: [ "日", "一", "二", "三", "四", "五", "六" ],
+    monthNames: [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月" ],
+    timeOnlyTitle: '选择时间',
+    timeText: '时间',
+    hourText: '小时',
+    minuteText: '分钟',
+    secondText: '秒钟',
+    millisecText: '毫秒',
+    microsecText: '微秒',
+    timezoneText: '时区',
+    currentText: '现在时间',
+    closeText: '确定',
+  });
+  $("#validate").validate({
+    messages:{
+      title:"必须选项不能为空，请输入内容",
+    }
+  });
+  {assign var="cid" value=$cid|default:""}
+  $.ajax({ url: '{url("admin/channel/getProducts?cid=$cid")}', success: function(data){
+    $('#products').html(data);
+  }});
+
+});
+</script>
+</html>

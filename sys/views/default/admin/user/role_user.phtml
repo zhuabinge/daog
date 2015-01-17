@@ -1,0 +1,124 @@
+{include file='admin/before_body.phtml' title='角色用户设置'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='user_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/role')}">用户管理</a></li>
+          <li class="current"><a href="{url('admin/role/edit')}">角色用户设置</a></li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4>
+                <i class="icon-reorder"></i>
+                角色用户设置
+              </h4>
+            </div>
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/role/user')}" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    角色名称
+                  </label>
+                  <div class="col-md-9">
+                    {if $roleInfo}
+                    <input type="text" name="rolename" value="{$roleInfo->name|escape}" disabled="disabled" class="form-control input-width-xxlarge required">
+                    {else}
+                    <input type="text" name="rolename" value="" disabled="disabled" class="form-control input-width-xxlarge required">
+                    {/if}
+                  </div>
+                </div>
+
+                <div class="form-group" hidden="hidden">
+                  <div class="col-md-9" >
+                    <input type="text" id="roleId" name="roleId" value="{$roleGetId}" class="form-control input-width-xxlarge required">
+                  </div>
+                </div>
+      <div class="row">
+      <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+          <thead>
+           <tr>
+            <th class="checkbox-column"> <input type="checkbox" class="uniform" /> </th>
+            <th> 用户名 </th>
+            <th> 昵称 </th>
+            <th width="160"> 创建时间 </th>
+            <th width="70"> 状态 </th>
+           </tr>
+          </thead>
+          <tbody>
+          {assign var="temp" value="false"}
+          {if $usersInfo}
+          {foreach $usersInfo as $user}
+           <tr>
+            {foreach $roleusers as $roleuser}
+            {if $roleuser->uid == $user->uid && $roleuser}
+            {$temp="true"}
+            {/if}
+            {/foreach}
+            <td class="checkbox-column"> <input type="checkbox" class="uniform" value="{$user->uid}" name="uid[]"{if $temp=="true"}checked="checked"{/if}/> </td>
+            {$temp="false"}
+            <td>{$user->username|escape}</td>
+            <td>{$user->nickname|escape}</td>
+            <td>{$user->created|date_format:'Y-m-d G:i:s'}</td>
+            <td>
+              {if $user->status == 1}
+              <span class="label label-success">有效</span>
+              {else}
+              <span class="label label-danger">已禁用</span>
+              {/if}
+            </td>
+           </tr>
+           {/foreach}
+           {/if}
+          </tbody>
+         </table>
+       </div>
+       </div>
+       <div class="table-footer">
+          <!-- <div class="col-md-6">
+           <ul class="pagination">
+            {html_pagination page="$curPage" rows="$rows" count="$total" url="{url('admin/role/user?page=%page%&id='|cat:$roleGetId)}"}
+           </ul>
+          </div>  -->
+         </div>
+
+      <div class="form-group form-actions">
+        <label class="col-md-3 control-label hidden-xs"></label>
+          <div class="col-md-9">
+          <input type="submit" value="保存提交" class="btn btn-primary">
+          <a href="{url('admin/role')}" class="btn">返回角色列表</a>
+          </div>
+      </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+{include file='admin/after_body.phtml'}
+<script type="text/javascript">
+$(document).ready(function() {
+  FormComponents.init();
+});
+</script>
+</html>

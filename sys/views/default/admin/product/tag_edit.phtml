@@ -1,0 +1,86 @@
+{include file='admin/before_body.phtml' title='修改添加标签'}
+
+<body>
+{include file='admin/header.phtml'}
+
+<div id="container" class="fixed-header {if isset($smarty.cookies.sidebar) && $smarty.cookies.sidebar}sidebar-closed{/if}">
+
+  {include file='admin/sidebar.phtml' navigation='product_view'}
+
+  <div id="content">
+    <div class="container">
+      <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li><i class="icon-home"></i><a href="{url('admin/product')}">商品管理</a></li>
+          <li class="current"><a href="{url('admin/tag')}">标签列表</a></li>
+          <li class="current">修改添加标签</li>
+        </ul>
+      </div>
+      <div class="page-header"></div>
+      <div class="page-header"></div>
+      {html_messages}
+
+      <!-- start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="widget box">
+            <div class="widget-header">
+              <h4><i class="icon-reorder"></i></h4>
+            </div>
+            {$tid = $tags->tid|default:''}
+            <div class="widget-content">
+              <form class="form-horizontal row-border" id="validate" action="{url('admin/tag/edit/'|cat:$tid)}" method="POST">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    <span class="required">  * </span> 标签名称：
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" name="title" value="{$tags->title|default:''|escape}" class="form-control input-width-xlarge required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">
+                    状态：
+                  </label>
+                  {$status = $tags->status|default:'-1'}
+                  <div class="col-md-9">
+                    <label class="radio pull-left" style="width:80px;">
+                      <input type="radio" name="status" class="uniform" {if $status == 1}checked{else if $status == -1}checked{/if} value="1">
+                      有效
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="status" class="uniform" {if $status == 0}checked{/if} value="0">
+                      无效
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group form-actions">
+                  <label class="col-md-3 control-label hidden-xs"></label>
+                  <div class="col-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary">
+                    <a href="{url('admin/tag')}" class="btn">返回标签列表</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /end -->
+    </div>
+  </div>
+</div>
+</body>
+
+{include file='admin/after_body.phtml'}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#validate").validate({
+    messages:{
+      title:"必须选项不能为空，请输入内容",
+    }
+  });
+});
+</script>
+</html>

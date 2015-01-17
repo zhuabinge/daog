@@ -1,0 +1,63 @@
+{include file='merchant/before_body.phtml' title='【天天逛逛报名入口】 - 天天逛逛商家报名系统'}
+<body>
+{include file='merchant/header.phtml' match="我的账户"}
+  <div class="container">
+    {include file='merchant/user_sidebar.phtml' match="资金管理"}
+
+    <div class="main">
+      <h2>资金管理</h2>
+      <div class="price-total">
+        <div class="col">
+          <div>账户余额</div>
+          <div><b class="color">{$merchant->deposit|default:'0'|escape}</b>元</div>
+          <div class="info">提现锁定金额：0元</div>
+          <a href="{url('merchant/user/funds_recharge')}" class="btn1" target="_blank">账户充值</a>
+        </div>
+        <div class="v-line"></div>
+        <div class="col">
+          <div>技术服务费预存款</div>
+          <div><b>{$merchant->service_fee|default:'0'|escape}</b>元</div>
+          <div class="info">需缴纳最低：1000元</div>
+          <a href="{url('merchant/user/funds_service')}" class="btn2">缴纳</a>
+        </div>
+        <div class="v-line"></div>
+        <div class="col">
+          <div>商家保证金</div>
+          <div><b>{$merchant->margin|default:'0'|escape}</b>元</div>
+          <div class="info">需缴纳保证金：5000元</div>
+          <a href="{url('merchant/user/funds_margin')}" class="btn2">缴纳</a>
+        </div>
+      </div>
+      <p class="warning">注：请在天天逛逛完成资金操作，如有通过旺旺、QQ发送给您的打款账号切勿相信！</p>
+      <h3>资金明细</h3>
+      <table cellpadding="0" cellspacing="0" align="center" class="table1">
+        <thead>
+          <tr>
+            <th class="big-cell">日期</th>
+            <th class="big-cell">详情</th>
+            <th>金额</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+{if isset($costsList) && $costsList}
+          {foreach $costsList as $c}
+          <tr>
+            <td>{$c->created|date_format:'Y-m-d G:i:s'}</td>
+            <td>{$c->content|escape}</td>
+            <td>{$c->cost}元</td>
+            <td>{if $c->type == 1}有效{else}无效{/if}</td>
+          </tr>
+          {/foreach}
+{else}
+          <tr>
+            <td colspan="5">您还没有资金操作记录</td>
+          </tr>
+{/if}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+{include file='merchant/after_body.phtml'}
+</html>

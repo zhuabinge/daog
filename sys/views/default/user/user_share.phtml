@@ -1,0 +1,94 @@
+{include file='before_body.phtml' title='天天逛逛_我的分享'}
+<body>
+{include file='header.phtml' head="user"}
+
+  {include file='user/user_sidebar.phtml' active='我的分享'}
+
+  <div class="credit-content">
+    <div class="main">
+{if isset($shareList) && $shareList}
+        <div class="share">
+        {foreach $shareList as $sa}
+          <div class="share-goods">
+            <div class="share-top">
+              <p class="fl">分享了<em>{count($sa['share']|default:array())}</em>个宝贝</p>
+            </div>
+            <!--当天分享的宝贝列表-->
+            <div class="share-box">
+              <!--单个分享的宝贝-->
+              {if isset($sa['share']) && $sa['share']}
+              {foreach $sa['share'] as $va}
+              <div class="single-goods">
+                <a href="{$va->product->link}" target="_blank" title="{$va->product->title|escape}">
+                  <img src="{urlStatic($va->product->image_path, 286, 286)}" width="236" height="236" alt="{$va->product->title|escape}">
+                </a>
+                <div class="goods-price">￥<em>{$va->product->sell_price}</em></div>
+              </div>
+              {/foreach}
+              {else}
+              <div style="height:30px; padding:0 10px;">暂无宝贝分享</div>
+              {/if}
+            </div>
+            <div class="time">{$sa['date']|default:''}</div>
+            <div class="red-circle"></div>
+            <div class="vertical-line"></div>
+          </div>
+        {/foreach}
+        </div>
+{else}
+        <div class="users_Icon share_info">
+          <span></span>
+          <a href="{url('')}">去随便逛逛</a>
+        </div>
+{/if}
+    </div>
+    
+    {include file='user/user_right.phtml'}
+  </div>
+
+{include file='footer.phtml'}
+</body>
+{include file='after_body.phtml'}
+<script type="text/javascript">
+$(function($) {
+  // 边栏轮播效果
+  var page = 1; //当前页码
+  $("#alter_prev").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==1){
+        $all_page.animate({ left:"-="+v_width*(page_count-1) });
+        page=page_count;
+      }else{
+        $all_page.animate({ left:"+="+v_width });
+        page--;
+      }
+    }
+  });
+  $("#alter_next").click(function(){
+    var $parent=$(this).parents("div.sidebar-box");
+    var $all_page=$parent.find("div.all-page");
+    var $a_page=$all_page.find("div.a-page");
+
+    var v_width=$a_page.width();
+    var page_count=$all_page.find("div.a-page").length;
+
+    if(!$all_page.is(":animated")){
+      if (page==page_count){
+        $all_page.animate({ left:"0" });
+        page=1;
+      }else{
+        $all_page.animate({ left:"-="+v_width });
+        page++;
+      }
+    }
+  });
+});
+</script>
+</html>
